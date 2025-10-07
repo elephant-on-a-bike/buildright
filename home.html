@@ -1,0 +1,847 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Trusted Tradesmen Platform</title>
+<style>
+
+  #project-management-summary {
+    background-color: #f0f4fa;
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 1rem;
+  }
+
+  #project-management-summary h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  #project-management-summary p {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+  }
+
+  .pm-levels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .pm-card {
+    flex: 1 1 250px;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    text-align: center;
+  }
+
+  .btn.learn-more {
+    background-color: #4a90e2;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .pm-levels {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  
+
+  #testimonials {
+    background-color: #f0f4fa;
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 1rem;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    text-align: center;
+    font-size: 1rem;
+  }
+
+  .testimonial-card p {
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  .rating {
+    font-size: 1.1rem;
+    color: #f5a623;
+    margin: 0.2rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  
+  .filter-container {
+    padding: 1rem;
+	}
+
+  .services-section {
+
+    padding: 2rem;
+    background-color: lightsteelblue;
+
+  }
+
+  select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  .tile {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .tile.selected {
+    background-color: #4a90e2;
+    color: white;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+  }
+  .modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+  }
+  .close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+.nav-container {
+  position: relative;
+  background-color: lightsteelblue;
+  padding: 1rem 2rem 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1001;
+}
+
+.logo {
+  font-size: 1.2rem;
+}
+
+.menu-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.flyout-menu {
+  position: fixed;
+  top: 0;
+  right: -500px;
+  width: 300px;
+  height: 100%;
+  background-color: #f0f4fa;
+  box-shadow: -2px 0 6px rgba(0,0,0,0.1);
+  transition: right 0.3s ease-in-out;
+  padding: 2rem 1rem;
+  z-index: 1000;
+}
+
+.flyout-menu.open {
+  right: 0;
+}
+
+.flyout-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.flyout-menu li {
+  margin: 1rem 0;
+}
+
+.flyout-menu a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .flyout-menu {
+    width: 100%;
+  }
+}
+
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background-color: #f9f9fb;
+      color: #333;
+    }
+    header, footer {
+      background-color: #ffffff;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border-radius: 0 0 12px 12px;
+      flex-wrap: wrap;
+    }
+    nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  .hero-section {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3rem 2rem;
+    background-color: #eef2f7;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 300px;
+  }
+
+  .hero-content {
+    z-index: 2;
+    max-width: 600px;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn {
+    background-color: #4a90e2;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  .hero-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    background-image: url('hero.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right center;
+    opacity: 0.3;
+    transition: transform 0.3s ease;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-image {
+      width: 60%;
+      transform: scale(0.9);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero-image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-position: center;
+      transform: scale(0.8);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 1rem;
+      border-radius: 12px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-image {
+      transform: scale(0.7);
+    }
+
+    .hero-content h1 {
+      font-size: 1.5rem;
+    }
+
+    .hero-content p {
+      font-size: 1rem;
+    }
+  }
+    .section {
+      padding: 2rem;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .card:hover {
+      background-color: #f0f4fa;
+    }
+    .accordion-panel {
+      display: none;
+      background-color: #ffffff;
+      padding: 1rem;
+      margin-top: 0.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      animation: slideDown 0.3s ease forwards;
+      position: relative;
+    }
+    .accordion-panel.show {
+      display: block;
+    }
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .step-card {
+      flex: 1 1 200px;
+      background-color: white;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    footer {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  #how-it-works {
+    background-color: #f0f4fa;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 1rem;
+  }
+
+  .how-it-works-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-between;
+  }
+
+  .how-step {
+    flex: 1 1 250px;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    text-align: center;
+  }
+
+  .how-step img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .how-it-works-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+</head>
+<body>
+<!-- Header Section -->
+<header class="nav-container">
+  <div class="logo"><strong>LOGO</strong></div>
+
+    <button class="btn cta">Sign in / Sign up</button>
+    <div class="menu-icon" onclick="toggleMenu()">More here ☰</div>
+
+</header>
+
+<!-- Flyout Navigation Menu -->
+<nav class="flyout-menu" id="flyoutMenu">
+  <div class="close-btn" onclick="toggleMenu()">✖</div>
+  <ul>
+    <li>#Home</a></li>
+    <li>#How It Works</a></li>
+    <li>#Services</a></li>
+    <li>#For Clients</a></li>
+    <li>#For Suppliers</a></li>
+    <li>#Project Management</a></li>
+    <li>#Trust & Security</a></li>
+    <li>#Reviews</a></li>
+    <li>#About Us</a></li>
+    <li>#Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero-section">
+  <div class="hero-content">
+    <h1>You got a project?</h1>
+    <h2>Renovations Made Simple, Secure, and Transparent.</h2>
+	<p>From quick fixes to full builds — we protect your funds, simplify contracts, and keep your project on track.
+</p>
+    <button class="btn">Try It Now</button>
+  </div>
+  <div class="hero-image"></div>
+</section>
+
+<section class="services-section">
+<h2>Got something to do now?</h2>
+<div class="filter-container">
+  <label for="categoryFilter">Filter by Category:</label>
+  <select id="categoryFilter" onchange="filterTrades()">
+<option value="All Services">All Services</option>
+<option value="Design">Design</option>
+<option value="Exterior">Exterior</option>
+<option value="General">General</option>
+<option value="Interior">Interior</option>
+<option value="Specialist">Specialist</option>
+<option value="Systems">Systems</option>
+</select>
+</div>
+
+<div class="grid" id="tradesGrid">
+
+  <div class="tile" data-category="General" onclick="toggleTile(this, 'Builder', 'New builds, extensions, structural work')">
+    <div style="font-size:2rem;">🏗️</div>
+    <div>Builder</div>
+  </div>
+
+  <div class="tile" data-category="General" onclick="toggleTile(this, 'Renovator', 'Interior/exterior refurbishments')">
+    <div style="font-size:2rem;">🔧</div>
+    <div>Renovator</div>
+  </div>
+
+  <div class="tile" data-category="General" onclick="toggleTile(this, 'Project Manager', 'Oversees timelines, budgets, and coordination')">
+    <div style="font-size:2rem;">📋</div>
+    <div>Project Manager</div>
+  </div>
+
+  <div class="tile" data-category="Interior" onclick="toggleTile(this, 'Decorator / Painter', 'Painting, wallpapering, finishes')">
+    <div style="font-size:2rem;">🎨</div>
+    <div>Decorator / Painter</div>
+  </div>
+
+  <div class="tile" data-category="Interior" onclick="toggleTile(this, 'Plasterer', 'Wall smoothing, ceiling finishes')">
+    <div style="font-size:2rem;">🧱</div>
+    <div>Plasterer</div>
+  </div>
+
+  <div class="tile" data-category="Interior" onclick="toggleTile(this, 'Tiler', 'Wall and floor tiling')">
+    <div style="font-size:2rem;">🪨</div>
+    <div>Tiler</div>
+  </div>
+
+  <div class="tile" data-category="Interior" onclick="toggleTile(this, 'Flooring Specialist', 'Wood, laminate, vinyl, carpet installation')">
+    <div style="font-size:2rem;">🪵</div>
+    <div>Flooring Specialist</div>
+  </div>
+
+  <div class="tile" data-category="Exterior" onclick="toggleTile(this, 'Roofer', 'Roof repairs, installations, waterproofing')">
+    <div style="font-size:2rem;">🏠</div>
+    <div>Roofer</div>
+  </div>
+
+  <div class="tile" data-category="Exterior" onclick="toggleTile(this, 'Landscaper', 'Garden design, paving, turfing')">
+    <div style="font-size:2rem;">🌳</div>
+    <div>Landscaper</div>
+  </div>
+
+  <div class="tile" data-category="Exterior" onclick="toggleTile(this, 'Fencer', 'Boundary fencing, gates')">
+    <div style="font-size:2rem;">🚧</div>
+    <div>Fencer</div>
+  </div>
+
+  <div class="tile" data-category="Exterior" onclick="toggleTile(this, 'Window & Door Installer', 'Glazing, frames, security doors')">
+    <div style="font-size:2rem;">🚪</div>
+    <div>Window & Door Installer</div>
+  </div>
+
+  <div class="tile" data-category="Systems" onclick="toggleTile(this, 'Electrician', 'Wiring, lighting, safety systems')">
+    <div style="font-size:2rem;">💡</div>
+    <div>Electrician</div>
+  </div>
+
+  <div class="tile" data-category="Systems" onclick="toggleTile(this, 'Plumber', 'Water systems, heating, drainage')">
+    <div style="font-size:2rem;">🚿</div>
+    <div>Plumber</div>
+  </div>
+
+  <div class="tile" data-category="Systems" onclick="toggleTile(this, 'HVAC Technician', 'Air conditioning, ventilation, heating')">
+    <div style="font-size:2rem;">🌬️</div>
+    <div>HVAC Technician</div>
+  </div>
+
+  <div class="tile" data-category="Systems" onclick="toggleTile(this, 'Smart Home Installer', 'Automation, security, network systems')">
+    <div style="font-size:2rem;">📱</div>
+    <div>Smart Home Installer</div>
+  </div>
+
+  <div class="tile" data-category="Specialist" onclick="toggleTile(this, 'Joiner / Carpenter', 'Custom woodwork, cabinetry, framing')">
+    <div style="font-size:2rem;">🪚</div>
+    <div>Joiner / Carpenter</div>
+  </div>
+
+  <div class="tile" data-category="Specialist" onclick="toggleTile(this, 'Bricklayer', 'Walls, chimneys, structural masonry')">
+    <div style="font-size:2rem;">🧱</div>
+    <div>Bricklayer</div>
+  </div>
+
+  <div class="tile" data-category="Specialist" onclick="toggleTile(this, 'Steelworker / Welder', 'Structural steel, gates, railings')">
+    <div style="font-size:2rem;">🔩</div>
+    <div>Steelworker / Welder</div>
+  </div>
+
+  <div class="tile" data-category="Specialist" onclick="toggleTile(this, 'Insulation Installer', 'Thermal and acoustic insulation')">
+    <div style="font-size:2rem;">🧤</div>
+    <div>Insulation Installer</div>
+  </div>
+
+  <div class="tile" data-category="Design" onclick="toggleTile(this, 'Architect', 'Building design, planning approvals')">
+    <div style="font-size:2rem;">📐</div>
+    <div>Architect</div>
+  </div>
+
+  <div class="tile" data-category="Design" onclick="toggleTile(this, 'Interior Designer', 'Space planning, finishes, furniture layout')">
+    <div style="font-size:2rem;">🛋️</div>
+    <div>Interior Designer</div>
+  </div>
+
+  <div class="tile" data-category="Design" onclick="toggleTile(this, 'Landscape Designer', 'Outdoor space planning and aesthetics')">
+    <div style="font-size:2rem;">🌿</div>
+    <div>Landscape Designer</div>
+  </div>
+
+  <div class="tile" data-category="Design" onclick="toggleTile(this, 'Surveyor', 'Site measurements, valuations, compliance')">
+    <div style="font-size:2rem;">📏</div>
+    <div>Surveyor</div>
+  </div>
+  
+  <button class="btn cta">Find a Trusted Pro</button>
+
+</div>
+
+<!-- Modal -->
+<div class="modal" id="tradeModal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">✖</span>
+    <h3 id="modalTitle"></h3>
+    <p id="modalDescription"></p>
+  </div>
+</div>
+</section>
+
+<section class="section">
+<h2>Why Choose Us</h2>
+<p>In a world full of information, reccomendations and marketing we offer practical, neutral advice and assistance from scoping your needs to signing off completion and all steps between, being fair and honest with everyone involved. </p>
+<div class="grid-4">
+<div class="card" onclick="toggleAccordion('transparency')">🔍<br/>Transparency</div>
+
+<div class="card" onclick="toggleAccordion('secure')">🔒<br/>Secure Funds</div>
+
+<div class="card" onclick="toggleAccordion('contracts')">📄<br/>Simple Contracts</div>
+
+<div class="card" onclick="toggleAccordion('management')">⚙️<br/>Flexible Management</div>
+
+</div>
+<div class="accordion-panel" id="transparency" style="width: 100%; margin-top: 1rem; border-radius: 12px; transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden;">
+<button class="close-btn" onclick="closeAccordion('transparency')">✖</button>
+<p>Clear scope, verified providers, honest reviews! We ensure every step of your project is visible and traceable, giving you full control and confidence.</p>
+<p align=right><button class="btn cta">Find out more</button></p>
+</div><div class="accordion-panel" id="secure" style="width: 100%; margin-top: 1rem; border-radius: 12px; transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden;">
+<button class="close-btn" onclick="closeAccordion('secure')">✖</button>
+<p>Your payments are held securely until milestones are met, protecting both clients and tradesmen.</p>
+<p align=right><button class="btn cta">Find out more</button></p>
+</div><div class="accordion-panel" id="contracts" style="width: 100%; margin-top: 1rem; border-radius: 12px; transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden;">
+<button class="close-btn" onclick="closeAccordion('contracts')">✖</button>
+<p>Easy-to-understand, plain‑language, contracts that clearly define expectations, timelines, and deliverables.</p>
+<p align=right><button class="btn cta">Find out more</button></p>
+</div><div class="accordion-panel" id="management" style="width: 100%; margin-top: 1rem; border-radius: 12px; transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden;">
+<button class="close-btn" onclick="closeAccordion('management')">✖</button>
+<p>Manage your project from anywhere with tools that adapt to your workflow and preferences.</p>
+<p align=right><button class="btn cta">Find out more</button></p>
+</div></section>
+
+<section class="section" id="project-management-summary">
+  <h2>Project Management Services</h2>
+  <p>Our project management offering ensures your construction or renovation project runs smoothly, stays on budget, and meets expectations. Choose the level of oversight that suits your needs:</p>
+  <div class="pm-levels">
+    <div class="pm-card">
+      <h3>Light Touch</h3>
+      <p>Project finances are kept safe and only released when all parties are satisfied that stages have been completed.</p>
+    </div>
+    <div class="pm-card">
+      <h3>Intermediate</h3>
+      <p>Includes additional site inspection via contractor submission of photographic evidence and proactive dispute resolution.</p>
+    </div>
+    <div class="pm-card">
+      <h3>Full</h3>
+      <p>Full onsite project management services to ensure all works are carried out to scope and specification, and that the project is on time and on budget.</p>
+    </div>
+  </div>
+  <div style="text-align:center; margin-top:1rem;">
+    <button class="btn learn-more">Learn More</button>
+  </div>
+</section>
+
+<section class="section">
+<h2>Who do we help</h2>
+<h3>We strive to support everyon in the project process at all times</h3>
+<p>We can help anyone with any type of rennovation, maitenance and construction project, from either a supplier ot client perspective. Click below for find our some of the ways way can help you. 
+<div class="grid-4">
+<div class="card" onclick="toggleAccordion('residential')">🏠<br/>Residential</div>
+
+<div class="card" onclick="toggleAccordion('commercial')">🏢<br/>Commercial</div>
+
+<div class="card" onclick="toggleAccordion('landlords')">🧑‍💼<br/>Landlords</div>
+
+<div class="card" onclick="toggleAccordion('tenants')">👥<br/>Tenants</div>
+
+<div class="card" onclick="toggleAccordion('pros')">👥<br/>Other professionals</div>
+
+</div>
+
+<div class="accordion-panel" id="residential" style="width: 100%; margin-top: 1rem; border-radius: 12px; transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden;">
+	<button class="close-btn" onclick="closeAccordion('residential')">✖</button>
+	<p>Homeowners can find trusted tradesmen for renovations, repairs, and improvements, with the comfort of oversite from our professional management professionals. </p>
+	<p align=right><button class="btn cta">Find out more</button></p>
+</div>
+
+<div class="accordion-panel" id="commercial" style="width: 100%; margin-top: 1rem; border-radius: 12px; transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden;">
+	<button class="close-btn" onclick="closeAccordion('commercial')">✖</button>
+	<p>Businesses can manage large-scale projects with vetted professionals and secure contracts, professionally managed, with timeline and budget control and transparency. </p>
+	<p align=right><button class="btn cta">Find out more</button></p>
+</div>
+
+<div class="accordion-panel" id="landlords" style="width: 100%; margin-top: 1rem; border-radius: 12px; transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden;">
+	<button class="close-btn" onclick="closeAccordion('landlords')">✖</button>
+	<p>Landlords can maintain properties efficiently with reliable tradesmen and transparent billing via a single trusted point of contact.</p>
+	<p align=right><button class="btn cta">Find out more</button></p>
+</div>
+
+<div class="accordion-panel" id="tenants" style="width: 100%; margin-top: 1rem; border-radius: 12px; transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden;">
+	<button class="close-btn" onclick="closeAccordion('tenants')">✖</button>
+	<p>Tenants can request repairs and improvements with confidence and clarity from one source with implicit landlord concent.</p>
+	<p align=right><button class="btn cta">Find out more</button></p>
+</div>
+
+<div class="accordion-panel" id="pros" style="width: 100%; margin-top: 1rem; border-radius: 12px; transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out; overflow: hidden;">
+	<button class="close-btn" onclick="closeAccordion('tenants')">✖</button>
+	<p>We service our fellow professionals and service partners by giving them a platfrom from where they can share thier good and services with thier prospective clients on the condition that they abide by the rules of the platform, designed to protect both client and tradesman. They are also wlecome use our site and services to honestly work with us on thier projects as required.</p>
+	<p align=right><button class="btn cta">Find out more</button></p>
+</div>
+
+</section>
+
+<section class="section" id="how-it-works">
+  <h2>How It Works</h2>
+  <h3>A Clear, Fair Process from Start to Finish.</h3>
+  <p>We’ve removed the guesswork from renovations — so you can focus on the results, not the risks.</p>
+
+
+  <div class="how-it-works-grid">
+    <div class="how-step">
+      <img src="images/step1-placeholder.png" alt="Connect & Contract3">
+      <h3>1. Specify your project</h3>
+      <p>Keeping things simple – just tell us what you need done. We will reach out to the most appropriate tradesman to either introduce or manage bidding. .</p>
+    </div>
+    <div class="how-step">
+      <img src="images/step2-placeholder.png" alt="Connect & Contract3">
+      <h3>2. Set up contract</h3>
+      <p>Get matched with trusted tradesmen and agree on terms transparently and securely.</p>
+    </div>
+    <div class="how-step">
+      <img src="images/step3-placeholder.png" alt="Connect & Contract3">
+      <h3>3. Manage & Complete</h3>
+      <p>Track progress, communicate easily, with payments released when all are satisfied. Complete your project with confidence and no stress.</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="section" id="testimonials">
+  <h2>What Clients Say</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <p>"Fantastic work, very professional and on time!"</p>
+      <div class="rating">Client Rating: ★★★★★</div>
+      <div class="rating">Performance: ★★★★★</div>
+    </div>
+    <div class="testimonial-card">
+      <p>"Clean finish and great communication throughout."</p>
+      <div class="rating">Client Rating: ★★★★☆</div>
+      <div class="rating">Performance: ★★★★★</div>
+    </div>
+    <div class="testimonial-card">
+      <p>"Reliable and skilled tradesman. Highly recommended."</p>
+      <div class="rating">Client Rating: ★★★★★</div>
+      <div class="rating">Performance: ★★★★☆</div>
+    </div>
+  </div>
+</section>
+
+
+<footer>
+<div>© 2025 TrustedTrades</div>
+<div>
+<a href="#">Privacy</a> | 
+    <a href="#">Terms</a> | 
+    <a href="#">Support</a>
+</div>
+<div>📧 contact@trustedtrades.com</div>
+<div>🔗 Social Icons</div>
+</footer>
+
+
+<script>
+  function toggleAccordion(id) {
+    const panels = document.querySelectorAll('.accordion-panel');
+    panels.forEach(panel => {
+      if (panel.id !== id) {
+        panel.classList.remove('show');
+      }
+    });
+    const panel = document.getElementById(id);
+    panel.classList.toggle('show');
+  }
+
+  function closeAccordion(id) {
+    document.getElementById(id).classList.remove('show');
+  }
+  
+  
+  function toggleMenu() {
+    const menu = document.getElementById('flyoutMenu');
+    menu.classList.toggle('open');
+  }
+
+function filterTrades() {
+  const selectedCategory = document.getElementById('categoryFilter').value;
+  const tiles = document.querySelectorAll('.tile');
+  tiles.forEach(tile => {
+    const category = tile.getAttribute('data-category');
+    tile.style.display = (selectedCategory === 'All Services' || category === selectedCategory) ? 'block' : 'none';
+  });
+}
+
+function toggleTile(tile, title, description) {
+  tile.classList.toggle('selected');
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalDescription').innerText = description;
+  document.getElementById('tradeModal').style.display = 'block';
+}
+
+function closeModal() {
+  document.getElementById('tradeModal').style.display = 'none';
+}
+</script>
+</body>
+</html>
