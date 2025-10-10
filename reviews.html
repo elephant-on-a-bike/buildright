@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reviews & Case Studies | BuildRight</title>
+  <link rel="stylesheet" href="base.css" />
+  <script src="base.js" defer></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="nav-container">
+    <div class="logo"><strong>LOGO</strong></div>
+    <button class="btn cta">Sign in / Sign up</button>
+    <div class="menu-icon" onclick="toggleMenu()">More here ☰</div>
+  </header>
+
+  <!-- Flyout Navigation Menu -->
+  <nav class="flyout-menu" id="flyoutMenu">
+    <div class="close-btn" onclick="toggleMenu()">✖</div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="howitworks.html">How It Works</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="clients.html">For Clients</a></li>
+      <li><a href="suppliers.html">For Suppliers</a></li>
+      <li><a href="pm.html">Project Management</a></li>
+      <li><a href="trust.html">Trust & Security</a></li>
+      <li><a href="reviews.html">Reviews & Case Studies</a></li>
+      <li><a href="aboutus.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Filterable Reviews -->
+  <section class="section reviews-filter">
+    <div class="container">
+      <h1>Client Reviews</h1>
+      <div class="filters">
+        <button class="filter-btn">All</button>
+        <button class="filter-btn">Residential</button>
+        <button class="filter-btn">Commercial</button>
+        <button class="filter-btn">Renovation</button>
+      </div>
+      <div class="review-cards">
+        <div class="review-card">
+          <h3>“Fantastic experience!”</h3>
+          <p>BuildRight helped us find the perfect contractor for our kitchen remodel. Everything was on time and on budget.</p>
+          <span>— Sarah L., Hong Kong</span>
+        </div>
+        <div class="review-card">
+          <h3>“Reliable and professional”</h3>
+          <p>We used BuildRight for a commercial office fit-out. The team was responsive and the escrow system gave us peace of mind.</p>
+          <span>— Marcus T., Central District</span>
+        </div>
+        <!-- Add more review cards as needed -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study Cards -->
+  <section class="section case-studies">
+    <div class="container">
+      <h2>Case Studies</h2>
+      <div class="case-grid">
+        <div class="case-card">
+          <div class="images">
+            <img src="before-placeholder.jpg" alt="Before" class="before-img" />
+            <img src="after-placeholder.jpg" alt="After" class="after-img" />
+          </div>
+          <div class="summary">
+            <h3>Residential Renovation</h3>
+            <p><strong>Summary:</strong> A 3-bedroom flat in Mid-Levels was transformed with modern finishes and improved layout.</p>
+            <p><strong>Outcome:</strong> Completed in 6 weeks with 15% cost savings. Client satisfaction rated 5/5.</p>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="images">
+            <img src="before-placeholder.jpg" alt="Before" class="before-img" />
+            <img src="after-placeholder.jpg" alt="After" class="after-img" />
+          </div>
+          <div class="summary">
+            <h3>Retail Space Fit-Out</h3>
+            <p><strong>Summary:</strong> A boutique in Sheung Wan needed a fast turnaround for launch.</p>
+            <p><strong>Outcome:</strong> Delivered in 3 weeks with custom shelving and lighting. Increased foot traffic by 40%.</p>
+          </div>
+        </div>
+        <!-- Add more case cards as needed -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 BuildRight. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | BuildRight</title>
+  <link rel="stylesheet" href="base.css" />
+  <script src="base.js" defer></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="nav-container">
+    <div class="logo"><strong>LOGO</strong></div>
+    <button class="btn cta">Sign in / Sign up</button>
+    <div class="menu-icon" onclick="toggleMenu()">More here ☰</div>
+  </header>
+
+  <!-- Flyout Navigation Menu -->
+  <nav class="flyout-menu" id="flyoutMenu">
+    <div class="close-btn" onclick="toggleMenu()">✖</div>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="howitworks.html">How It Works</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="clients.html">For Clients</a></li>
+      <li><a href="suppliers.html">For Suppliers</a></li>
+      <li><a href="pm.html">Project Management</a></li>
+      <li><a href="trust.html">Trust & Security</a></li>
+      <li><a href="reviews.html">Reviews & Case Studies</a></li>
+      <li><a href="aboutus.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contact Form -->
+<form class="form-column">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" placeholder="Your name" required />
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com" required />
+  </div>
+
+  <div class="form-group">
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="5" placeholder="How can we help?" required></textarea>
+  </div>
+
+  <button type="submit" class="btn-primary">Send Message</button>
+</form>
+
+
+
+  <!-- Direct Contact Info -->
+  <section class="section direct-contact">
+    <div class="container">
+      <h2>Reach Us Directly</h2>
+      <p><strong>Email:</strong> support@buildright.com</p>
+      <p><strong>Phone:</strong> +852 1234 5678</p>
+      <p><strong>Office:</strong> 88 Queen’s Road Central, Hong Kong</p>
+    </div>
+  </section>
+
+  <!-- FAQ Accordion -->
+  <section class="section faq">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-toggle">How do I get matched with a contractor?</button>
+          <div class="accordion-content">
+            <p>Once you submit your project, we use your criteria to match you with vetted professionals in your area.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-toggle">Is my payment secure?</button>
+          <div class="accordion-content">
+            <p>Yes. All payments are held in escrow and only released when milestones are approved.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-toggle">Can I speak to someone live?</button>
+          <div class="accordion-content">
+            <p>Absolutely. Use the live chat button below to connect with our support team.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Chat Button -->
+  <section class="section live-chat">
+    <div class="container center">
+      <button class="btn-secondary" onclick="openLiveChat()">💬 Chat With Us</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 BuildRight. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Optional: Live Chat Script -->
+  <script>
+    function openLiveChat() {
+      alert("Live chat feature coming soon!");
+    }
+
+    // FAQ accordion toggle
+    document.querySelectorAll('.accordion-toggle').forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        content.classList.toggle('open');
+      });
+    });
+  </script>
+</body>
+</html>

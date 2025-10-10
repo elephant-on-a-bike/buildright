@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Clients | BuildRight</title>
+  <link rel="stylesheet" href="base.css" />
+  <script src="base.js" defer></script>
+  <script>
+    function showTab(tabId) {
+      const tabs = document.querySelectorAll('.client-tab');
+      tabs.forEach(tab => tab.style.display = 'none');
+      document.getElementById(tabId).style.display = 'block';
+
+      const buttons = document.querySelectorAll('.tab-button');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      showTab('homeowners');
+    });
+  </script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="nav-container">
+  <div class="logo"><a href="home.html"><strong>HOME</strong></a></div>
+  <button class="btn cta">Sign in / Sign up</button>
+  <div class="menu-icon" onclick="toggleMenu()">More here ☰</div>
+</header>
+
+<!-- Flyout Navigation Menu -->
+<nav class="flyout-menu" id="flyoutMenu">
+  <div class="close-btn" onclick="toggleMenu()">✖</div>
+  <ul>
+    <li><a href="home.html">Home</a></li>
+    <li><a href="howitworks.html">How It Works</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="clients.html">For Clients</a></li>
+    <li><a href="suppliers.html">For Suppliers</a></li>
+    <li><a href="pm.html">Project Management</a></li>
+    <li><a href="trust.html">Trust & Security</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="aboutus.html">About Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Page Title -->
+<section class="section">
+  <div class="logo"><h1>FOR CLIENTS</h1></div>
+  <div class="container">
+    <h2>Tailored Support for Every Type of Client</h2>
+    <p>Whether you're building your dream home or managing multiple properties, BuildRight is built for you.</p>
+  </div>
+</section>
+
+<!-- Tabs -->
+<section class="section client-tabs">
+  <div class="container">
+    <div class="tab-buttons">
+      <button class="tab-button" data-tab="homeowners" onclick="showTab('homeowners')">Homeowners</button>
+      <button class="tab-button" data-tab="smes" onclick="showTab('smes')">SMEs</button>
+      <button class="tab-button" data-tab="landlords" onclick="showTab('landlords')">Landlords</button>
+      <button class="tab-button" data-tab="tenants" onclick="showTab('tenants')">Tenants</button>
+    </div>
+
+    <!-- Homeowners Tab -->
+    <div class="client-tab" id="homeowners">
+      <h3>Why Homeowners Love BuildRight</h3>
+      <ul>
+        <li>Easy project setup and contractor matching</li>
+        <li>Transparent pricing and milestone tracking</li>
+        <li>Secure escrow payments for peace of mind</li>
+      </ul>
+      <blockquote>"BuildRight made our kitchen renovation stress-free and on budget!" – Sarah L.</blockquote>
+      <button class="btn cta">Start Your Project</button>
+    </div>
+
+    <!-- SMEs Tab -->
+    <div class="client-tab" id="smes" style="display:none;">
+      <h3>Support for Small & Medium Enterprises</h3>
+      <ul>
+        <li>Scalable solutions for office and retail spaces</li>
+        <li>Reliable contractors with commercial experience</li>
+        <li>Project management tools for busy teams</li>
+      </ul>
+      <blockquote>"We expanded our café with zero downtime thanks to BuildRight." – Café Bloom</blockquote>
+      <button class="btn cta">Get a Quote</button>
+    </div>
+
+    <!-- Landlords Tab -->
+    <div class="client-tab" id="landlords" style="display:none;">
+      <h3>Landlord-Friendly Features</h3>
+      <ul>
+        <li>Quick repairs and maintenance scheduling</li>
+        <li>Portfolio management for multiple properties</li>
+        <li>Verified service providers and clear reporting</li>
+      </ul>
+      <blockquote>"BuildRight helps me keep my rentals in top shape year-round." – James T.</blockquote>
+      <button class="btn cta">Manage Your Properties</button>
+    </div>
+
+    <!-- Tenants Tab -->
+    <div class="client-tab" id="tenants" style="display:none;">
+      <h3>Empowering Tenants</h3>
+      <ul>
+        <li>Request repairs and upgrades with ease</li>
+        <li>Track progress and communicate with providers</li>
+        <li>Stay informed with transparent updates</li>
+      </ul>
+      <blockquote>"I got my bathroom fixed in days—no hassle, no confusion." – Priya M.</blockquote>
+      <button class="btn cta">Request a Service</button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2025 BuildRight. All rights reserved.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,3 +1,59 @@
+    .form-section {
+      padding: 2rem 1rem;
+      border-bottom: 1px solid #eee;
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+      margin: 1rem auto;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .metrics-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #f8f8f8;
+      border-top: 1px solid #ccc;
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-around;
+      font-weight: bold;
+      z-index: 1000;
+    }
+
+.btn-primary {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 30%;
+}
 
 
   #project-management-summary {
@@ -220,6 +276,9 @@
   }
 }
 
+.cen {
+      text-align: center;
+}
 
     body {
       font-family: 'Segoe UI', sans-serif;

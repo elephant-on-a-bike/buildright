@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Form | BuildRight</title>
+  <link rel="stylesheet" href="base.css" />
+  <script src="base.js" defer></script>
+
+</head>
+<body>
+  <!-- Section I -->
+  <section class="form-section active" id="section1">
+    <div class="container">
+      <h2>I. Project Overview</h2>
+      <form id="form1">
+        <div class="form-group">
+          <label for="projectType">Project Type</label>
+          <select id="projectType" name="projectType">
+            <option value="">Select type</option>
+            <option value="new">New Construction</option>
+            <option value="renovation">Major Renovation</option>
+            <option value="addition">Addition</option>
+            <option value="tenant">Tenant Improvement</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="projectSize">Project Size</label>
+          <select id="projectSize" name="projectSize">
+            <option value="">Select size</option>
+            <option value="0-100">0–100 sq.ft</option>
+            <option value="100-500">100–500 sq.ft</option>
+            <option value="500-2500">500–2500 sq.ft</option>
+            <option value="2500-5000">2500–5000 sq.ft</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="projectLocation">Project Address/Location</label>
+          <input type="text" id="projectLocation" name="projectLocation" />
+        </div>
+
+        <div class="form-group">
+          <label for="startDate">Start Date</label>
+          <input type="date" id="startDate" name="startDate" />
+        </div>
+
+        <div class="form-group">
+          <label for="endDate">Completion Date</label>
+          <input type="date" id="endDate" name="endDate" />
+        </div>
+
+        <div class="form-group">
+          <label for="projectGoals">Project Goals</label>
+          <textarea id="projectGoals" name="projectGoals" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <button type="button" class="btn-primary" onclick="nextSection(1)">Submit Section</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Section II -->
+  <section class="form-section" id="section2">
+    <div class="container">
+      <h2>II. Client & User Needs</h2>
+      <form id="form2">
+        <div class="form-group">
+          <label for="occupantProfile">Household/Occupant Profile</label>
+          <textarea id="occupantProfile" name="occupantProfile" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="functionality">Functionality</label>
+          <textarea id="functionality" name="functionality" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="roomPreferences">Room Preferences</label>
+          <textarea id="roomPreferences" name="roomPreferences" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="specificRequirements">Specific Requirements</label>
+          <textarea id="specificRequirements" name="specificRequirements" rows="4"></textarea>
+        </div>
+
+        <div class="form-group" style="display: block;">
+          <button type="button" class="btn-primary" onclick="prevSection(2)">Back</button>
+          <button type="button" class="btn-primary" onclick="clearForm()">Clear</button>
+          <button type="button" class="btn-primary" onclick="nextSection(2)">Submit Section</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  
+  <section class="form-section" id="section3">
+  <div class="container">
+    <h2>III. Site & External Factors</h2>
+    <form id="form3">
+      <!-- Site Characteristics -->
+      <div class="form-group">
+        <label for="siteDescription">Describe the existing property</label>
+        <textarea id="siteDescription" name="siteDescription" rows="4" placeholder="Age, history, current condition..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="naturalFeatures">Important natural features</label>
+        <textarea id="naturalFeatures" name="naturalFeatures" rows="4" placeholder="Views, water features, landscaping..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="siteIssues">Known or potential site issues</label>
+        <textarea id="siteIssues" name="siteIssues" rows="4" placeholder="Drainage, hazardous materials..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="siteRestrictions">Zoning, building code, or historical restrictions</label>
+        <textarea id="siteRestrictions" name="siteRestrictions" rows="4" placeholder="Any legal or planning constraints..."></textarea>
+      </div>
+
+      <!-- Environmental Considerations -->
+      <div class="form-group">
+        <label for="environmentalSensitivities">Environmental sensitivities or sustainability features</label>
+        <textarea id="environmentalSensitivities" name="environmentalSensitivities" rows="4" placeholder="Green building goals, site impact concerns..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="efficiencyGoals">Energy or water efficiency goals</label>
+        <textarea id="efficiencyGoals" name="efficiencyGoals" rows="4" placeholder="Specific targets or technologies..."></textarea>
+      </div>
+
+      <!-- Controls -->
+        <div class="form-group" style="display: block;">
+          <button type="button" class="btn-primary" onclick="prevSection(3)">Back</button>
+          <button type="button" class="btn-primary" onclick="clearForm()">Clear</button>
+          <button type="button" class="btn-primary" onclick="nextSection(3)">Submit Section</button>
+        </div>
+    </form>
+  </div>
+</section>
+
+<section class="form-section" id="section4">
+  <div class="container">
+    <h2>IV. Budget & Resources</h2>
+    <form id="form4">
+      <!-- Budget -->
+      <div class="form-group">
+        <label for="maxBudget">Approximate maximum budget for construction</label>
+        <input type="number" id="maxBudget" name="maxBudget" placeholder="Enter amount in HKD" />
+      </div>
+
+      <div class="form-group">
+        <label for="costPerSqFt">Preferred cost per square foot</label>
+        <input type="number" id="costPerSqFt" name="costPerSqFt" placeholder="HKD per sq.ft" />
+      </div>
+
+      <!-- Financing -->
+      <div class="form-group">
+        <label for="financingStatus">Is funding committed and available?</label>
+        <select id="financingStatus" name="financingStatus">
+          <option value="">Select status</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+          <option value="partial">Partially</option>
+        </select>
+      </div>
+
+      <!-- Design & Construction Team -->
+      <div class="form-group">
+        <label for="existingTeam">Do you already have a design or construction team in mind?</label>
+        <textarea id="existingTeam" name="existingTeam" rows="3" placeholder="List any known firms or individuals..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="teamRecommendations">Are you interested in recommendations?</label>
+        <select id="teamRecommendations" name="teamRecommendations">
+          <option value="">Select preference</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+          <option value="maybe">Maybe</option>
+        </select>
+      </div>
+
+      <!-- Controls -->
+        <div class="form-group" style="display: block;">
+          <button type="button" class="btn-primary" onclick="prevSection(4)">Back</button>
+          <button type="button" class="btn-primary" onclick="clearForm()">Clear</button>
+          <button type="button" class="btn-primary" onclick="nextSection(4)">Submit Section</button>
+        </div>
+    </form>
+  </div>
+</section>
+
+<section class="form-section" id="section5">
+  <div class="container">
+    <h2>V. Style & Aesthetics</h2>
+    <form id="form5">
+      <!-- Architectural Style -->
+      <div class="form-group">
+        <label for="architecturalStyle">Preferred architectural style</label>
+        <select id="architecturalStyle" name="architecturalStyle">
+          <option value="">Select style</option>
+          <option value="modern">Modern</option>
+          <option value="traditional">Traditional</option>
+          <option value="craftsman">Craftsman</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <!-- Aesthetic Preferences -->
+      <div class="form-group">
+        <label for="aestheticWords">Aesthetic preferences</label>
+        <input type="text" id="aestheticWords" name="aestheticWords" placeholder="Cozy, minimalist, luxurious, natural..." />
+      </div>
+
+      <!-- Design Styles, Colors, Materials -->
+      <div class="form-group">
+        <label for="designLikes">Design styles, colors, or materials you like or dislike</label>
+        <textarea id="designLikes" name="designLikes" rows="4" placeholder="What you’re drawn to or want to avoid..."></textarea>
+      </div>
+
+      <!-- Controls -->
+        <div class="form-group" style="display: block;">
+          <button type="button" class="btn-primary" onclick="prevSection(5)">Back</button>
+          <button type="button" class="btn-primary" onclick="clearForm()">Clear</button>
+          <button type="button" class="btn-primary" onclick="nextSection(5)">Submit Section</button>
+        </div>
+    </form>
+  </div>
+</section>
+
+<section class="form-section" id="section6">
+  <div class="container">
+    <h2>VI. Challenges & Constraints</h2>
+    <form id="form6">
+      <!-- Perceived Constraints -->
+      <div class="form-group">
+        <label for="constraints">Perceived Constraints</label>
+        <textarea id="constraints" name="constraints" rows="4" placeholder="What challenges or impediments do you foresee?"></textarea>
+      </div>
+
+      <!-- Past Experiences -->
+      <div class="form-group">
+        <label for="pastExperiences">Past Experiences</label>
+        <textarea id="pastExperiences" name="pastExperiences" rows="4" placeholder="Any previous design or construction experiences that shape your current needs?"></textarea>
+      </div>
+
+      <!-- Controls -->
+        <div class="form-group" style="display: block;">
+          <button type="button" class="btn-primary" onclick="prevSection(6)">Back</button>
+          <button type="button" class="btn-primary" onclick="clearForm()">Clear</button>
+          <button type="button" class="btn-primary" onclick="nextSection(6)">Submit Section</button>
+        </div>
+    </form>
+  </div>
+</section>
+
+
+
+  <!-- Floating Metrics Bar -->
+  <div class="metrics-bar" id="metricsBar">
+    <span>Cost: <span id="cost">0</span></span>
+    <span>Complexity: <span id="complexity">0</span></span>
+    <span>Program: <span id="program">0</span></span>
+    <span>BDInvolvement: <span id="bd">0</span></span>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const metrics = { cost: 0, complexity: 0, program: 0, bd: 0 };
+
+function updateMetrics() {
+  let count = 0;
+  const fields = [
+    // Section I
+    'projectType', 'projectSize', 'projectLocation', 'startDate', 'endDate', 'projectGoals',
+    // Section II
+    'occupantProfile', 'functionality', 'roomPreferences', 'specificRequirements',
+    // Section III
+    'siteDescription', 'naturalFeatures', 'siteIssues', 'siteRestrictions',
+    'environmentalSensitivities', 'efficiencyGoals',
+    // Section IV
+    'maxBudget', 'costPerSqFt', 'financingStatus', 'existingTeam', 'teamRecommendations',
+    // Section V
+    'architecturalStyle', 'aestheticWords', 'designLikes',
+    // Section VI
+    'constraints', 'pastExperiences'
+  ];
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value.trim() !== '') count++;
+  });
+
+  metrics.cost = count;
+  metrics.complexity = count;
+  metrics.program = count;
+  metrics.bd = count;
+
+  document.getElementById('cost').textContent = metrics.cost;
+  document.getElementById('complexity').textContent = metrics.complexity;
+  document.getElementById('program').textContent = metrics.program;
+  document.getElementById('bd').textContent = metrics.bd;
+ }
+
+
+
+    function nextSection(current) {
+      document.getElementById(`section${current}`).classList.remove('active');
+      const next = document.getElementById(`section${current + 1}`);
+      if (next) next.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
+      updateMetrics();
+    }
+
+    function prevSection(current) {
+      document.getElementById(`section${current}`).classList.remove('active');
+      const prev = document.getElementById(`section${current - 1}`);
+      if (prev) prev.classList.add('active');
+    }
+
+    function clearForm() {
+      document.querySelectorAll('input, select, textarea').forEach(el => el.value = '');
+      metrics.cost = metrics.complexity = metrics.program = metrics.bd = 0;
+      updateMetrics();
+    }
+
+	document.getElementById('form1').addEventListener('input', updateMetrics);
+	document.getElementById('form2').addEventListener('input', updateMetrics);
+	document.getElementById('form3').addEventListener('input', updateMetrics);
+	document.getElementById('form4').addEventListener('input', updateMetrics);
+	document.getElementById('form5').addEventListener('input', updateMetrics);
+	document.getElementById('form6').addEventListener('input', updateMetrics);
+    window.addEventListener('load', updateMetrics);
+  </script>
+</body>
+</html>
