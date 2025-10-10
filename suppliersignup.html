@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supplier Sign-Up | BuildRight</title>
+  <link rel="stylesheet" href="base.css" />
+  <script src="base.js" defer></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="nav-container">
+    <div class="logo"><strong><a href="home.html">LOGO</a></strong></div>
+    <button class="btn cta">Sign in / Sign up</button>
+    <div class="menu-icon" onclick="toggleMenu()">More here ☰</div>
+  </header>
+
+<!-- Flyout Navigation Menu -->
+<nav class="flyout-menu" id="flyoutMenu">
+  <div class="close-btn" onclick="toggleMenu()">✖</div>
+  <ul>
+    <li><a href="home.html">Home</a></li>
+    <li><a href="howitworks.html">How It Works</a></li>
+    <li><a href="services.html">Services</a></li>
+    <li><a href="clients.html">For Clients</a></li>
+    <li><a href="suppliers.html">For Suppliers</a></li>
+    <li><a href="pm.html">Project Management</a></li>
+    <li><a href="trust.html">Trust & Security</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="aboutus.html">About Us</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+  <!-- Supplier Sign-Up Form -->
+  <section class="section">
+    <div class="container">
+      <h1>Supplier Sign-Up</h1>
+      <form id="supplierForm">
+        <!-- Company Name -->
+        <div class="form-group">
+          <label for="companyName">Company Name</label>
+          <input type="text" id="companyName" name="companyName" required />
+        </div>
+
+        <!-- Services Supplied -->
+        <div class="form-group">
+          <label for="services">Services Supplied</label>
+          <textarea id="services" name="services" rows="3" placeholder="e.g., Electrical, Plumbing, Carpentry..." required></textarea>
+        </div>
+
+        <!-- Company Registration Info -->
+        <div class="form-group">
+          <label for="registrationNumber">Company Registration Number</label>
+          <input type="text" id="registrationNumber" name="registrationNumber" required />
+        </div>
+
+        <div class="form-group">
+          <label for="registrationJurisdiction">Jurisdiction</label>
+          <input type="text" id="registrationJurisdiction" name="registrationJurisdiction" placeholder="e.g., Hong Kong SAR" required />
+        </div>
+
+        <!-- Staff Info -->
+        <div class="form-group">
+          <label for="staffCount">Total Number of Staff</label>
+          <input type="number" id="staffCount" name="staffCount" min="1" required />
+        </div>
+
+        <div class="form-group">
+          <label for="qualifiedStaffCount">Number of Qualified Staff</label>
+          <input type="number" id="qualifiedStaffCount" name="qualifiedStaffCount" min="0" required />
+        </div>
+
+        <!-- Contact Info -->
+        <div class="form-group">
+          <label for="contactPerson">Primary Contact Person</label>
+          <input type="text" id="contactPerson" name="contactPerson" required />
+        </div>
+
+        <div class="form-group">
+          <label for="contactEmail">Contact Email</label>
+          <input type="email" id="contactEmail" name="contactEmail" required />
+        </div>
+
+        <div class="form-group">
+          <label for="contactPhone">Contact Phone</label>
+          <input type="tel" id="contactPhone" name="contactPhone" />
+        </div>
+
+        <!-- Certifications -->
+        <div class="form-group">
+          <label for="certifications">Certifications (optional)</label>
+          <textarea id="certifications" name="certifications" rows="3" placeholder="e.g., ISO 9001, LEED, etc."></textarea>
+        </div>
+
+        <!-- Submit -->
+        <div class="form-group">
+          <button type="submit" class="btn-primary">Submit Application</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 BuildRight. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

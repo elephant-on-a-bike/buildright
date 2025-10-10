@@ -320,12 +320,14 @@ function updateMetrics() {
       document.getElementById(`section${current}`).classList.remove('active');
       const prev = document.getElementById(`section${current - 1}`);
       if (prev) prev.classList.add('active');
+	  window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
     }
 
     function clearForm() {
       document.querySelectorAll('input, select, textarea').forEach(el => el.value = '');
       metrics.cost = metrics.complexity = metrics.program = metrics.bd = 0;
       updateMetrics();
+	  window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top
     }
 
 	document.getElementById('form1').addEventListener('input', updateMetrics);
