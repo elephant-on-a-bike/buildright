@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Expert System Prototype</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+    h1 { margin-bottom: 0.25em; }
+    .subtitle { color: #666; margin-bottom: 1em; }
+    .layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1em; background: #fafafa; }
+    .question { margin-bottom: 1em; }
+    label { font-weight: bold; display: block; margin-bottom: 0.25em; }
+    input[type="text"], input[type="number"], textarea, select {
+      width: 100%; padding: 0.5em; border: 1px solid #ccc; border-radius: 4px;
+    }
+    textarea { min-height: 90px; }
+    .actions { margin-top: 1em; display: flex; gap: 0.5em; }
+    .btn { padding: 0.6em 1em; border: 1px solid #333; background: #fff; border-radius: 6px; cursor: pointer; }
+    .btn.primary { background: #333; color: #fff; }
+    pre { white-space: pre-wrap; word-wrap: break-word; }
+    .section-title { font-weight: bold; margin-top: 0.5em; }
+    .muted { color: #777; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Project Questionnaire</h1>
+  <div class="subtitle">A minimal expert system demo with conditional questions and live spec preview.</div>
+
+  <div class="layout">
+    <div class="card">
+      <div id="questionnaire"></div>
+      <div class="actions">
+        <button id="finishBtn" class="btn primary">Finish</button>
+        <button id="resetBtn" class="btn">Reset</button>
+      </div>
+      <div class="section-title">Structured JSON output</div>
+      <pre id="output" class="muted">Click Finish to generate the structured JSON output.</pre>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Human-centric project scope preview</div>
+      <div id="specPreview">
+        Fill in the questionnaire to see a live, human-readable project scope.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Utility: normalize for condition checks only
+    function norm(v) {
+      if (typeof v !== 'string') return v;
+      return v.trim().toLowerCase();
+    }
+
+    // Question catalogue
+    const questions = [
+      { id: "Q000_NAME", text: "Project name", type: "text", placeholder: "e.g., Office Renovation", conditions: [] },
+      { id: "Q000_DESC", text: "Project description", type: "textarea", placeholder: "Briefly describe the project", conditions: [] },
+      { id: "Q001_AREA", text: "Total floor area", type: "number", unit: "m2", placeholder: "e.g., 4500", conditions: [] },
+      { id: "Q001_FLOORS", text: "Number of floors", type: "number", placeholder: "e.g., 3", conditions: [] },
+      { id: "Q001_TYPE", text: "Project type", type: "multiple_choice", options: ["Design", "Construction", "Renovation", "Maintenance"], conditions: [] },
+      { id: "Q002_HVAC", text: "Does the project involve HVAC systems?", type: "boolean", conditions: [] },
+      { id: "Q003_HVAC_TYPE", text: "What type of HVAC system is required?", type: "multiple_choice", options: ["Split AC", "VRF", "Chiller Plant", "Packaged Rooftop", "Other"], conditions: [{ depends_on: "Q002_HVAC", value: "yes" }] },
+      { id: "Q004_LIGHTING", text: "Does the scope include lighting upgrades?", type: "boolean", conditions: [] },
+      { id: "Q005_EMERGENCY_LIGHTING", text: "Include emergency lighting?", type: "boolean", conditions: [{ depends_on: "Q004_LIGHTING", value: "yes" }] },
+      { id: "Q006_PERMITS", text: "Are permits/approvals required?", type: "boolean", conditions: [{ depends_on: "Q001_TYPE", value: "renovation" }] },
+      { id: "Q007_TIMELINE", text: "Target completion timeline (weeks)", type: "number", placeholder: "e.g., 16", conditions: [] },
+      { id: "Q008_EXCLUSIONS", text: "List any exclusions (comma-separated)", type: "text", placeholder: "e.g., Furniture, IT/AV systems", conditions: [] },
+      { id: "Q009_ASSUMPTIONS", text: "List any key assumptions (comma-separated)", type: "text", placeholder: "e.g., Existing structure is sound", conditions: [] }
+    ];
+
+    const responses = {};
+
+    // Render questions
+    function renderQuestions() {
+      const container = document.getElementById("questionnaire");
+      container.innerHTML = "";
+
+      questions.forEach(q => {
+        if (shouldAsk(q)) {
+          const div = document.createElement("div");
+          div.className = "question";
+
+          const label = document.createElement("label");
+          label.textContent = q.text + (q.unit ? ` (${q.unit})` : "");
+          div.appendChild(label);
+
+          let input;
+
+          if (q.type === "text" || q.type === "number") {
+            input = document.createElement("input");
+            input.type = q.type;
+            if (q.placeholder) input.placeholder = q.placeholder;
+          } else if (q.type === "textarea") {
+            input = document.createElement("textarea");
+            if (q.placeholder) input.placeholder = q.placeholder;
+          } else if (q.type === "boolean") {
+            input = document.createElement("select");
+            const blank = document.createElement("option");
+            blank.value = ""; blank.textContent = "Select...";
+            input.appendChild(blank);
+            ["yes", "no"].forEach(opt => {
+              const o = document.createElement("option");
+              o.value = opt; o.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
+              input.appendChild(o);
+            });
+          } else if (q.type === "multiple_choice") {
+            input = document.createElement("select");
+            const blank = document.createElement("option");
+            blank.value = ""; blank.textContent = "Select...";
+            input.appendChild(blank);
+            q.options.forEach(opt => {
+              const o = document.createElement("option");
+              o.value = opt; o.textContent = opt;
+              input.appendChild(o);
+            });
+          }
+
+          input.onchange = () => {
+            responses[q.id] = input.value; // store exact value
+            renderQuestions();
+            updateSpecPreview();
+          };
+
+          if (responses[q.id] !== undefined) {
+            input.value = responses[q.id]; // restore exact value
+          }
+
+          div.appendChild(input);
+          container.appendChild(div);
+        }
+      });
+    }
+
+    // Check conditions
+    function shouldAsk(question) {
+      if (!question.conditions || question.conditions.length === 0) return true;
+      return question.conditions.every(cond => {
+        const actual = responses[cond.depends_on];
+        return norm(actual) === norm(cond.value);
+      });
+    }
+
+    // --- Build structured output ---
+    function buildOutput() {
+      const name = responses["Q000_NAME"] || "Untitled Project";
+      const desc = responses["Q000_DESC"] || "";
+      const type = responses["Q001_TYPE"];
+
+      const rawResponses = Object.entries(responses).map(([qid, ans]) => {
+        const q = questions.find(q => q.id === qid);
+        return { question_id: qid, question_text: q ? q.text : qid, answer: ans };
+      });
+
+      const disciplines = [];
+      if (responses["Q002_HVAC"] === "yes") disciplines.push("HVAC");
+      if (responses["Q004_LIGHTING"] === "yes") disciplines.push("Electrical");
+
+      const exclusions = (responses["Q008_EXCLUSIONS"] || "")
+        .split(",").map(s => s.trim()).filter(Boolean);
+      const assumptions = (responses["Q009_ASSUMPTIONS"] || "")
+        .split(",").map(s => s.trim()).filter(Boolean);
+
+      return {
+        project: { id: "P-EXAMPLE-001", title: name, description: desc },
+        metadata: { created_at: new Date().toISOString(), status: "in_progress" },
+        responses: rawResponses,
+        derived_scope: {
+          disciplines: disciplines.length ? disciplines : ["General"],
+          project_type: type || "General"
+        },
+        specification_outline: {
+          scope_of_work: [
+            type ? `${type} project` : "General works",
+            responses["Q002_HVAC"] === "yes" && responses["Q003_HVAC_TYPE"]
+              ? `Installation of ${responses["Q003_HVAC_TYPE"]} HVAC system` : null,
+            responses["Q004_LIGHTING"] === "yes"
+              ? `Upgrade of lighting systems${responses["Q005_EMERGENCY_LIGHTING"] === "yes" ? " including emergency lighting" : ""}` : null
+          ].filter(Boolean),
+          exclusions: exclusions.length ? exclusions : ["None specified"],
+          assumptions: assumptions.length ? assumptions : ["None specified"]
+        },
+        pricing_outline: {
+          categories: [
+            { category: "Civil/Structural", estimated_cost_range: "TBD" },
+            ...(responses["Q002_HVAC"] === "yes"
+              ? [{ category: "Mechanical (HVAC)", estimated_cost_range: "TBD" }] : []),
+            ...(responses["Q004_LIGHTING"] === "yes"
+              ? [{ category: "Electrical", estimated_cost_range: "TBD" }] : [])
+          ]
+        }
+      };
+    }
+
+    // --- Human-centric spec preview ---
+    function updateSpecPreview() {
+      const out = buildOutput();
+      const scopeLines = out.specification_outline.scope_of_work.map(s => `<li>${s}</li>`).join("");
+      const exclusions = out.specification_outline.exclusions.map(s => `<li>${s}</li>`).join("");
+      const assumptions = out.specification_outline.assumptions.map(s => `<li>${s}</li>`).join("");
+      const disciplines = out.derived_scope.disciplines.join(", ");
+
+      const html = `
+        <div><strong>Project title:</strong> ${out.project.title}</div>
+        <div><strong>Description:</strong> ${out.project.description || "<span class='muted'>None provided</span>"}</div>
+        <hr />
+        <div><strong>Scope of work:</strong><ul>${scopeLines || "<li class='muted'>Pending inputs</li>"}</ul></div>
+        <div><strong>Disciplines involved:</strong> ${disciplines}</div>
+        <div><strong>Exclusions:</strong><ul>${exclusions}</ul></div>
+        <div><strong>Assumptions:</strong><ul>${assumptions}</ul></div>
+        <div><strong>Pricing outline:</strong>
+          <ul>${out.pricing_outline.categories.map(c => `<li>${c.category} — Estimated cost: <em>${c.estimated_cost_range}</em></li>`).join("")}</ul>
+        </div>
+        <div class="muted">Generated: ${new Date(out.metadata.created_at).toLocaleString()}</div>
+      `;
+      document.getElementById("specPreview").innerHTML = html;
+    }
+
+    // --- Finish & Reset buttons ---
+    document.getElementById("finishBtn").onclick = () => {
+      const output = buildOutput();
+      document.getElementById("output").textContent = JSON.stringify(output, null, 2);
+    };
+
+    document.getElementById("resetBtn").onclick = () => {
+      for (const k of Object.keys(responses)) delete responses[k];
+      document.getElementById("output").textContent = "Click Finish to generate the structured JSON output.";
+      document.getElementById("specPreview").textContent = "Fill in the questionnaire to see a live, human-readable project scope.";
+      renderQuestions();
+    };
+
+    // Initial render
+    renderQuestions();
+    updateSpecPreview();
+  </script>
+</body>
+</html>
