@@ -11,6 +11,18 @@ document.getElementById("resetBtn").onclick = () => {
   renderQuestions();
 };
 
+function showInfo(text) {
+  document.getElementById("infoText").textContent = text;
+  document.getElementById("infoModal").style.display = "flex";
+  document.body.classList.add("modal-open");
+}
+
+document.getElementById("closeInfoBtn").onclick = () => {
+  document.getElementById("infoModal").style.display = "none";
+  document.body.classList.remove("modal-open");
+};
+
+
 // Initial render
 renderQuestions();
 updateSpecPreview();

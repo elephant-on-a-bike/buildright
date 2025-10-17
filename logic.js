@@ -26,10 +26,29 @@ function renderQuestions() {
       const div = document.createElement("div");
       div.className = "question";
 
-      const label = document.createElement("label");
-      label.textContent = q.text + (q.unit ? ` (${q.unit})` : "");
-      div.appendChild(label);
+      // Label wrapper
+const labelWrapper = document.createElement("div");
+labelWrapper.className = "label-with-info";
 
+const label = document.createElement("label");
+label.textContent = q.text + (q.unit ? ` (${q.unit})` : "");
+
+labelWrapper.appendChild(label);
+
+      // Add info icon if available
+		// Add info icon if available
+		if (q.info) {
+		  const infoIcon = document.createElement("span");
+		  infoIcon.textContent = "i";   // lowercase inside the circle
+		  infoIcon.className = "info-icon";
+		  infoIcon.title = "Please explain";
+		  infoIcon.onclick = () => showInfo(q.info);
+		  labelWrapper.appendChild(infoIcon);
+		}
+
+div.appendChild(labelWrapper);
+
+      // Input element
       let input;
       if (q.type === "text" || q.type === "number") {
         input = document.createElement("input");
@@ -45,7 +64,8 @@ function renderQuestions() {
         input.appendChild(blank);
         ["yes", "no"].forEach(opt => {
           const o = document.createElement("option");
-          o.value = opt; o.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
+          o.value = opt;
+          o.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
           input.appendChild(o);
         });
       } else if (q.type === "multiple_choice") {
@@ -55,7 +75,8 @@ function renderQuestions() {
         input.appendChild(blank);
         q.options.forEach(opt => {
           const o = document.createElement("option");
-          o.value = opt; o.textContent = opt;
+          o.value = opt;
+          o.textContent = opt;
           input.appendChild(o);
         });
       }
@@ -75,6 +96,8 @@ function renderQuestions() {
     }
   });
 }
+
+
 
 // --- Build structured output ---
 function buildOutput() {

@@ -1,0 +1,80 @@
+body { font-family: Arial, sans-serif; margin: 2em; }
+h1 { margin-bottom: 0.25em; }
+.subtitle { color: #666; margin-bottom: 1em; }
+.layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; align-items: start; }
+.card { border: 1px solid #ddd; border-radius: 8px; padding: 1em; background: #fafafa; }
+.question { margin-bottom: 1em; }
+label { font-weight: bold; display: block; margin-bottom: 0.25em; }
+input[type="text"], input[type="number"], textarea, select {
+  width: 100%; padding: 0.5em; border: 1px solid #ccc; border-radius: 4px;
+}
+textarea { min-height: 90px; }
+.actions { margin-top: 1em; display: flex; gap: 0.5em; }
+.btn { padding: 0.6em 1em; border: 1px solid #333; background: #fff; border-radius: 6px; cursor: pointer; }
+.btn.primary { background: #333; color: #fff; }
+pre { white-space: pre-wrap; word-wrap: break-word; }
+.section-title { font-weight: bold; margin-top: 0.5em; }
+.muted { color: #777; font-size: 0.9em; }
+
+/* Modal overlay */
+#infoModal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+
+/* Modal content */
+#infoModalContent {
+  background: #fff;
+  padding: 2em;
+  border-radius: 8px;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Blur effect on background */
+body.modal-open .layout {
+  filter: blur(4px);
+}
+
+/* Wrap label and icon on one line */
+.label-with-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* Info icon styling */
+/* Info icon as a rounded blue badge */
+.info-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 0.5em;
+  border-radius: 50%;
+  background-color: #0077cc;   /* blue fill */
+  border: 1px solid #fff;      /* white border */
+  color: #fff;                 /* white text */
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.info-icon:hover {
+  background-color: #005fa3;   /* darker blue on hover */
+}
+
+
+/* Tooltip via title attribute */
+.info-icon[title] {
+  position: relative;
+}
