@@ -9,11 +9,40 @@ function norm(v) {
 
 // --- Condition check ---
 function shouldAsk(question) {
-  if (!question.conditions || question.conditions.length === 0) return true;
-  return question.conditions.every(cond => {
-    const actual = responses[cond.depends_on];
-    return norm(actual) === norm(cond.value);
-  });
+  // If no conditions at all, always show
+  if ((!question.conditions || question.conditions.length === 0) &&
+      (!question.conditionGroups || question.conditionGroups.length === 0)) {
+    return true;
+  }
+
+  // Handle simple AND conditions
+  if (question.conditions && question.conditions.length > 0) {
+    const allMatch = question.conditions.every(cond => {
+      const actual = responses[cond.depends_on];
+      if (Array.isArray(cond.value)) {
+        return cond.value.some(v => norm(actual) === norm(v));
+      } else {
+        return norm(actual) === norm(cond.value);
+      }
+    });
+    if (!allMatch) return false;
+  }
+
+  // Handle OR groups
+  if (question.conditionGroups && question.conditionGroups.length > 0) {
+    return question.conditionGroups.some(group =>
+      group.every(cond => {
+        const actual = responses[cond.depends_on];
+        if (Array.isArray(cond.value)) {
+          return cond.value.some(v => norm(actual) === norm(v));
+        } else {
+          return norm(actual) === norm(cond.value);
+        }
+      })
+    );
+  }
+
+  return true;
 }
 
 // --- Render Questions ---

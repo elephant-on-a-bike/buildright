@@ -8,11 +8,21 @@ const questions = [
     info: "Provide a short, descriptive name so the project can be easily identified in reports and communications."
   },
   {
+    id: "Q001_TYPE",
+    text: "Project type",
+    type: "multiple_choice",
+    options: ["Design", "Construction", "Renovation", "Maintenance"],
+    conditions: [],
+    info: "Select the overall nature of the project. This determines which disciplines and regulatory steps are relevant."
+  },
+  {
     id: "Q000_DESC",
     text: "Project description",
     type: "textarea",
     placeholder: "Briefly describe the project",
-    conditions: [],
+	conditions: [
+	  { depends_on: "Q001_TYPE", value: ["Design", "Construction", "Renovation"] }
+	],
     info: "Give a high-level overview of the project, such as its purpose, location, and main objectives."
   },
   {
@@ -31,14 +41,6 @@ const questions = [
     placeholder: "e.g., 3",
     conditions: [],
     info: "Specify how many levels the building has. This affects structural, vertical transport, and services planning."
-  },
-  {
-    id: "Q001_TYPE",
-    text: "Project type",
-    type: "multiple_choice",
-    options: ["Design", "Construction", "Renovation", "Maintenance"],
-    conditions: [],
-    info: "Select the overall nature of the project. This determines which disciplines and regulatory steps are relevant."
   },
   {
     id: "Q002_HVAC",
@@ -99,5 +101,23 @@ const questions = [
     placeholder: "e.g., Existing structure is sound",
     conditions: [],
     info: "Note any assumptions being made, such as site access or existing conditions. These clarify the basis of the scope."
-  }
+  },
+  {
+  id: "Q010_SITE_ACCESS",
+  text: "Are there any site access restrictions?",
+  type: "textarea",
+  placeholder: "e.g., Limited working hours, restricted delivery routes",
+  info: "Tell us if there are any constraints on accessing the site, such as delivery restrictions or working hour limits.",
+  conditionGroups: [
+    // Group 1: Renovation AND Permits = yes
+    [
+      { depends_on: "Q001_TYPE", value: "Renovation" },
+      { depends_on: "Q006_PERMITS", value: "yes" }
+    ],
+    // Group 2: Construction project type
+    [
+      { depends_on: "Q001_TYPE", value: "Construction" }
+    ]
+  ]
+	}
 ];
