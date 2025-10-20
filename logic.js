@@ -55,27 +55,24 @@ function renderQuestions() {
       const div = document.createElement("div");
       div.className = "question";
 
-      // Label wrapper
-const labelWrapper = document.createElement("div");
-labelWrapper.className = "label-with-info";
+      // Label wrapper with info icon
+      const labelWrapper = document.createElement("div");
+      labelWrapper.className = "label-with-info";
 
-const label = document.createElement("label");
-label.textContent = q.text + (q.unit ? ` (${q.unit})` : "");
+      const label = document.createElement("label");
+      label.textContent = q.text + (q.unit ? ` (${q.unit})` : "");
+      labelWrapper.appendChild(label);
 
-labelWrapper.appendChild(label);
+      if (q.info) {
+        const infoIcon = document.createElement("span");
+        infoIcon.textContent = "i"; // lowercase inside the circle
+        infoIcon.className = "info-icon";
+        infoIcon.title = "Please explain";
+        infoIcon.onclick = () => showInfo(q.info);
+        labelWrapper.appendChild(infoIcon);
+      }
 
-      // Add info icon if available
-		// Add info icon if available
-		if (q.info) {
-		  const infoIcon = document.createElement("span");
-		  infoIcon.textContent = "i";   // lowercase inside the circle
-		  infoIcon.className = "info-icon";
-		  infoIcon.title = "Please explain";
-		  infoIcon.onclick = () => showInfo(q.info);
-		  labelWrapper.appendChild(infoIcon);
-		}
-
-div.appendChild(labelWrapper);
+      div.appendChild(labelWrapper);
 
       // Input element
       let input;
@@ -110,12 +107,23 @@ div.appendChild(labelWrapper);
         });
       }
 
-      input.onchange = () => {
-        responses[q.id] = input.value;
-        renderQuestions();
-        updateSpecPreview();
-      };
+      // Attach handler
+      if (q.id === "Q000_DESC") {
+        input.onchange = () => {
+          responses[q.id] = input.value;
+          analyzeDescription(input.value); // run keyword analysis
+          renderQuestions();
+          updateSpecPreview();
+        };
+      } else {
+        input.onchange = () => {
+          responses[q.id] = input.value;
+          renderQuestions();
+          updateSpecPreview();
+        };
+      }
 
+      // Restore previous value if present
       if (responses[q.id] !== undefined) {
         input.value = responses[q.id];
       }
@@ -125,6 +133,7 @@ div.appendChild(labelWrapper);
     }
   });
 }
+
 
 
 

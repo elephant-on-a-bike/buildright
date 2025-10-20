@@ -22,6 +22,15 @@ document.getElementById("closeInfoBtn").onclick = () => {
   document.body.classList.remove("modal-open");
 };
 
+function analyzeDescription(text) {
+  const lower = text.toLowerCase();
+  keywordRules.forEach(rule => {
+    if (rule.keywords.some(kw => lower.includes(kw))) {
+      rule.action();
+    }
+  });
+}
+
 
 // Initial render
 renderQuestions();
