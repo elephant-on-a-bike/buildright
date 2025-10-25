@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitOut Hub — Small Projects</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="small-projects.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="logo" href="#hero" aria-label="FitOut Hub home">
+        <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+          <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+          <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>FitOut Hub</span>
+      </a>
+  
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <!-- Inline section links (desktop only) -->
+        <ul class="nav-inline">
+          <li><a href="#why">Why FitOut Hub</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#who">Who we help</a></li>
+          <li><a href="#choose">Why choose us</a></li>
+        </ul>
+  
+        <!-- Always-visible CTA -->
+        <a href="#cta" class="btn btn-outline nav-cta">Start your project</a>
+  
+        <!-- Hamburger (desktop only) -->
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+  
+        <!-- Drawer -->
+        <ul class="nav-links" id="drawer">
+          <li><a href="page1.html">Page 1</a></li>
+          <li><a href="page2.html">Page 2</a></li>
+          <li><a href="page3.html">Page 3</a></li>
+          <li><a href="page4.html">Page 4</a></li>
+          <li class="mobile-only"><a href="#why">Why FitOut Hub</a></li>
+          <li class="mobile-only"><a href="#how">How it works</a></li>
+          <li class="mobile-only"><a href="#who">Who we help</a></li>
+          <li class="mobile-only"><a href="#choose">Why choose us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- Main content -->
+  <main class="section">
+    <div class="container">
+        <div class="header-content hero">
+            <h1>Get Quotes for Your Next Project — Simple, Safe, and Stress‑Free</h1>
+            <p>
+              Looking to freshen up your home, fix that leaky office ceiling, or even kick off a small building project? 
+              You’re in the right place.
+            </p>
+            <ul>
+              <li><strong>Post your project</strong> — big or small, from repairs to renovations.</li>
+              <li><strong>Stay anonymous</strong> — your details are kept private while vetted local tradesmen review your request.</li>
+              <li><strong>Get multiple quotes</strong> — tradesmen covering your chosen area can respond with their best offers.</li>
+              <li><strong>Choose with confidence</strong> — compare by price, reputation, and proven success on past projects.</li>
+              <li><strong>Pay securely</strong> — funds are held in escrow and only released when you’re happy with the work.</li>
+            </ul>
+            <p>
+              Need a little extra help? Optional project management is available, but you’re always in control.
+            </p>
+            <p>
+              It’s a smarter, safer way to get things done — giving you freedom of choice and peace of mind, 
+              while connecting you with trusted professionals who are ready to help.
+            </p>
+            <p>
+                Get started now, tell us about your project and we will find the service(s) for you or select a trade from the list...
+              </p>
+            </div>
+          <div class="section-alt">
+      <ul class="services-list" id="servicesList" class="padding:20px"></ul>
+    </div>
+    </div>
+  </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container footer-inner">
+          <div class="footer-left">
+            <a class="logo" href="#hero">
+              <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
+                <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+                <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>FitOut Hub</span>
+            </a>
+            <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+          </div>
+          <nav class="footer-nav" aria-label="Footer">
+            <a href="#why">Why FitOut Hub</a>
+            <a href="#how">How it works</a>
+            <a href="#who">Who we help</a>
+            <a href="#choose">Why choose us</a>
+            <a href="#cta">Start your project</a>
+          </nav>
+        </div>
+      </footer>
+
+  <!-- Overlay -->
+  <div class="pd-overlay" id="pdOverlay" aria-hidden="true"></div>
+
+<!-- Modal -->
+<section class="pd-modal" id="pdModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="pdClose" aria-label="Close">×</button>
+  
+      <div class="pd-copy">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc"></p>
+  
+        <ul id="modalSubservices" class="subservices-list" aria-label="Included sub-services"></ul>
+  
+        <!-- New region selector -->
+        <div class="form-group">
+          <label for="regionSelect" class="form-label">Where is your project</label>
+          <select id="regionSelect" name="regionSelect" class="form-control" aria-label="Select a region">
+            <option value="">-- Please choose a region --</option>
+            <option value="hong-kong-island">Hong Kong Island</option>
+            <option value="kowloon">Kowloon</option>
+            <option value="new-territories">New Territories</option>
+            <option value="lantau">Lantau Island</option>
+            <option value="outlying-islands">Outlying Islands</option>
+          </select>
+        </div>
+  
+        <!-- Description textarea -->
+        <div class="form-group">
+          <label for="workDescription" class="form-label">Description of Works</label>
+          <textarea id="workDescription" name="workDescription" rows="4" class="form-control" style="width: 100%" placeholder="Describe the works to be completed..." aria-label="Description of works"></textarea>
+        </div>
+  
+        <button class="btn btn-primary" id="modalCta">Book now</button>
+      </div>
+  
+      <div class="pd-art" aria-hidden="true">
+        <img id="modalImage" src="" alt="" />
+      </div>
+    </div>
+  </section>
+  
+  
+  
+
+  <!-- Scripts -->
+  <script src="small-projects.js"></script>
+</body>
+</html>
