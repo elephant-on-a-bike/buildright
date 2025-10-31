@@ -171,7 +171,7 @@ p { color: var(--gray-700); margin: 0 0 16px 0; }
 /* Hero */
 .hero {
   background: linear-gradient(180deg, var(--blue-50) 0%, var(--white) 60%);
-  padding: 64px 0;
+  padding: 64px 20px;
 }
   .hero-image {
     position: absolute;

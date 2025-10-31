@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="contactus.css" />
 </head>
 <body>
   <!-- Site Header -->
@@ -63,61 +64,63 @@
   </div>
 </header>
 
-
-
 <main>
     <section class="section">
       <div class="container">
-        <h1 class="section-title">How It Works</h1>
+        <h1 class="section-title">Let’s Build Something Together</h1>
         <p class="lead">
-          Whether you're fixing a leak, refreshing your space, or starting a small build — BuildRight makes it easy to connect with trusted local tradesmen and get competitive quotes, all while keeping your identity private.
+          Whether you're planning your next big project, need help sourcing materials, or just want to say hello — we’re here for it. Reach out and let’s make great things happen.
         </p>
   
-        <div class="grid grid-steps">
-          <div class="card">
-            <h2 class="card-title">1. Submit Your Project</h2>
-            <p>
-              Describe the work you need done — from home repairs to office renovations. Choose your region and add any helpful details. It only takes a minute.
-            </p>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h2>📬 Contact Details</h2>
+            <p><strong>Email:</strong> <a href="mailto:hello@buildright.com">hello@buildright.com</a></p>
+            <p><strong>Phone:</strong> <a href="tel:+85212345678">+852 1234 5678</a></p>
+            <p><strong>Address:</strong> 88 Project Lane, Central District, Hong Kong</p>
+            <p><strong>Hours:</strong> Mon–Fri, 9am–6pm</p>
+            <div class="social-links">
+              <a href="#"><img src="icon-facebook.svg" alt="Facebook"></a>
+              <a href="#"><img src="icon-instagram.svg" alt="Instagram"></a>
+              <a href="#"><img src="icon-linkedin.svg" alt="LinkedIn"></a>
+            </div>
           </div>
   
-          <div class="card">
-            <h2 class="card-title">2. Stay Anonymous</h2>
-            <p>
-              Your project is shared with vetted tradesmen in your area, but your identity stays private. No cold calls, no pressure — just quotes.
-            </p>
-          </div>
+          <form class="contact-form">
+            <h2>📝 Send Us a Message</h2>
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" required />
   
-          <div class="card">
-            <h2 class="card-title">3. Compare Quotes</h2>
-            <p>
-              You’ll receive multiple offers through the platform. Compare by price, reputation, and past success — and choose the one that fits you best.
-            </p>
-          </div>
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" required />
   
-          <div class="card">
-            <h2 class="card-title">4. Pay Securely</h2>
-            <p>
-              Once you accept a quote, your payment is held in escrow. It’s only released when both you and the tradesman agree the job is complete.
-            </p>
-          </div>
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
   
-          <div class="card">
-            <h2 class="card-title">5. Optional Project Management</h2>
-            <p>
-              Want a little extra help? You can opt into light-touch project management — just enough to guide things along, never enough to take over.
-            </p>
-          </div>
+            <button type="submit">Send Message</button>
+          </form>
         </div>
   
-        <div class="section-note">
-          <p>
-            BuildRight gives you freedom of choice and peace of mind — connecting you with skilled professionals while protecting your time, money, and privacy.
-          </p>
+        <div class="map-embed">
+          <h2>📍 Find Us</h2>
+          <iframe
+            src="https://www.google.com/maps?q=Central+District+Hong+Kong&output=embed"
+            width="100%"
+            height="300"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
         </div>
       </div>
     </section>
   </main>
+  
+
+
+  
+  
+  
 
     <!-- Final CTA -->
     <section id="cta" class="cta" aria-label="Get started">

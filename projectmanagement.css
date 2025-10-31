@@ -1,0 +1,28 @@
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 2em;
+  }
+  
+  .pm-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+  }
+  
+  .pm-table th,
+  .pm-table td {
+    padding: 0.75em;
+    border: 1px solid #ddd;
+  }
+  
+  .pm-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+  }
+  
+  .pm-table td:first-child {
+    text-align: left;
+    font-weight: 500;
+  }
+  
+  

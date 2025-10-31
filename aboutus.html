@@ -2,82 +2,136 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us | BuildRight</title>
-  <link rel="stylesheet" href="base.css" />
-  <script src="base.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitOut Hub — Transparent, Stress‑Free Renovations & Fit‑Outs</title>
+  <meta name="description" content="FitOut Hub connects clients, contractors, suppliers, and design professionals on one transparent platform with project oversight that prevents disputes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="aboutus.css" />
 </head>
 <body>
-  <!-- Header -->
-  <header class="nav-container">
-    <div class="logo"><strong>LOGO</strong></div>
-    <button class="btn cta">Sign in / Sign up</button>
-    <div class="menu-icon" onclick="toggleMenu()">More here ☰</div>
-  </header>
+  <!-- Site Header -->
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <a class="logo" href="#hero" aria-label="FitOut Hub home">
+      <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+        <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+        <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>FitOut Hub</span>
+    </a>
 
-  <!-- Flyout Navigation Menu -->
-  <nav class="flyout-menu" id="flyoutMenu">
-    <div class="close-btn" onclick="toggleMenu()">✖</div>
-    <ul>
-      <li><a href="home.html">Home</a></li>
-      <li><a href="howitworks.html">How It Works</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="clients.html">For Clients</a></li>
-      <li><a href="suppliers.html">For Suppliers</a></li>
-      <li><a href="pm.html">Project Management</a></li>
-      <li><a href="trust.html">Trust & Security</a></li>
-      <li><a href="reviews.html">Reviews & Case Studies</a></li>
-      <li><a href="aboutus.html">About Us</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
+    <nav class="nav" role="navigation" aria-label="Primary">
+      <!-- Inline section links (desktop only) -->
+      <ul class="nav-inline">
+        <li><a href="#why">Why FitOut Hub</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#who">Who we help</a></li>
+        <li><a href="#choose">Why choose us</a></li>
+      </ul>
 
-  <!-- Mission Statement -->
-  <section class="section mission">
+      <!-- Always-visible CTA -->
+      <a href="#cta" class="btn btn-outline nav-cta">Start your project</a>
+
+      <!-- Hamburger (desktop only) -->
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <!-- Drawer -->
+      <ul class="nav-links" id="drawer">
+        <li><a href="howitworks.html">How it Works</a></li>
+        <li><a href="ourservices.html">Our Services</a></li>
+        <li><a href="smallprojects.html">Book a Tradesman</a></li>
+        <li><a href="forclients.html">For Clients</a></li>
+        <li><a href="forcontractors.html">For Contractors</a></li>
+        <li><a href="forsuppliers.html">For Suppliers</a></li>
+        <li><a href="projectmanagement.html">Project Management</a></li>
+        <li><a href="trustandsecurity.html">Trust and Security</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+        <li class="mobile-only"><a href="#why">Why FitOut Hub</a></li>
+        <li class="mobile-only"><a href="#how">How it works</a></li>
+        <li class="mobile-only"><a href="#who">Who we help</a></li>
+        <li class="mobile-only"><a href="#choose">Why choose us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section">
     <div class="container">
-      <h1>Our Mission</h1>
-      <p>BuildRight exists to empower clients and contractors to collaborate with confidence. We believe in transparency, accountability, and quality craftsmanship—every project, every time.</p>
-    </div>
-  </section>
+      <h1 class="section-title">About Us</h1>
+      <p class="lead">
+        At BuildRight, our mission is simple: empower every project with clarity, trust, and excellence. Whether you're a homeowner, contractor, or supplier, we believe in creating a platform where collaboration thrives and outcomes exceed expectations.
+      </p>
+      <p>
+        Our ambition is to redefine how construction and renovation projects are planned, quoted, and delivered. We’re dedicated to making every step — from sourcing materials to final handover — transparent, efficient, and rewarding for all parties involved.
+      </p>
 
-  <!-- Team Grid -->
-  <section class="section team-grid">
-    <div class="container">
-      <h2>Meet the Team</h2>
-      <div class="grid">
-        <div class="grid-item">
-          <img src="team-placeholder.jpg" alt="Team Member Photo" class="team-photo" />
-          <h3>Alex Chan</h3>
-          <p>Founder & CEO. Alex brings 15 years of experience in construction tech and a passion for building trust in the industry.</p>
-        </div>
-        <div class="grid-item">
-          <img src="team-placeholder.jpg" alt="Team Member Photo" class="team-photo" />
-          <h3>Jamie Lee</h3>
-          <p>Head of Operations. Jamie ensures every project runs smoothly, from onboarding to completion.</p>
-        </div>
-        <div class="grid-item">
-          <img src="team-placeholder.jpg" alt="Team Member Photo" class="team-photo" />
-          <h3>Ravi Patel</h3>
-          <p>Lead Developer. Ravi builds the tools that power our platform and keep your data secure.</p>
-        </div>
-        <!-- Add more team members as needed -->
+      <h2 class="section-subtitle">Meet the Team</h2>
+      <div class="team-grid">
+        <div class="team-card"><img src="person1.jpg" alt="Team member 1"><p>Alex Chen</p></div>
+        <div class="team-card"><img src="person2.jpg" alt="Team member 2"><p>Maria Lopez</p></div>
+        <div class="team-card"><img src="person3.jpg" alt="Team member 3"><p>James Okoro</p></div>
+        <div class="team-card"><img src="person4.jpg" alt="Team member 4"><p>Sophie Dubois</p></div>
+        <div class="team-card"><img src="person5.jpg" alt="Team member 5"><p>Ravi Patel</p></div>
+        <div class="team-card"><img src="person6.jpg" alt="Team member 6"><p>Emily Zhang</p></div>
+        <div class="team-card"><img src="person7.jpg" alt="Team member 7"><p>Tomás Silva</p></div>
+        <div class="team-card"><img src="person8.jpg" alt="Team member 8"><p>Grace Johnson</p></div>
       </div>
     </div>
   </section>
+</main>
 
-  <!-- Sustainability Commitment -->
-  <section class="section sustainability">
-    <div class="container">
-      <h2>Our Commitment to Sustainability</h2>
-      <p>We support eco-conscious building practices and encourage our partners to use sustainable materials, reduce waste, and prioritize energy efficiency. BuildRight is committed to a greener future for the construction industry.</p>
-    </div>
-  </section>
+
+  
+  
+  
+
+    <!-- Final CTA -->
+    <section id="cta" class="cta" aria-label="Get started">
+        <div class="container cta-inner">
+          <h2>Ready to build with confidence?</h2>
+          <p>Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
+          <div class="cta-actions">
+            <a href="#" class="btn btn-primary">Start your project</a>
+            <a href="#" class="btn btn-secondary">Join as a professional</a>
+          </div>
+        </div>
+      </section>
+  
 
   <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2025 BuildRight. All rights reserved.</p>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <a class="logo" href="#hero">
+          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
+            <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+            <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>FitOut Hub</span>
+        </a>
+        <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#why">Why FitOut Hub</a>
+        <a href="#how">How it works</a>
+        <a href="#who">Who we help</a>
+        <a href="#choose">Why choose us</a>
+        <a href="#cta">Start your project</a>
+      </nav>
     </div>
   </footer>
+
+  <script src="main.js"></script>
+  <script src="reviews.js" defer></script>
 </body>
 </html>

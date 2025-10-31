@@ -2,99 +2,121 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reviews & Case Studies | BuildRight</title>
-  <link rel="stylesheet" href="base.css" />
-  <script src="base.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitOut Hub — Transparent, Stress‑Free Renovations & Fit‑Outs</title>
+  <meta name="description" content="FitOut Hub connects clients, contractors, suppliers, and design professionals on one transparent platform with project oversight that prevents disputes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="reviews.css" />
 </head>
 <body>
-  <!-- Header -->
-  <header class="nav-container">
-    <div class="logo"><strong>LOGO</strong></div>
-    <button class="btn cta">Sign in / Sign up</button>
-    <div class="menu-icon" onclick="toggleMenu()">More here ☰</div>
-  </header>
+  <!-- Site Header -->
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <a class="logo" href="#hero" aria-label="FitOut Hub home">
+      <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+        <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+        <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>FitOut Hub</span>
+    </a>
 
-  <!-- Flyout Navigation Menu -->
-  <nav class="flyout-menu" id="flyoutMenu">
-    <div class="close-btn" onclick="toggleMenu()">✖</div>
-    <ul>
-      <li><a href="home.html">Home</a></li>
-      <li><a href="howitworks.html">How It Works</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="clients.html">For Clients</a></li>
-      <li><a href="suppliers.html">For Suppliers</a></li>
-      <li><a href="pm.html">Project Management</a></li>
-      <li><a href="trust.html">Trust & Security</a></li>
-      <li><a href="reviews.html">Reviews & Case Studies</a></li>
-      <li><a href="aboutus.html">About Us</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
+    <nav class="nav" role="navigation" aria-label="Primary">
+      <!-- Inline section links (desktop only) -->
+      <ul class="nav-inline">
+        <li><a href="#why">Why FitOut Hub</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#who">Who we help</a></li>
+        <li><a href="#choose">Why choose us</a></li>
+      </ul>
 
-  <!-- Filterable Reviews -->
-  <section class="section reviews-filter">
+      <!-- Always-visible CTA -->
+      <a href="#cta" class="btn btn-outline nav-cta">Start your project</a>
+
+      <!-- Hamburger (desktop only) -->
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <!-- Drawer -->
+      <ul class="nav-links" id="drawer">
+        <li><a href="howitworks.html">How it Works</a></li>
+        <li><a href="ourservices.html">Our Services</a></li>
+        <li><a href="smallprojects.html">Book a Tradesman</a></li>
+        <li><a href="forclients.html">For Clients</a></li>
+        <li><a href="forcontractors.html">For Contractors</a></li>
+        <li><a href="forsuppliers.html">For Suppliers</a></li>
+        <li><a href="projectmanagement.html">Project Management</a></li>
+        <li><a href="trustandsecurity.html">Trust and Security</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+        <li class="mobile-only"><a href="#why">Why FitOut Hub</a></li>
+        <li class="mobile-only"><a href="#how">How it works</a></li>
+        <li class="mobile-only"><a href="#who">Who we help</a></li>
+        <li class="mobile-only"><a href="#choose">Why choose us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="section">
     <div class="container">
-      <h1>Client Reviews</h1>
-      <div class="filters">
-        <button class="filter-btn">All</button>
-        <button class="filter-btn">Residential</button>
-        <button class="filter-btn">Commercial</button>
-        <button class="filter-btn">Renovation</button>
-      </div>
-      <div class="review-cards">
-        <div class="review-card">
-          <h3>“Fantastic experience!”</h3>
-          <p>BuildRight helped us find the perfect contractor for our kitchen remodel. Everything was on time and on budget.</p>
-          <span>— Sarah L., Hong Kong</span>
-        </div>
-        <div class="review-card">
-          <h3>“Reliable and professional”</h3>
-          <p>We used BuildRight for a commercial office fit-out. The team was responsive and the escrow system gave us peace of mind.</p>
-          <span>— Marcus T., Central District</span>
-        </div>
-        <!-- Add more review cards as needed -->
-      </div>
+      <h1 class="section-title">Project Reviews</h1>
+      <p class="lead">
+        See what our clients and contractors are saying about their BuildRight experience — from small fixes to full renovations. Honest feedback, real results, and trusted partnerships.
+      </p>
+      <div id="reviews-grid" class="grid-reviews"></div>
     </div>
   </section>
+</main>
 
-  <!-- Case Study Cards -->
-  <section class="section case-studies">
-    <div class="container">
-      <h2>Case Studies</h2>
-      <div class="case-grid">
-        <div class="case-card">
-          <div class="images">
-            <img src="before-placeholder.jpg" alt="Before" class="before-img" />
-            <img src="after-placeholder.jpg" alt="After" class="after-img" />
-          </div>
-          <div class="summary">
-            <h3>Residential Renovation</h3>
-            <p><strong>Summary:</strong> A 3-bedroom flat in Mid-Levels was transformed with modern finishes and improved layout.</p>
-            <p><strong>Outcome:</strong> Completed in 6 weeks with 15% cost savings. Client satisfaction rated 5/5.</p>
+  
+  
+  
+
+    <!-- Final CTA -->
+    <section id="cta" class="cta" aria-label="Get started">
+        <div class="container cta-inner">
+          <h2>Ready to build with confidence?</h2>
+          <p>Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
+          <div class="cta-actions">
+            <a href="#" class="btn btn-primary">Start your project</a>
+            <a href="#" class="btn btn-secondary">Join as a professional</a>
           </div>
         </div>
-        <div class="case-card">
-          <div class="images">
-            <img src="before-placeholder.jpg" alt="Before" class="before-img" />
-            <img src="after-placeholder.jpg" alt="After" class="after-img" />
-          </div>
-          <div class="summary">
-            <h3>Retail Space Fit-Out</h3>
-            <p><strong>Summary:</strong> A boutique in Sheung Wan needed a fast turnaround for launch.</p>
-            <p><strong>Outcome:</strong> Delivered in 3 weeks with custom shelving and lighting. Increased foot traffic by 40%.</p>
-          </div>
-        </div>
-        <!-- Add more case cards as needed -->
-      </div>
-    </div>
-  </section>
+      </section>
+  
 
   <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <p>&copy; 2025 BuildRight. All rights reserved.</p>
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <a class="logo" href="#hero">
+          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
+            <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+            <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>FitOut Hub</span>
+        </a>
+        <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#why">Why FitOut Hub</a>
+        <a href="#how">How it works</a>
+        <a href="#who">Who we help</a>
+        <a href="#choose">Why choose us</a>
+        <a href="#cta">Start your project</a>
+      </nav>
     </div>
   </footer>
+
+  <script src="main.js"></script>
+  <script src="reviews.js" defer></script>
 </body>
 </html>
