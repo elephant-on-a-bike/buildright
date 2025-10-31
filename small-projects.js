@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
   
     // ====== Populate service list ======
-    const listEl = document.getElementById('servicesList');
-    if (listEl) {
+    const listServices = document.getElementById('servicesList');
+    if (listServices) {
       services.forEach(service => {
         const li = document.createElement('li');
         li.className = 'service-item';
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </label>
           <button class="svc-more" data-id="${service.id}" aria-haspopup="dialog">More</button>
         `;
-        listEl.appendChild(li);
+        listServices.appendChild(li);
       });
     }
   
@@ -174,8 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   
     // ====== Open modal on "More" clicks ======
-    if (listEl) {
-      listEl.addEventListener('click', (e) => {
+    if (listServices) {
+      listServices.addEventListener('click', (e) => {
         const btn = e.target.closest('button.svc-more');
         if (!btn) return;
         const id = btn.dataset.id;
