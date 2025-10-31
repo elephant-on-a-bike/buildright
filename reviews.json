@@ -3,37 +3,25 @@
       "title": "Kitchen Renovation",
       "rating": 5,
       "comments": "Fantastic work — clean, on time, and exactly what we wanted.",
-      "images": ["kitchen01.jpg", "kitchen01.jpg", "kitchen01.jpg"]
+      "images": ["kitchen01.jpg", "kitchen02.jpg", "kitchen03.jpg"]
     },
     {
       "title": "Office Fit-Out",
       "rating": 4,
       "comments": "Professional team and great finish. Minor delay but well managed.",
-      "images": ["office1.jpg", "office1.jpg"]
+      "images": ["office1.jpg", "office2.jpg"]
     },
     {
       "title": "Garden Deck Build",
       "rating": 5,
       "comments": "Beautiful result and great communication throughout.",
-      "images": ["deck1.jpg", "deck1.jpg", "deck1.jpg"]
+      "images": ["deck1.jpg", "deck2.jpg", "deck3.jpg"]
     },
     {
       "title": "Bathroom Refresh",
       "rating": 4,
       "comments": "Good value and tidy work. Would use again.",
-      "images": ["bathroom1.jpg", "bathroom1.jpg"]
-    },
-    {
-      "title": "Garden Deck Build",
-      "rating": 5,
-      "comments": "Beautiful result and great communication throughout.",
-      "images": ["deck1.jpg", "deck1.jpg", "deck1.jpg"]
-    },
-    {
-      "title": "Bathroom Refresh",
-      "rating": 4,
-      "comments": "Good value and tidy work. Would use again.",
-      "images": ["bathroom1.jpg", "bathroom1.jpg"]
+      "images": ["bathroom1.jpg", "bathroom2.jpg"]
     }
   ]
   
