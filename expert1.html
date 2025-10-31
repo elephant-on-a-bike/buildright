@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitOut Hub — Transparent, Stress‑Free Renovations & Fit‑Outs</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta name="description" content="FitOut Hub connects clients, contractors, suppliers, and design professionals on one transparent platform with project oversight that prevents disputes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="expert.css" />
+</head>
+<body>
+  <!-- Site Header -->
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <a class="logo" href="home1.html" aria-label="FitOut Hub home">
+      <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+        <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+        <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>FitOut Hub</span>
+    </a>
+
+    <nav class="nav" role="navigation" aria-label="Primary">
+      <!-- Inline section links (desktop only) -->
+      <ul class="nav-inline">
+        <li><a href="#why">Why FitOut Hub</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#who">Who we help</a></li>
+        <li><a href="#choose">Why choose us</a></li>
+      </ul>
+
+      <!-- Always-visible CTA -->
+      <a href="#cta" class="btn btn-outline nav-cta">Start your project</a>
+
+      <!-- Hamburger (desktop only) -->
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <!-- Drawer -->
+      <ul class="nav-links" id="drawer">
+        <li><a href="howitworks.html">How it Works</a></li>
+        <li><a href="ourservices.html">Our Services</a></li>
+        <li><a href="smallprojects.html">Book a Tradesman</a></li>
+        <li><a href="forclients.html">For Clients</a></li>
+        <li><a href="forcontractors.html">For Contractors</a></li>
+        <li><a href="forsuppliers.html">For Suppliers</a></li>
+        <li><a href="projectmanagement.html">Project Management</a></li>
+        <li><a href="trustandsecurity.html">Trust and Security</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+        <li class="mobile-only"><a href="#why">Why FitOut Hub</a></li>
+        <li class="mobile-only"><a href="#how">How it works</a></li>
+        <li class="mobile-only"><a href="#who">Who we help</a></li>
+        <li class="mobile-only"><a href="#choose">Why choose us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<body>
+  <h1>Project Questionnaire</h1>
+  <div class="subtitle">Expert system demo with conditional questions and live spec preview.</div>
+
+  <div class="layout">
+    <div class="card">
+      <div id="questionnaire"></div>
+      <div class="actions">
+        <button id="finishBtn" class="btn primary">Finish</button>
+        <button id="resetBtn" class="btn">Reset</button>
+      </div>
+      <div class="section-title">Structured JSON output</div>
+      <pre id="output" class="muted">Click Finish to generate the structured JSON output.</pre>
+    </div>
+
+    <div class="card" id="specCard">
+      <div class="section-title">Human-centric project scope preview</div>
+      <div id="specPreview"></div>
+    </div>
+  </div>
+
+  <div id="infoModal">
+    <div id="infoModalContent">
+      <div class="info-body">
+        <p id="infoText"></p>
+        <button id="closeInfoBtn" class="btn">Close</button>
+      </div>
+      <div class="info-image">
+        <img src="hero.png" alt="Hero illustration" />
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <a class="logo" href="#hero">
+          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
+            <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+            <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>FitOut Hub</span>
+        </a>
+        <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#why">Why FitOut Hub</a>
+        <a href="#how">How it works</a>
+        <a href="#who">Who we help</a>
+        <a href="#choose">Why choose us</a>
+        <a href="#cta">Start your project</a>
+      </nav>
+    </div>
+  </footer>
+  <!-- Load scripts in order -->
+  <script src="questions.js"></script>
+  <script src="keywords.js"></script>
+  <script src="logic.js"></script>
+  <script src="expert.js"></script>
+
+  <script>
+    // Show scope only after Finish is clicked
+    document.getElementById("finishBtn").addEventListener("click", () => {
+      const specCard = document.getElementById("specCard");
+      specCard.classList.add("visible");
+    });
+
+    // Optional: hide scope again on reset
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      const specCard = document.getElementById("specCard");
+      specCard.classList.remove("visible");
+      document.getElementById("specPreview").innerHTML = "Fill in the questionnaire to see a live, human-readable project scope.";
+    });
+  </script>
+</body>
+</html>
