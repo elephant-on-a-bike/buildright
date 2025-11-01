@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitOut Hub — Transparent, Stress‑Free Renovations & Fit‑Outs</title>
+  favicon.ico
+  <meta name="description" content="FitOut Hub connects clients, contractors, suppliers, and design professionals on one transparent platform with project oversight that prevents disputes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="chatbot.css" />
+</head>
+<body>
+  <!-- Site Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="logo" aria-label="FitOut Hub home" href="home1.html">
+        <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+          <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+          <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>FitOut Hub</span>
+      </a>
+
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <ul class="nav-inline">
+          <li><a href="#why">Why FitOut Hub</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#who">Who we help</a></li>
+          <li><a href="#choose">Why choose us</a></li>
+        </ul>
+
+        <a href="#cta" class="btn btn-outline nav-cta">Start your project</a>
+
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+
+        <ul class="nav-links" id="drawer">
+          <li><a href="howitworks.html">How it Works</a></li>
+          <li><a href="ourservices.html">Our Services</a></li>
+          <li><a href="smallprojects.html">Book a Tradesman</a></li>
+          <li><a href="forclients.html">For Clients</a></li>
+          <li><a href="forcontractors.html">For Contractors</a></li>
+          <li><a href="forsuppliers.html">For Suppliers</a></li>
+          <li><a href="projectmanagement.html">Project Management</a></li>
+          <li><a href="trustandsecurity.html">Trust and Security</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="contactus.html">Contact Us</a></li>
+          <li class="mobile-only"><a href="#why">Why FitOut Hub</a></li>
+          <li class="mobile-only"><a href="#how">How it works</a></li>
+          <li class="mobile-only"><a href="#who">Who we help</a></li>
+          <li class="mobile-only"><a href="#choose">Why choose us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <h1 class="section-title">Start Your Project</h1>
+        <div id="chat-container" class="chat-container"></div>
+        <div class="loader" id="loader" style="display: none;">
+          <span></span><span></span><span></span>
+        </div>
+        <button id="start-btn" class="btn btn-primary">Begin</button>
+      </div>
+    </section>
+  </main>
+
+  <section id="cta" class="cta" aria-label="Get started">
+    <div class="container cta-inner">
+      <h2>Ready to build with confidence?</h2>
+      <p>Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-primary">Start your project</a>
+        <a href="#" class="btn btn-secondary">Join as a professional</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <a class="logo" href="#hero">
+          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
+            <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+            <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>FitOut Hub</span>
+        </a>
+        <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#why">Why FitOut Hub</a>
+        <a href="#how">How it works</a>
+        <a href="#who">Who we help</a>
+        <a href="#choose">Why choose us</a>
+        <a href="#cta">Start your project</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="chatbot.js"></script>
+</body>
+</html>

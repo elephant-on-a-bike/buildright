@@ -1,0 +1,212 @@
+/* Chat container */
+.chat-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  /* Chat question block */
+  .chat-question {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  
+  .chat-question p {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  /* Inputs */
+  .chat-question input,
+  .chat-question select,
+  .chat-question textarea {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .chat-question textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  /* Summary */
+  .chat-summary {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #ecfdf5;
+    border: 1px solid #10b981;
+    border-radius: 8px;
+  }
+  
+  .chat-summary h2 {
+    margin-bottom: 1rem;
+    color: #065f46;
+  }
+  
+  .chat-summary ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .chat-summary li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #d1fae5;
+    font-size: 0.95rem;
+  }
+  
+  
+.chat-question {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.4s ease forwards;
+  }
+  
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  
+  .chat-question button {
+    margin: 0.5rem 0.5rem 0 0;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    color: white;
+  }
+  
+  .chat-question button:nth-of-type(5n+1) {
+    background-color: #6366F1; /* Indigo */
+  }
+  .chat-question button:nth-of-type(5n+2) {
+    background-color: #0EA5E9; /* Sky Blue */
+  }
+  .chat-question button:nth-of-type(5n+3) {
+    background-color: #10B981; /* Emerald */
+  }
+  .chat-question button:nth-of-type(5n+4) {
+    background-color: #F59E0B; /* Amber */
+  }
+  .chat-question button:nth-of-type(5n) {
+    background-color: #F43F5E; /* Rose */
+  }
+  
+  .chat-question button:hover {
+    opacity: 0.9;
+    transform: scale(1.03);
+  }
+
+  .chat-back {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .chat-back button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+  }
+  
+  .chat-back button:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .chat-back svg {
+    width: 20px;
+    height: 20px;
+    fill: #4b5563;
+  }
+
+  .chat-question-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  
+  .help-icon {
+    background-color: #e5e7eb;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .help-icon:hover {
+    background-color: #d1d5db;
+  }
+  
+  .help-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: #374151;
+  }
+  .loader {
+    display: inline-block;
+    width: 60px;
+    text-align: center;
+    margin: 1rem auto;
+  }
+  
+  .loader span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+    background: #2563EB;
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out both;
+  }
+  
+  .loader span:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+  .loader span:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+  .loader span:nth-child(3) {
+    animation-delay: 0;
+  }
+  
+  @keyframes bounce {
+    0%, 80%, 100% {
+      transform: scale(0);
+    } 40% {
+      transform: scale(1);
+    }
+  }
+
+  

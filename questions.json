@@ -1,0 +1,91 @@
+[
+    {
+      "id": "project_type",
+      "question": "What type of project are you planning?",
+      "type": "select",
+      "options": [
+        "Bathroom Renovation",
+        "Kitchen Remodel",
+        "Office Fit-Out"
+      ],
+      "help": "Choose the general category that best describes your project. For example, if you're updating your kitchen cabinets and appliances, select 'Kitchen Remodel'."
+    },
+    {
+      "id": "property_type",
+      "question": "Is this for a home or an office?",
+      "type": "select",
+      "options": [
+        "Home",
+        "Office"
+      ],
+      "help": "Let us know where the project is taking place. This helps us tailor the scope and requirements."
+    },
+    {
+      "id": "has_design",
+      "question": "Do you already have a design or layout plan?",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "If you already have a floor plan, sketches, or design documents, select 'Yes'. Otherwise, choose 'No'."
+    },
+    {
+      "id": "style_preference",
+      "question": "Do you have a preferred design style?",
+      "type": "text",
+      "conditions": {
+        "any": [
+          {
+            "id": "project_type",
+            "value": "Bathroom Renovation"
+          },
+          {
+            "id": "project_type",
+            "value": "Kitchen Remodel"
+          }
+        ]
+      },
+      "help": "You can mention styles like modern, industrial, Scandinavian, or traditional. This helps us understand your aesthetic preferences."
+    },
+    {
+      "id": "need_plumbing",
+      "question": "Will plumbing work be required?",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "conditions": {
+        "all": [
+          {
+            "id": "project_type",
+            "value": "Bathroom Renovation"
+          },
+          {
+            "id": "property_type",
+            "value": "Home"
+          }
+        ]
+      },
+      "help": "Plumbing work includes installing or moving sinks, toilets, showers, or pipes."
+    },
+    {
+      "id": "budget",
+      "question": "What is your estimated budget for this project?",
+      "type": "text",
+      "help": "Provide a rough estimate of how much you're planning to spend. This helps us match you with the right professionals."
+    },
+    {
+      "id": "timeline",
+      "question": "What is your ideal completion date?",
+      "type": "date",
+      "help": "When would you like the project to be finished? This helps us plan availability and timelines."
+    },
+    {
+      "id": "scope_notes",
+      "question": "Any additional notes or goals for this project?",
+      "type": "textarea",
+      "help": "Feel free to share any specific goals, concerns, or ideas you have for your project."
+    }
+  ]

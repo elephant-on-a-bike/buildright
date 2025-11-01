@@ -1,0 +1,35 @@
+{
+  "bathroom": {
+    "project_type": "Bathroom Renovation"
+  },
+  "kitchen": {
+    "project_type": "Kitchen Remodel"
+  },
+  "office": {
+    "project_type": "Office Fit-Out"
+  },
+  "ac": {
+    "need_plumbing": "Yes"
+  },
+  "air conditioning": {
+    "need_plumbing": "Yes"
+  },
+  "plumbing": {
+    "need_plumbing": "Yes"
+  },
+  "tap": {
+    "need_plumbing": "Yes"
+  },
+  "tiles": {
+    "has_design": "No"
+  },
+  "paint": {
+    "has_design": "No"
+  },
+  "layout": {
+    "has_design": "Yes"
+  },
+  "design": {
+    "has_design": "Yes"
+  }
+}
