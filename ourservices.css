@@ -1,11 +1,11 @@
-.grid-services {
+  .page-ourservices .grid-services {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2em;
   }
   
   @media (min-width: 800px) {
-    .grid-services {
+    .page-ourservices .grid-services {
       grid-template-columns: 1fr 1fr;
     }
   }

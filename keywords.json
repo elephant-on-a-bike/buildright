@@ -1,9 +1,11 @@
 {
   "bathroom": {
-    "project_type": "Bathroom Renovation"
+    "project_type": "Bathroom Renovation",
+    "need_plumbing": "Yes"
   },
   "kitchen": {
-    "project_type": "Kitchen Remodel"
+    "project_type": "Kitchen Remodel",
+    "need_plumbing": "Yes"
   },
   "office": {
     "project_type": "Office Fit-Out"
@@ -32,4 +34,99 @@
   "design": {
     "has_design": "Yes"
   }
+  ,
+  "electrical": {
+    "electrical_work": "Yes"
+  },
+  "electric": {
+    "electrical_work": "Yes"
+  },
+  "wiring": {
+    "electrical_work": "Yes"
+  },
+  "rewire": {
+    "electrical_work": "Yes"
+  },
+  "outlet": {
+    "electrical_work": "Yes"
+  },
+  "socket": {
+    "electrical_work": "Yes"
+  },
+  "lighting": {
+    "electrical_work": "Yes",
+    "lighting_needs": "Prefers updated lighting fixtures and layout"
+  },
+  "lights": {
+    "electrical_work": "Yes",
+    "lighting_needs": "Updated lights required"
+  },
+  "electrical updates": {
+    "electrical_work": "Yes"
+  },
+  "lighting updates": {
+    "electrical_work": "Yes",
+    "lighting_needs": "Lighting updates"
+  }
+  ,
+  "recessed": { "electrical_work": "Yes", "lighting_needs": "Recessed/downlight installation" },
+  "downlight": { "electrical_work": "Yes", "lighting_needs": "Downlights" },
+  "downlights": { "electrical_work": "Yes", "lighting_needs": "Downlights" },
+  "pendant": { "electrical_work": "Yes", "lighting_needs": "Pendant lighting" },
+  "chandelier": { "electrical_work": "Yes", "lighting_needs": "Feature lighting" },
+  "led": { "electrical_work": "Yes", "lighting_needs": "LED upgrade" },
+  "dimmer": { "electrical_work": "Yes", "lighting_needs": "Dimmer/lighting controls" },
+
+  "electrician": { "electrical_work": "Yes" },
+  "rewiring": { "electrical_work": "Yes" },
+  "wires": { "electrical_work": "Yes" },
+  "breaker": { "electrical_work": "Yes" },
+  "fuseboard": { "electrical_work": "Yes" },
+
+  "shower": { "need_plumbing": "Yes" },
+  "bath": { "need_plumbing": "Yes" },
+  "bathtub": { "need_plumbing": "Yes" },
+  "sink": { "need_plumbing": "Yes" },
+  "basin": { "need_plumbing": "Yes" },
+  "toilet": { "need_plumbing": "Yes" },
+  "wc": { "need_plumbing": "Yes" },
+  "plumber": { "need_plumbing": "Yes" },
+  "leak": { "need_plumbing": "Yes" },
+  "pipe": { "need_plumbing": "Yes" },
+
+  "kitchen sink": { "project_type": "Kitchen Remodel", "need_plumbing": "Yes" },
+  "cabinets": { "project_type": "Kitchen Remodel" },
+  "benchtop": { "project_type": "Kitchen Remodel" },
+  "backsplash": { "project_type": "Kitchen Remodel" },
+  "hob": { "project_type": "Kitchen Remodel" },
+  "oven": { "project_type": "Kitchen Remodel" },
+  "appliances": { "project_type": "Kitchen Remodel" },
+
+  "hardwood": { "flooring_type": "Hardwood" },
+  "timber": { "flooring_type": "Hardwood" },
+  "oak": { "flooring_type": "Hardwood" },
+  "laminate": { "flooring_type": "Laminate" },
+  "vinyl": { "flooring_type": "Vinyl" },
+  "carpet": { "flooring_type": "Carpet" },
+  "stone": { "flooring_type": "Tile" },
+
+  "ventilation": { "ventilation": "Yes" },
+  "extractor": { "ventilation": "Yes" },
+  "fan": { "ventilation": "Yes" },
+  "ducting": { "ventilation": "Yes" },
+
+  "permit": { "permit_required": "Not Sure" },
+  "planning": { "permit_required": "Not Sure" },
+  "council": { "permit_required": "Not Sure" },
+  "building control": { "permit_required": "Not Sure" },
+
+  "wheelchair": { "accessibility": "Yes" },
+  "ramp": { "accessibility": "Yes" },
+  "grab bar": { "accessibility": "Yes" },
+  "grab bars": { "accessibility": "Yes" },
+
+  "eco": { "sustainability": "Yes" },
+  "sustainable": { "sustainability": "Yes" },
+  "green": { "sustainability": "Yes" },
+  "recycled": { "sustainability": "Yes" }
 }

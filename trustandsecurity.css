@@ -1,11 +1,11 @@
-.grid-values {
+  .page-trustandsecurity .grid-values {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2em;
   }
   
   @media (min-width: 700px) {
-    .grid-values {
+    .page-trustandsecurity .grid-values {
       grid-template-columns: 1fr 1fr;
     }
   }

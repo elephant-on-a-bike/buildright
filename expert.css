@@ -1,4 +1,3 @@
-body { font-family: Arial, sans-serif; margin: 2em; }
 h1 { margin-bottom: 0.25em; }
 .subtitle {
   text-align: center;
@@ -17,13 +16,10 @@ h1 { margin-bottom: 0.25em; }
 }
 
 .card { 
-  border: 1px solid #ddd; 
-  border-radius: 8px; 
-  padding: 1em; 
-  background: #fafafa; 
+  /* keep only sizing here; visuals consolidated in style.css */
   width: 90%;
   margin: 0 auto;
-  }
+}
   
   @media (min-width: 801px) {
   .card {
@@ -32,9 +28,10 @@ h1 { margin-bottom: 0.25em; }
   }
 
 .question { margin-bottom: 1em; }
-label { font-weight: bold; display: block; margin-bottom: 0.25em; }
+/* form visuals moved to style.css; keep spacing/width here */
+label { display: block; margin-bottom: 0.25em; }
 input[type="text"], input[type="number"], textarea, select {
-  width: 100%; padding: 0.5em; border: 1px solid #ccc; border-radius: 4px;
+  width: 100%; padding: 0.5em; box-sizing: border-box;
 }
 textarea { min-height: 90px; }
 
@@ -71,27 +68,7 @@ pre { white-space: pre-wrap; word-wrap: break-word; }
 }
 
 
-/* Modal overlay */
-#infoModal {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0,0,0,0.5);
-  z-index: 1000;
-}
-
-#infoModalContent {
-  display: flex;
-  gap: 1.5em;
-  background: #fff;
-  padding: 2em;
-  border-radius: 8px;
-  max-width: 700px;
-  width: 90%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
+/* Modal visuals centralized in style.css (#infoModal / .modal) */
 
 .info-body {
   flex: 2;
@@ -126,28 +103,7 @@ body.modal-open .layout {
 }
 
 
-/* Info icon styling */
-/* Info icon as a rounded blue badge */
-.info-icon {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 18px;
-  height: 18px;
-  margin-left: 0.5em;
-  border-radius: 50%;
-  background-color: #0077cc;   /* blue fill */
-  border: 1px solid #fff;      /* white border */
-  color: #fff;                 /* white text */
-  font-size: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.info-icon:hover {
-  background-color: #005fa3;   /* darker blue on hover */
-}
+/* info-icon moved to style.css */
 
 
 /* Tooltip via title attribute */

@@ -1,5 +1,5 @@
 /* Chat container */
-.chat-container {
+.page-chat-widget .chat-container {
     max-width: 600px;
     margin: 2rem auto;
     padding: 1rem;
@@ -10,7 +10,7 @@
   }
   
   /* Chat question block */
-  .chat-question {
+  .page-chat-widget .chat-question {
     margin-bottom: 1.5rem;
     padding: 1rem;
     background-color: #ffffff;
@@ -18,56 +18,52 @@
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   }
-  
-  .chat-question p {
+
+  .page-chat-widget .chat-question p {
     margin-bottom: 0.5rem;
     font-weight: 600;
   }
   
   /* Inputs */
-  .chat-question input,
-  .chat-question select,
-  .chat-question textarea {
+  .page-chat-widget .chat-question input,
+  .page-chat-widget .chat-question select,
+  .page-chat-widget .chat-question textarea {
     width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
-    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
   }
-  
-  .chat-question textarea {
+
+  .page-chat-widget .chat-question textarea {
     resize: vertical;
     min-height: 80px;
   }
   
   /* Summary */
-  .chat-summary {
+  .page-chat-widget .chat-summary {
     margin-top: 2rem;
     padding: 1.5rem;
     background-color: #ecfdf5;
     border: 1px solid #10b981;
     border-radius: 8px;
   }
-  
-  .chat-summary h2 {
+
+  .page-chat-widget .chat-summary h2 {
     margin-bottom: 1rem;
     color: #065f46;
   }
-  
-  .chat-summary ul {
+
+  .page-chat-widget .chat-summary ul {
     list-style: none;
     padding: 0;
   }
-  
-  .chat-summary li {
+
+  .page-chat-widget .chat-summary li {
     padding: 0.5rem 0;
     border-bottom: 1px solid #d1fae5;
     font-size: 0.95rem;
   }
   
   
-.chat-question {
+.page-chat-widget .chat-question {
     opacity: 0;
     transform: translateY(10px);
     animation: fadeInUp 0.4s ease forwards;
@@ -81,125 +77,146 @@
   }
 
   
-  .chat-question button {
-    margin: 0.5rem 0.5rem 0 0;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    color: white;
-  }
-  
-  .chat-question button:nth-of-type(5n+1) {
-    background-color: #6366F1; /* Indigo */
-  }
-  .chat-question button:nth-of-type(5n+2) {
-    background-color: #0EA5E9; /* Sky Blue */
-  }
-  .chat-question button:nth-of-type(5n+3) {
-    background-color: #10B981; /* Emerald */
-  }
-  .chat-question button:nth-of-type(5n+4) {
-    background-color: #F59E0B; /* Amber */
-  }
-  .chat-question button:nth-of-type(5n) {
-    background-color: #F43F5E; /* Rose */
-  }
-  
-  .chat-question button:hover {
-    opacity: 0.9;
-    transform: scale(1.03);
-  }
+  .page-chat-widget .chat-question button {
+      margin: 0.5rem 0.5rem 0 0;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+      color: white;
+    }
 
-  .chat-back {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -0.5rem;
-    margin-bottom: 1.5rem;
-  }
+  .page-chat-widget .chat-question button:nth-of-type(5n+1) {
+      background-color: #6366F1; /* Indigo */
+    }
+  .page-chat-widget .chat-question button:nth-of-type(5n+2) {
+      background-color: #0EA5E9; /* Sky Blue */
+    }
+  .page-chat-widget .chat-question button:nth-of-type(5n+3) {
+      background-color: #10B981; /* Emerald */
+    }
+  .page-chat-widget .chat-question button:nth-of-type(5n+4) {
+      background-color: #F59E0B; /* Amber */
+    }
+  .page-chat-widget .chat-question button:nth-of-type(5n) {
+      background-color: #F43F5E; /* Rose */
+    }
   
-  .chat-back button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s ease;
-  }
-  
-  .chat-back button:hover {
-    background-color: #f3f4f6;
-  }
-  
-  .chat-back svg {
-    width: 20px;
-    height: 20px;
-    fill: #4b5563;
-  }
+  .page-chat-widget .chat-question button:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
 
-  .chat-question-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
+  .page-chat-widget .chat-back {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+  .page-chat-widget .chat-back button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease;
+    }
+
+  .page-chat-widget .chat-back button:hover {
+      background-color: #f3f4f6;
+    }
+
+  .page-chat-widget .chat-back svg {
+      width: 20px;
+      height: 20px;
+      fill: #4b5563;
+    }
+
+  .page-chat-widget .chat-question-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
   
-  .help-icon {
-    background-color: #e5e7eb;
-    border: none;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin-left: 0.5rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  .help-icon:hover {
-    background-color: #d1d5db;
-  }
-  
-  .help-icon svg {
-    width: 16px;
-    height: 16px;
+  .page-chat-widget .help-icon {
+      background-color: #e5e7eb;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-left: 0.5rem;
+      transition: background-color 0.3s ease;
+      /* prevent flex containers from shrinking the help button to zero width */
+      flex: 0 0 auto;
+    }
+
+  .page-chat-widget .help-icon:hover {
+      background-color: #d1d5db;
+    }
+
+  .page-chat-widget .help-icon svg {
+      /* override global responsive svg rules that may set width to 0
+         (e.g. `img, svg { max-width:100% }`) by forcing an explicit size */
+      display: inline-block;
+      width: 16px !important;
+      height: 16px !important;
+      max-width: none !important;
+      vertical-align: middle;
+    }
+
+  /* Explicitly style the circle and text inside the help icon so the
+     question mark is visible even when global SVG fill rules exist. */
+  .page-chat-widget .help-icon svg circle {
     fill: #374151;
   }
-  .loader {
-    display: inline-block;
-    width: 60px;
-    text-align: center;
-    margin: 1rem auto;
+
+  .page-chat-widget .help-icon svg text {
+    fill: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    dominant-baseline: middle;
+    text-anchor: middle;
   }
-  
-  .loader span {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    margin: 0 2px;
-    background: #2563EB;
-    border-radius: 50%;
-    animation: bounce 1.4s infinite ease-in-out both;
-  }
-  
-  .loader span:nth-child(1) {
-    animation-delay: -0.32s;
-  }
-  .loader span:nth-child(2) {
-    animation-delay: -0.16s;
-  }
-  .loader span:nth-child(3) {
-    animation-delay: 0;
-  }
+  .page-chat-widget .loader {
+      display: inline-block;
+      width: 60px;
+      text-align: center;
+      margin: 1rem auto;
+    }
+
+    .page-chat-widget .loader span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 0 2px;
+      background: #2563EB;
+      border-radius: 50%;
+      animation: bounce 1.4s infinite ease-in-out both;
+    }
+
+    .page-chat-widget .loader span:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+    .page-chat-widget .loader span:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+    .page-chat-widget .loader span:nth-child(3) {
+      animation-delay: 0;
+    }
   
   @keyframes bounce {
     0%, 80%, 100% {
@@ -210,3 +227,132 @@
   }
 
   
+
+/* Help modal overlay and content (scoped to the chat page) */
+.page-chat-widget .help-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+.page-chat-widget .help-modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.page-chat-widget .help-modal-content {
+  position: relative;
+  z-index: 2;
+  background: #ffffff;
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  max-width: 720px;
+  width: calc(100% - 2rem);
+  box-shadow: 0 12px 32px rgba(2,6,23,0.18);
+}
+
+.page-chat-widget .help-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+/* Prevent background scroll when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Center the Begin button and hide the chat container until chat is active */
+.page-chat-widget .chat-container {
+  display: none;
+}
+
+.page-chat-widget #start-btn {
+  display: block;
+  margin: 2.5rem auto;
+  padding: 0.75rem 1.25rem;
+  min-width: 180px;
+  text-align: center;
+}
+
+/* When chat is active (JS adds .chat-active to body), reveal the container */
+.page-chat-widget.chat-active .chat-container,
+.page-chat-widget.chat-active .loader {
+  display: block;
+}
+
+/* fallback visible question mark styling */
+.page-chat-widget .help-fallback {
+  display: none; /* hidden by default; visible only if svg blocked */
+}
+
+/* If the SVG fails to render, show the fallback - using user-agent check isn't reliable,
+   but we make the fallback visible on forced rule overrides if needed. */
+.page-chat-widget .help-icon.no-svg .help-fallback {
+  display: inline-block;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Matched keywords debug panel */
+.page-chat-widget .matched-keywords {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: #111827;
+}
+.page-chat-widget .matched-keywords .matched-text {
+  background: #f3f4f6;
+  padding: 0.5rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+.page-chat-widget .matched-keywords mark.kw {
+  background: #ffe58a;
+  padding: 0 0.15rem;
+  border-radius: 2px;
+}
+.page-chat-widget .matched-keywords .matched-list ul { margin: 0.25rem 0 0 1rem; }
+.page-chat-widget .matched-keywords .matched-list li { margin-bottom: 0.25rem; }
+.page-chat-widget .matched-keywords .muted { color: #6b7280; }
+
+.page-chat-widget .matched-keywords .answers-dump {
+  margin-top: 0.5rem;
+  background: #111827;
+  color: #e6eef8;
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  max-height: 180px;
+  overflow: auto;
+}
+
+/* Subtle hint explaining why a question is asked (narrative / follow-up) */
+.page-chat-widget .trigger-hint {
+  margin-left: 0.25rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.page-chat-widget .trigger-hint::before {
+  content: '• ';
+  color: #9ca3af;
+  margin-right: 0.25rem;
+}
+

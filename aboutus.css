@@ -1,15 +1,15 @@
-.team-grid {
+  .page-aboutus .team-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 1.5em;
     margin-top: 2em;
   }
   
-  .team-card {
+  .page-aboutus .team-card {
     text-align: center;
   }
   
-  .team-card img {
+  .page-aboutus .team-card img {
     width: 100%;
     max-width: 150px;
     max-height: 180px;

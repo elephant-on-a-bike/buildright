@@ -1,4 +1,12 @@
 
+  /*
+    base.js — small utilities referenced by HTML
+
+    This file contains helper functions that are referenced from inline HTML attributes
+    (for example `onclick="toggleMenu()"`) across the site. When refactoring or
+    removing functions, ensure the HTML is updated to avoid breaking the inline calls.
+  */
+
   function toggleAccordion(id) {
     const panels = document.querySelectorAll('.accordion-panel');
     panels.forEach(panel => {

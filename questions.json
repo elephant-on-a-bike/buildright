@@ -56,18 +56,16 @@
         "Yes",
         "No"
       ],
-      "conditions": {
-        "all": [
-          {
-            "id": "project_type",
-            "value": "Bathroom Renovation"
-          },
-          {
-            "id": "property_type",
-            "value": "Home"
-          }
-        ]
-      },
+      "conditions": [
+        {
+          "depends_on": "project_type",
+          "value": "Bathroom Renovation"
+        },
+        {
+          "depends_on": "property_type",
+          "value": "Home"
+        }
+      ],
       "help": "Plumbing work includes installing or moving sinks, toilets, showers, or pipes."
     },
     {
@@ -87,5 +85,114 @@
       "question": "Any additional notes or goals for this project?",
       "type": "textarea",
       "help": "Feel free to share any specific goals, concerns, or ideas you have for your project."
+    },
+    {
+      "id": "electrical_work",
+      "question": "Will your project require electrical work?",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "Electrical work includes installing outlets, lighting fixtures, rewiring, or upgrading panels."
+    },
+    {
+      "id": "flooring_type",
+      "question": "What type of flooring do you prefer?",
+      "type": "select",
+      "options": [
+        "Tile",
+        "Hardwood",
+        "Laminate",
+        "Vinyl",
+        "Carpet"
+      ],
+      "help": "Choose the flooring material that best suits your space and budget."
+    },
+    {
+      "id": "lighting_needs",
+      "question": "Do you have specific lighting needs?",
+      "type": "textarea",
+      "conditionGroups": [
+        [
+          { "depends_on": "electrical_work", "value": "Yes" }
+        ],
+        [
+          { "depends_on": "project_type", "value": "Office" }
+        ]
+      ],
+      "help": "Describe any preferences for ambient, task, or accent lighting."
+    },
+    {
+      "id": "ventilation",
+      "question": "Is ventilation a concern for this project?",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "Ventilation is important for bathrooms, kitchens, and enclosed spaces."
+    },
+    {
+      "id": "permit_required",
+      "question": "Do you know if your project requires a permit?",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No",
+        "Not Sure"
+      ],
+      "help": "Some renovations require permits depending on local regulations."
+    },
+    {
+      "id": "accessibility",
+      "question": "Is accessibility a priority for this space?",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "Accessibility features include ramps, grab bars, and wide doorways."
+    },
+    {
+      "id": "sustainability",
+      "question": "Would you like to explore sustainable or eco-friendly options?",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "Eco-friendly options include energy-efficient appliances and recycled materials."
+    },
+    {
+      "id": "contractor_preference",
+      "question": "Do you have a preferred contractor or want recommendations?",
+      "type": "select",
+      "options": [
+        "I have a contractor",
+        "I need recommendations"
+      ],
+      "help": "Let us know if you already have someone in mind or need help finding one."
+    },
+    {
+      "id": "timeline_flexibility",
+      "question": "Is your project timeline flexible?",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "Flexible timelines may allow for better pricing and scheduling."
+    },
+    {
+      "id": "budget_priority",
+      "question": "What matters most: budget, speed, or quality?",
+      "type": "select",
+      "options": [
+        "Budget",
+        "Speed",
+        "Quality"
+      ],
+      "help": "This helps us tailor recommendations to your priorities."
     }
   ]

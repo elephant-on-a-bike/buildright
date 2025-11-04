@@ -62,6 +62,60 @@ p { color: var(--gray-700); margin: 0 0 16px 0; }
 .btn-outline { border-color: var(--blue-900); color: var(--blue-900); background: transparent; }
 .btn-outline:hover { background: var(--blue-900); color: var(--white); }
 
+/* Small modifiers and canonical form controls (centralized from page CSS) */
+.btn--form { margin-top: 1rem; padding: 0.75rem 1.5rem; font-size: 1rem; width: auto; }
+
+/* canonical form controls */
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group label { font-weight: 600; margin-bottom: 0.5rem; }
+input, select, textarea, .form-control {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+textarea { min-height: 80px; }
+
+/* Modal / overlay canonical */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; }
+.modal-content { margin: 6% auto; max-width: 720px; background: var(--white); padding: 1.5rem; border-radius: 12px; }
+.modal.open { display: flex; align-items: center; justify-content: center; }
+.close-btn { position: absolute; top: 8px; right: 10px; cursor: pointer; }
+
+/* Info icon used by logic.js */
+.label-with-info { display: flex; justify-content: space-between; align-items: center; }
+.info-icon {
+  display: inline-flex; justify-content: center; align-items: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  background-color: var(--blue-700); color: #fff; font-size: 12px; font-weight: bold;
+  cursor: pointer; transition: background-color 0.2s ease;
+}
+.info-icon:hover { background-color: var(--blue-900); }
+
+/* Page transition: fade in on load, fade out on navigation */
+/* Body starts hidden; JS will add/remove classes to control transitions */
+body {
+  transition: opacity 320ms cubic-bezier(.2,.8,.2,1), transform 320ms cubic-bezier(.2,.8,.2,1);
+}
+
+body:not(.is-loaded) {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+body.is-exiting {
+  opacity: 0 !important;
+  transform: translateY(-6px) !important;
+}
+
+/* Reduce motion preference: disable transitions for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body { transition: none !important; }
+}
+
 /* Header */
 .site-header {
   position: sticky;

@@ -1,70 +1,67 @@
-.contact-grid {
+  .page-contact .contact-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2em;
     margin-top: 2em;
   }
-  
+
   @media (min-width: 700px) {
-    .contact-grid {
+    .page-contact .contact-grid {
       grid-template-columns: 1fr 1fr;
     }
   }
-  
-  .contact-info {
+
+  .page-contact .contact-info {
     background: #f0f4f8;
     padding: 1.5em;
     border-radius: 8px;
   }
-  
-  .contact-info h2 {
+
+  .page-contact .contact-info h2 {
     margin-top: 0;
   }
-  
-  .contact-info a {
+
+  .page-contact .contact-info a {
     color: #0078d4;
     text-decoration: none;
   }
-  
-  .social-links {
+
+  .page-contact .social-links {
     margin-top: 1em;
     display: flex;
     gap: 1em;
   }
-  
-  .social-links img {
+
+  .page-contact .social-links img {
     width: 24px;
     height: 24px;
   }
-  
-  .contact-form {
+
+  .page-contact .contact-form {
     background: #fff;
     padding: 1.5em;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.05);
   }
-  
-  .contact-form h2 {
+
+  .page-contact .contact-form h2 {
     margin-top: 0;
   }
-  
-  .contact-form label {
+
+  .page-contact .contact-form label {
     display: block;
     margin-top: 1em;
     font-weight: bold;
   }
-  
-  .contact-form input,
-  .contact-form textarea {
+
+  .page-contact .contact-form input,
+  .page-contact .contact-form textarea {
     width: 100%;
-    padding: 0.8em;
     margin-top: 0.5em;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: inherit;
+    box-sizing: border-box;
   }
-  
-  .contact-form button {
+
+  .page-contact .contact-form button {
     margin-top: 1.5em;
     padding: 0.8em 1.5em;
     background-color: #0078d4;
@@ -74,16 +71,16 @@
     font-weight: bold;
     cursor: pointer;
   }
-  
-  .contact-form button:hover {
+
+  .page-contact .contact-form button:hover {
     background-color: #005fa3;
   }
-  
-  .map-embed {
+
+  .page-contact .map-embed {
     margin-top: 3em;
   }
-  
-  .map-embed h2 {
+
+  .page-contact .map-embed h2 {
     margin-bottom: 1em;
   }
   

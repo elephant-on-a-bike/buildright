@@ -184,16 +184,14 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   
-    // ====== Header hamburger toggle ======
-    const navToggle = document.querySelector('.nav-toggle');
-    const drawer    = document.getElementById('drawer');
-  
-    if (navToggle && drawer) {
-      navToggle.addEventListener('click', () => {
-        const isOpen = drawer.classList.toggle('open');
-        navToggle.setAttribute('aria-expanded', String(isOpen));
-        drawer.setAttribute('aria-hidden', String(!isOpen));
-      });
-    }
+  // Header hamburger toggle is handled globally in `main.js` to avoid duplicate listeners.
+  // If you need page-specific behaviour, add a data attribute and handle it here *without*
+  // toggling the core drawer state. Example pattern:
+  //
+  // 1) Add a modifier on the toggle in HTML: <button class="nav-toggle" data-page-nav="true">...
+  // 2) In main.js, read that attribute if you need to apply page-specific styling or analytics,
+  //    but keep the `open` class toggle centralized here in main.js.
+  //
+  // Avoid attaching additional click listeners that also toggle `.nav-links` or `#drawer`.
   });
   
