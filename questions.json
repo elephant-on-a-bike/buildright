@@ -134,6 +134,32 @@
       "help": "Ventilation is important for bathrooms, kitchens, and enclosed spaces."
     },
     {
+      "id": "need_ac",
+      "question": "Do you need air conditioning for this project?",
+      "type": "select",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "help": "Indicate whether you want supply, extension or upgrade of an air conditioning system."
+    },
+    {
+      "id": "ac_type",
+      "question": "Which type of air conditioning do you need?",
+      "type": "select",
+      "options": [
+        "Split system",
+        "Ducted",
+        "VRF/VRV",
+        "Portable",
+        "Not sure"
+      ],
+      "conditions": [
+        { "depends_on": "need_ac", "value": "Yes" }
+      ],
+      "help": "Choose the AC system that best matches your needs. If unsure, select 'Not sure' and we'll follow up."
+    },
+    {
       "id": "permit_required",
       "question": "Do you know if your project requires a permit?",
       "type": "select",

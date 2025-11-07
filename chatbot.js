@@ -126,10 +126,24 @@ function extractKeywords(text) {
   // "electrical" and "lighting" match reliably even when adjacent to punctuation.
   const normalized = String(text).toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
 
-  // Build entries with trimmed keys to avoid invisible whitespace issues,
-  // and sort longest-first so multi-word keys match before their substrings.
-  const entries = Object.entries(keywordMap || {}).map(([k, v]) => ({ key: k, keyTrim: String(k).trim(), value: v }))
-    .sort((a, b) => b.keyTrim.length - a.keyTrim.length);
+  // Build entries with trimmed keys to avoid invisible whitespace issues.
+  // Support comma-separated keys (e.g. "house,flat,apartment") as shorthand
+  // where multiple synonyms map to the same prefill object. Each token is
+  // expanded into its own matching entry but we keep `baseKey` to reference
+  // the original mapping for debugging and rendering.
+  const entries = [];
+  const tokenToBase = Object.create(null);
+  for (const [baseKey, v] of Object.entries(keywordMap || {})) {
+    // allow comma-separated tokens in the key, or a single token
+    const parts = String(baseKey).split(',').map(s => s.trim()).filter(Boolean);
+    for (const part of parts) {
+      const keyTrim = part;
+      entries.push({ baseKey, keyTrim, value: v });
+      tokenToBase[keyTrim] = baseKey;
+    }
+  }
+  // sort longest-first so multi-word keys match before their substrings.
+  entries.sort((a, b) => b.keyTrim.length - a.keyTrim.length);
   const matched = [];
 
   // Primary pass: word-boundary regex against normalized text
@@ -240,12 +254,12 @@ function extractKeywords(text) {
     console.log('keyword-match-debug', { text, normalized, matched, detailed, answers });
   } catch (e) {}
 
-  // also pass a snapshot of available keys for debugging
-  const keysSnapshot = entries.map(e=>e.keyTrim).slice(0, 200);
-  renderMatchedKeywords(text, matched, normalized, detailed, keysSnapshot);
+  // also pass a snapshot of available keys for debugging plus the token->base map
+  const keysSnapshot = entries.map(e => e.keyTrim).slice(0, 200);
+  renderMatchedKeywords(text, matched, normalized, detailed, keysSnapshot, tokenToBase);
 }
 
-function renderMatchedKeywords(text, matched, normalized, detailed, keysSnapshot) {
+function renderMatchedKeywords(text, matched, normalized, detailed, keysSnapshot, tokenToBase) {
   const div = document.getElementById('matched-keywords');
   if (!div) return;
   // show original text with matched words highlighted (longest-first replace)
@@ -258,7 +272,10 @@ function renderMatchedKeywords(text, matched, normalized, detailed, keysSnapshot
     out = out.replace(re, match => `<mark class="kw">${match}</mark>`);
   }
 
-  const list = unique.length ? ('<ul>' + unique.map(k => `<li><strong>${k}</strong> → ${escapeHtml(JSON.stringify(keywordMap[k]))}</li>`).join('') + '</ul>') : '<div class="muted">No keywords detected</div>';
+  const list = unique.length ? ('<ul>' + unique.map(k => {
+    const base = (tokenToBase && tokenToBase[k]) ? tokenToBase[k] : k;
+    return `<li><strong>${escapeHtml(k)}</strong> → ${escapeHtml(JSON.stringify(keywordMap[base]))}</li>`;
+  }).join('') + '</ul>') : '<div class="muted">No keywords detected</div>';
 
   // show normalized input and detailed per-keyword checks for debugging
   const normHtml = `<div class="muted">Normalized: <code>${escapeHtml(normalized || '')}</code></div>`;
@@ -620,7 +637,162 @@ function renderSummary(container) {
   }
 
   summary.appendChild(ul);
+  // add email button to allow client to receive a PDF copy
+  const actions = document.createElement('div');
+  actions.className = 'chat-summary-actions';
+
+  const emailBtn = document.createElement('button');
+  emailBtn.className = 'btn btn-primary';
+  emailBtn.textContent = 'Email PDF';
+  emailBtn.addEventListener('click', async () => {
+    try {
+      // show modal to collect recipient email
+      const recipient = await showEmailModal();
+      if (!recipient) return;
+
+      // ensure html2pdf is available (load dynamically if not)
+      if (typeof html2pdf === 'undefined') {
+        await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js');
+      }
+
+      // generate a printable clone of the summary to ensure styling
+      const clone = summary.cloneNode(true);
+      clone.style.maxWidth = '800px';
+      clone.style.padding = '20px';
+      clone.style.background = '#ffffff';
+
+      // create a container for the PDF content off-document
+      const pdfContainer = document.createElement('div');
+      pdfContainer.style.position = 'fixed';
+      pdfContainer.style.left = '-9999px';
+      pdfContainer.appendChild(clone);
+      document.body.appendChild(pdfContainer);
+
+      // create PDF via html2pdf and get pdf (jsPDF) instance, then extract blob
+      const opt = { margin: 10, filename: 'project-scope.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+      const pdf = await html2pdf().from(clone).set(opt).toPdf().get('pdf');
+      const blob = pdf.output('blob');
+
+      // cleanup the offscreen container
+      pdfContainer.remove();
+
+      // send to server endpoint (PHP) for emailing
+      const fd = new FormData();
+      fd.append('recipient', recipient);
+      fd.append('file', blob, 'project-scope.pdf');
+
+      // show a lightweight in-UI status
+      const sending = document.createElement('div');
+      sending.className = 'pdf-sending';
+      sending.textContent = 'Sending PDF — please wait...';
+      summary.appendChild(sending);
+
+      const resp = await fetch('send_pdf.php', { method: 'POST', body: fd });
+      sending.remove();
+      if (!resp.ok) {
+        const txt = await resp.text();
+        alert('Failed to send PDF: ' + txt);
+        return;
+      }
+      const j = await resp.json().catch(()=>({ok:false,message:'Invalid JSON response'}));
+      if (j && j.ok) {
+        alert('PDF sent successfully to ' + recipient + '.');
+      } else {
+        alert('Failed to send PDF: ' + (j && j.message ? j.message : 'Unknown error'));
+      }
+
+    } catch (err) {
+      console.error('Failed to generate or send PDF', err);
+      alert('Sorry — could not generate/send the PDF. See console for details.');
+    }
+  });
+
+  actions.appendChild(emailBtn);
+  summary.appendChild(actions);
   container.appendChild(summary);
+}
+
+// Helper to dynamically load a script and return when it's ready
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.async = true;
+    s.onload = () => resolve();
+    s.onerror = (e) => reject(new Error('Failed to load ' + src));
+    document.head.appendChild(s);
+  });
+}
+
+// Show a small modal to collect an email address; returns the email string or null
+function showEmailModal() {
+  return new Promise((resolve) => {
+    // Reuse the modal pattern but with email input and Send/Cancel buttons
+    let modal = document.getElementById('email-modal');
+    const previousActive = document.activeElement;
+
+    function close(value) {
+      if (!modal) return resolve(null);
+      document.body.classList.remove('modal-open');
+      modal.remove();
+      modal = null;
+      if (previousActive && previousActive.focus) previousActive.focus();
+      resolve(value || null);
+    }
+
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'email-modal';
+      modal.className = 'help-modal';
+      modal.innerHTML = `
+        <div class="help-modal-overlay" tabindex="-1"></div>
+        <div class="help-modal-content" role="dialog" aria-modal="true" aria-labelledby="email-title">
+          <button class="help-close" aria-label="Close">&times;</button>
+          <h3 id="email-title">Send project PDF</h3>
+          <div style="margin-top:8px">
+            <label for="email-input">Recipient email</label>
+            <input id="email-input" type="email" style="width:100%;padding:8px;margin-top:6px;border:1px solid #d1d5db;border-radius:6px" placeholder="client@example.com" />
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
+            <button id="email-cancel" class="btn">Cancel</button>
+            <button id="email-send" class="btn btn-primary">Send</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      const overlay = modal.querySelector('.help-modal-overlay');
+      const closeBtn = modal.querySelector('.help-close');
+      const cancelBtn = modal.querySelector('#email-cancel');
+      const sendBtn = modal.querySelector('#email-send');
+      const input = modal.querySelector('#email-input');
+
+      function onClose() { close(null); }
+      function onCancel() { close(null); }
+      function onSend() {
+        const v = (input.value || '').trim();
+        if (!v || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) {
+          input.focus();
+          input.style.borderColor = 'red';
+          return;
+        }
+        close(v);
+      }
+
+      overlay.addEventListener('click', onClose);
+      closeBtn.addEventListener('click', onCancel);
+      cancelBtn.addEventListener('click', onCancel);
+      sendBtn.addEventListener('click', onSend);
+
+      modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') onClose();
+        if (e.key === 'Enter') onSend();
+      });
+
+      document.body.classList.add('modal-open');
+      input.focus();
+    }
+  });
 }
 
 function showHelpModal(title, content) {

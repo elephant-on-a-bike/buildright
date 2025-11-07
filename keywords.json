@@ -8,13 +8,19 @@
     "need_plumbing": "Yes"
   },
   "office": {
-    "project_type": "Office Fit-Out"
+    "project_type": "Office Fit-Out",
+    "property_type": "Office"
+  },
+  "house,flat,apartment": {
+    "property_type": "Home"
   },
   "ac": {
-    "need_plumbing": "Yes"
+    "need_plumbing": "Yes",
+    "need_ac": "Yes"
   },
   "air conditioning": {
-    "need_plumbing": "Yes"
+    "need_plumbing": "Yes",
+    "need_ac": "Yes"
   },
   "plumbing": {
     "need_plumbing": "Yes"
