@@ -1,0 +1,293 @@
+{
+  "formTitle": "Company Registration",
+  "formDescription": "Register your company as a contractor on FitOut Hub",
+  "sections": [
+    {
+      "id": "company_info",
+      "title": "Company Information",
+      "fields": [
+        {
+          "id": "business_name",
+          "label": "Business Name",
+          "type": "text",
+          "required": true,
+          "maxlength": 150,
+          "placeholder": "Enter registered company name"
+        },
+        {
+          "id": "registration_number",
+          "label": "Business Registration Number",
+          "type": "text",
+          "required": true,
+          "maxlength": 50,
+          "placeholder": "e.g., BR123456"
+        },
+        {
+          "id": "contact_person_name",
+          "label": "Primary Contact Person",
+          "type": "text",
+          "required": true,
+          "maxlength": 100,
+          "placeholder": "Full name of main contact"
+        },
+        {
+          "id": "contact_person_role",
+          "label": "Contact Person's Role",
+          "type": "text",
+          "required": true,
+          "maxlength": 100,
+          "placeholder": "e.g., Managing Director, Operations Manager"
+        },
+        {
+          "id": "phone",
+          "label": "Company Phone Number",
+          "type": "tel",
+          "required": true,
+          "pattern": "^[+\\d\\s-]{7,}$",
+          "placeholder": "+852 1234 5678"
+        },
+        {
+          "id": "email",
+          "label": "Company Email Address",
+          "type": "email",
+          "required": true,
+          "placeholder": "info@yourcompany.com"
+        },
+        {
+          "id": "address",
+          "label": "Registered Business Address",
+          "type": "textarea",
+          "required": true,
+          "rows": 3,
+          "placeholder": "Street address, district, region"
+        },
+        {
+          "id": "website",
+          "label": "Company Website",
+          "type": "url",
+          "required": false,
+          "placeholder": "https://www.yourcompany.com"
+        }
+      ]
+    },
+    {
+      "id": "credentials",
+      "title": "Business Credentials",
+      "fields": [
+        {
+          "id": "business_license",
+          "label": "Business License / BR Certificate",
+          "type": "file",
+          "required": true,
+          "accept": "image/*,.pdf",
+          "help": "Upload a copy of your Business Registration certificate"
+        },
+        {
+          "id": "insurance",
+          "label": "Public Liability Insurance",
+          "type": "file",
+          "required": true,
+          "accept": "image/*,.pdf",
+          "help": "Upload current insurance certificate"
+        },
+        {
+          "id": "certifications",
+          "label": "Industry Certifications",
+          "type": "file",
+          "required": false,
+          "accept": "image/*,.pdf",
+          "multiple": true,
+          "help": "ISO, trade certifications, etc. (optional)"
+        }
+      ]
+    },
+    {
+      "id": "workforce",
+      "title": "Workforce & Capabilities",
+      "fields": [
+        {
+          "id": "employee_count",
+          "label": "Number of Employees",
+          "type": "number",
+          "required": true,
+          "min": 1,
+          "max": 10000,
+          "placeholder": "Enter total employee count"
+        },
+        {
+          "id": "trades_covered",
+          "label": "Trades Covered by Your Company",
+          "type": "checkbox",
+          "required": true,
+          "options": [
+            "Builder/General Contractor",
+            "Renovator",
+            "Project Manager",
+            "Painting & Decorating",
+            "Plasterer",
+            "Tiler",
+            "Flooring Specialist",
+            "Roofer",
+            "Landscaper",
+            "Fencing",
+            "Windows & Doors",
+            "Electrician",
+            "Plumber",
+            "HVAC Technician",
+            "Smart Home Installer",
+            "Carpenter",
+            "Bricklayer",
+            "Steel Worker",
+            "Insulation Specialist",
+            "Architect",
+            "Interior Designer",
+            "Landscape Designer",
+            "Surveyor"
+          ],
+          "help": "Select all trades your company provides"
+        },
+        {
+          "id": "uses_subcontractors",
+          "label": "Does your company use subcontractors?",
+          "type": "radio",
+          "required": true,
+          "options": ["Yes", "No"]
+        }
+      ]
+    },
+    {
+      "id": "services",
+      "title": "Services Offered",
+      "fields": [
+        {
+          "id": "job_types",
+          "label": "Types of Projects Your Company Handles",
+          "type": "checkbox",
+          "required": true,
+          "options": [
+            "Small Repairs",
+            "Maintenance Contracts",
+            "Partial Renovations",
+            "Full Renovations",
+            "New Construction",
+            "Commercial Projects",
+            "Residential Projects",
+            "Emergency Service"
+          ]
+        },
+        {
+          "id": "service_area",
+          "label": "Service Areas",
+          "type": "checkbox",
+          "required": true,
+          "options": [
+            "Hong Kong Island",
+            "Kowloon",
+            "New Territories",
+            "Lantau Island",
+            "Outlying Islands"
+          ],
+          "help": "Select all areas your company can service"
+        },
+        {
+          "id": "emergency_service",
+          "label": "Do you offer 24/7 emergency service?",
+          "type": "radio",
+          "required": true,
+          "options": ["Yes", "No"]
+        }
+      ]
+    },
+    {
+      "id": "portfolio",
+      "title": "Company Portfolio (Optional)",
+      "fields": [
+        {
+          "id": "portfolio_images",
+          "label": "Upload Project Photos",
+          "type": "file",
+          "required": false,
+          "accept": "image/*",
+          "multiple": true,
+          "max": 15,
+          "help": "Upload up to 15 photos of completed projects"
+        },
+        {
+          "id": "portfolio_description",
+          "label": "Company Overview & Specialties",
+          "type": "textarea",
+          "required": false,
+          "rows": 5,
+          "maxlength": 1000,
+          "placeholder": "Describe your company's history, specialties, and typical projects..."
+        }
+      ]
+    },
+    {
+      "id": "references",
+      "title": "Client References (Optional)",
+      "fields": [
+        {
+          "id": "reference1_name",
+          "label": "Reference 1 - Company/Client Name",
+          "type": "text",
+          "required": false,
+          "maxlength": 150
+        },
+        {
+          "id": "reference1_contact",
+          "label": "Reference 1 - Contact",
+          "type": "text",
+          "required": false,
+          "placeholder": "Email or phone"
+        },
+        {
+          "id": "reference2_name",
+          "label": "Reference 2 - Company/Client Name",
+          "type": "text",
+          "required": false,
+          "maxlength": 150
+        },
+        {
+          "id": "reference2_contact",
+          "label": "Reference 2 - Contact",
+          "type": "text",
+          "required": false,
+          "placeholder": "Email or phone"
+        },
+        {
+          "id": "reference3_name",
+          "label": "Reference 3 - Company/Client Name",
+          "type": "text",
+          "required": false,
+          "maxlength": 150
+        },
+        {
+          "id": "reference3_contact",
+          "label": "Reference 3 - Contact",
+          "type": "text",
+          "required": false,
+          "placeholder": "Email or phone"
+        }
+      ]
+    },
+    {
+      "id": "compliance",
+      "title": "Compliance & Agreement",
+      "fields": [
+        {
+          "id": "background_check_consent",
+          "label": "I consent to business verification and background checks",
+          "type": "checkbox_single",
+          "required": true
+        },
+        {
+          "id": "terms_agreed",
+          "label": "I agree to FitOut Hub's Terms of Service and Contractor Agreement on behalf of the company",
+          "type": "checkbox_single",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

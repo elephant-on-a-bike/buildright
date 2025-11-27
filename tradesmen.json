@@ -1,0 +1,260 @@
+[
+  {
+    "id": "builder",
+    "featured": true,
+    "title": "Builder",
+    "category": "General",
+    "emoji": "🏗️",
+    "description": "New builds, extensions, and structural works.",
+    "jobs": [
+      "New build planning", "Structural framing", "Extension construction", "Foundation repair", "Site preparation"
+    ],
+    "image": "builder.png"
+  },
+  {
+    "id": "renovator",
+    "title": "Renovator",
+    "category": "General",
+    "emoji": "🔧",
+    "description": "Interior and exterior refurbishments.",
+    "jobs": [
+      "Kitchen refurbishment", "Bathroom upgrade", "Ceiling repair", "Partition removal", "General makeover"
+    ],
+    "image": "renovator.png"
+  },
+  {
+    "id": "project-manager",
+    "title": "Project Manager",
+    "category": "General",
+    "emoji": "📋",
+    "description": "Coordination of timelines, budgets, and stakeholders.",
+    "jobs": [
+      "Budget tracking", "Timeline management", "Quality inspections", "Risk mitigation", "Stakeholder reporting"
+    ],
+    "image": "pm.png"
+  },
+  {
+    "id": "painting",
+    "featured": true,
+    "title": "Decorator / Painter",
+    "category": "Interior",
+    "emoji": "🎨",
+    "description": "Painting, wallpapering, and interior finishes.",
+    "jobs": [
+      "Interior painting", "Exterior painting", "Wallpaper hanging", "Trim & detail work", "Surface preparation"
+    ],
+    "image": "painter.png"
+  },
+  {
+    "id": "plasterer",
+    "title": "Plasterer",
+    "category": "Interior",
+    "emoji": "🧱",
+    "description": "Wall smoothing and ceiling finishes.",
+    "jobs": [
+      "Skim coating", "Ceiling repair", "Patch repairs", "Drywall finishing", "Textured finishes"
+    ],
+    "image": "plasterer.png"
+  },
+  {
+    "id": "tiler",
+    "title": "Tiler",
+    "category": "Interior",
+    "emoji": "🪨",
+    "description": "Wall and floor tiling.",
+    "jobs": [
+      "Bathroom wall tiles", "Kitchen splashback", "Floor leveling", "Grouting & sealing", "Tile repairs"
+    ],
+    "image": "tiler.png"
+  },
+  {
+    "id": "flooring",
+    "title": "Flooring Specialist",
+    "category": "Interior",
+    "emoji": "🪵",
+    "description": "Wood, laminate, vinyl, carpet installation.",
+    "jobs": [
+      "Hardwood install", "Laminate flooring", "Vinyl planks", "Carpet fitting", "Floor preparation"
+    ],
+    "image": "flooring.png"
+  },
+  {
+    "id": "roofer",
+    "title": "Roofer",
+    "category": "Exterior",
+    "emoji": "🏠",
+    "description": "Roof repairs, installations, and waterproofing.",
+    "jobs": [
+      "Leak detection", "Tile replacement", "Flashing repair", "Flat roof membrane", "Gutter cleaning"
+    ],
+    "image": "roofer.png"
+  },
+  {
+    "id": "landscaper",
+    "title": "Landscaper",
+    "category": "Exterior",
+    "emoji": "🌳",
+    "description": "Garden design, paving, and turfing.",
+    "jobs": [
+      "Garden planning", "Turf laying", "Paving installation", "Planting & beds", "Irrigation setup"
+    ],
+    "image": "landscaper.png"
+  },
+  {
+    "id": "fencer",
+    "title": "Fencer",
+    "category": "Exterior",
+    "emoji": "🚧",
+    "description": "Boundary fencing and gates.",
+    "jobs": [
+      "Timber fencing", "Gate installation", "Repairs & posts", "Security panels", "Screening"
+    ],
+    "image": "fencer.png"
+  },
+  {
+    "id": "window-door",
+    "title": "Window & Door Installer",
+    "category": "Exterior",
+    "emoji": "🚪",
+    "description": "Glazing, frames, and security doors.",
+    "jobs": [
+      "Window replacement", "Door hanging", "Frame repair", "Security door install", "Seal & insulation"
+    ],
+    "image": "windowdoor.png"
+  },
+  {
+    "id": "electrician",
+    "featured": true,
+    "title": "Electrician",
+    "category": "Systems",
+    "emoji": "💡",
+    "description": "Wiring, lighting, and safety systems.",
+    "jobs": [
+      "Light fixture install", "Socket additions", "Safety inspection", "Circuit troubleshooting", "Consumer unit upgrade"
+    ],
+    "image": "electrician.png"
+  },
+  {
+    "id": "plumber",
+    "featured": true,
+    "title": "Plumber",
+    "category": "Systems",
+    "emoji": "🚿",
+    "description": "Water systems, heating, and drainage.",
+    "jobs": [
+      "Leaky tap repair", "Drain unblocking", "Pipe replacement", "Water heater service", "Fixture installation"
+    ],
+    "image": "plumber.png"
+  },
+  {
+    "id": "hvac",
+    "featured": true,
+    "title": "HVAC Technician",
+    "category": "Systems",
+    "emoji": "🌬️",
+    "description": "Air conditioning, ventilation, and heating.",
+    "jobs": [
+      "AC servicing", "Filter replacement", "Ventilation setup", "Duct inspection", "Thermostat install"
+    ],
+    "image": "hvac.png"
+  },
+  {
+    "id": "smart-home",
+    "title": "Smart Home Installer",
+    "category": "Systems",
+    "emoji": "📱",
+    "description": "Automation, security, and network systems.",
+    "jobs": [
+      "Device pairing", "Security camera setup", "Network cabling", "Hub configuration", "Energy monitoring"
+    ],
+    "image": "smarthome.png"
+  },
+  {
+    "id": "carpenter",
+    "title": "Joiner / Carpenter",
+    "category": "Specialist",
+    "emoji": "🪚",
+    "description": "Custom woodwork, cabinetry, and framing.",
+    "jobs": [
+      "Bespoke shelving", "Door framing", "Cabinet installation", "Trim carpentry", "Repair & refurbishment"
+    ],
+    "image": "carpenter.png"
+  },
+  {
+    "id": "bricklayer",
+    "title": "Bricklayer",
+    "category": "Specialist",
+    "emoji": "🧱",
+    "description": "Walls, chimneys, and structural masonry.",
+    "jobs": [
+      "Wall construction", "Pointing & repairs", "Garden walls", "Chimney rebuild", "Block laying"
+    ],
+    "image": "bricklayer.png"
+  },
+  {
+    "id": "steelworker",
+    "title": "Steelworker / Welder",
+    "category": "Specialist",
+    "emoji": "🔩",
+    "description": "Structural steel, gates, and railings.",
+    "jobs": [
+      "Gate fabrication", "Railing installation", "On-site welding", "Steel frame repair", "Bracket & supports"
+    ],
+    "image": "steelworker.png"
+  },
+  {
+    "id": "insulation",
+    "title": "Insulation Installer",
+    "category": "Specialist",
+    "emoji": "🧤",
+    "description": "Thermal and acoustic insulation.",
+    "jobs": [
+      "Loft insulation", "Wall cavity fill", "Pipe lagging", "Acoustic panel fit", "Energy efficiency upgrade"
+    ],
+    "image": "insulation.png"
+  },
+  {
+    "id": "architect",
+    "title": "Architect",
+    "category": "Design",
+    "emoji": "📐",
+    "description": "Building design and planning approvals.",
+    "jobs": [
+      "Concept design", "Permit drawings", "3D modeling", "Spec documentation", "Planning submission"
+    ],
+    "image": "architect.png"
+  },
+  {
+    "id": "interior-designer",
+    "title": "Interior Designer",
+    "category": "Design",
+    "emoji": "🛋️",
+    "description": "Space planning, finishes, and furniture layout.",
+    "jobs": [
+      "Mood board creation", "Material selection", "Furniture plan", "Lighting layout", "Finish schedule"
+    ],
+    "image": "interiordesigner.png"
+  },
+  {
+    "id": "landscape-designer",
+    "title": "Landscape Designer",
+    "category": "Design",
+    "emoji": "🌿",
+    "description": "Outdoor space planning and aesthetics.",
+    "jobs": [
+      "Concept planting", "Hardscape layout", "Drainage planning", "Lighting design", "Seasonal plan"
+    ],
+    "image": "landscapedesigner.png"
+  },
+  {
+    "id": "surveyor",
+    "title": "Surveyor",
+    "category": "Design",
+    "emoji": "📏",
+    "description": "Site measurements, valuations, and compliance.",
+    "jobs": [
+      "Site measurement", "Condition report", "Valuation study", "Compliance review", "Boundary verification"
+    ],
+    "image": "surveyor.png"
+  }
+]

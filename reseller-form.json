@@ -1,0 +1,282 @@
+{
+  "formTitle": "Reseller Registration",
+  "formDescription": "Register your business as a reseller on FitOut Hub",
+  "sections": [
+    {
+      "id": "business_info",
+      "title": "Business Information",
+      "fields": [
+        {
+          "id": "business_name",
+          "label": "Business Name",
+          "type": "text",
+          "required": true,
+          "maxlength": 150,
+          "placeholder": "Enter registered business name"
+        },
+        {
+          "id": "registration_number",
+          "label": "Business Registration Number",
+          "type": "text",
+          "required": true,
+          "maxlength": 50,
+          "placeholder": "e.g., BR987654"
+        },
+        {
+          "id": "contact_person_name",
+          "label": "Primary Contact Person",
+          "type": "text",
+          "required": true,
+          "maxlength": 100,
+          "placeholder": "Full name of main contact"
+        },
+        {
+          "id": "contact_person_role",
+          "label": "Contact Person's Role",
+          "type": "text",
+          "required": true,
+          "maxlength": 100,
+          "placeholder": "e.g., Sales Manager, Business Owner"
+        },
+        {
+          "id": "phone",
+          "label": "Business Phone Number",
+          "type": "tel",
+          "required": true,
+          "pattern": "^[+\\d\\s-]{7,}$",
+          "placeholder": "+852 1234 5678"
+        },
+        {
+          "id": "email",
+          "label": "Business Email Address",
+          "type": "email",
+          "required": true,
+          "placeholder": "sales@yourcompany.com"
+        },
+        {
+          "id": "address",
+          "label": "Registered Business Address",
+          "type": "textarea",
+          "required": true,
+          "rows": 3,
+          "placeholder": "Street address, district, region"
+        },
+        {
+          "id": "website",
+          "label": "Company Website",
+          "type": "url",
+          "required": false,
+          "placeholder": "https://www.yourcompany.com"
+        }
+      ]
+    },
+    {
+      "id": "credentials",
+      "title": "Business Credentials",
+      "fields": [
+        {
+          "id": "business_license",
+          "label": "Business License / BR Certificate",
+          "type": "file",
+          "required": true,
+          "accept": "image/*,.pdf",
+          "help": "Upload a copy of your Business Registration certificate"
+        },
+        {
+          "id": "tax_certificate",
+          "label": "Tax Certificate",
+          "type": "file",
+          "required": false,
+          "accept": "image/*,.pdf",
+          "help": "Upload tax registration document (if applicable)"
+        },
+        {
+          "id": "insurance",
+          "label": "Business Insurance",
+          "type": "file",
+          "required": false,
+          "accept": "image/*,.pdf",
+          "help": "Upload insurance certificate (optional)"
+        }
+      ]
+    },
+    {
+      "id": "product_categories",
+      "title": "Products & Categories",
+      "fields": [
+        {
+          "id": "product_categories",
+          "label": "Product Categories You Supply",
+          "type": "checkbox",
+          "required": true,
+          "options": [
+            "Construction Materials",
+            "Hardware & Fixtures",
+            "Appliances",
+            "Furniture",
+            "Decorative Items",
+            "Lighting",
+            "Flooring",
+            "Plumbing Supplies",
+            "Electrical Supplies",
+            "Paint & Coatings",
+            "Tools & Equipment",
+            "Safety Equipment",
+            "HVAC Equipment"
+          ],
+          "help": "Select all categories that apply to your business"
+        },
+        {
+          "id": "product_catalog",
+          "label": "Product Catalog / Price List",
+          "type": "file",
+          "required": false,
+          "accept": ".pdf,.xlsx,.xls,.csv",
+          "help": "Upload your product catalog or price list (optional)"
+        },
+        {
+          "id": "brands_carried",
+          "label": "Major Brands You Carry",
+          "type": "textarea",
+          "required": false,
+          "rows": 3,
+          "maxlength": 500,
+          "placeholder": "List major brands you supply, separated by commas"
+        }
+      ]
+    },
+    {
+      "id": "service_details",
+      "title": "Service Details",
+      "fields": [
+        {
+          "id": "delivery_available",
+          "label": "Do you offer delivery service?",
+          "type": "radio",
+          "required": true,
+          "options": ["Yes", "No"]
+        },
+        {
+          "id": "installation_services",
+          "label": "Do you provide installation services?",
+          "type": "radio",
+          "required": true,
+          "options": ["Yes", "No"]
+        },
+        {
+          "id": "service_area",
+          "label": "Service / Delivery Areas",
+          "type": "checkbox",
+          "required": true,
+          "options": [
+            "Hong Kong Island",
+            "Kowloon",
+            "New Territories",
+            "Lantau Island",
+            "Outlying Islands"
+          ],
+          "help": "Select all areas you can deliver to or service"
+        },
+        {
+          "id": "minimum_order",
+          "label": "Minimum Order Value (HKD)",
+          "type": "number",
+          "required": false,
+          "min": 0,
+          "placeholder": "Enter minimum order amount (optional)"
+        },
+        {
+          "id": "payment_terms",
+          "label": "Payment Terms",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Cash on Delivery",
+            "Net 7 Days",
+            "Net 15 Days",
+            "Net 30 Days",
+            "Advance Payment",
+            "Other"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "portfolio",
+      "title": "Portfolio & Showcase (Optional)",
+      "fields": [
+        {
+          "id": "portfolio_images",
+          "label": "Product Showcase Images",
+          "type": "file",
+          "required": false,
+          "accept": "image/*",
+          "multiple": true,
+          "max": 15,
+          "help": "Upload up to 15 photos showcasing your products"
+        },
+        {
+          "id": "portfolio_description",
+          "label": "Business Overview",
+          "type": "textarea",
+          "required": false,
+          "rows": 5,
+          "maxlength": 1000,
+          "placeholder": "Describe your business, specialties, and what sets you apart..."
+        }
+      ]
+    },
+    {
+      "id": "references",
+      "title": "Business References (Optional)",
+      "fields": [
+        {
+          "id": "reference1_name",
+          "label": "Reference 1 - Company Name",
+          "type": "text",
+          "required": false,
+          "maxlength": 150
+        },
+        {
+          "id": "reference1_contact",
+          "label": "Reference 1 - Contact",
+          "type": "text",
+          "required": false,
+          "placeholder": "Email or phone"
+        },
+        {
+          "id": "reference2_name",
+          "label": "Reference 2 - Company Name",
+          "type": "text",
+          "required": false,
+          "maxlength": 150
+        },
+        {
+          "id": "reference2_contact",
+          "label": "Reference 2 - Contact",
+          "type": "text",
+          "required": false,
+          "placeholder": "Email or phone"
+        }
+      ]
+    },
+    {
+      "id": "compliance",
+      "title": "Compliance & Agreement",
+      "fields": [
+        {
+          "id": "background_check_consent",
+          "label": "I consent to business verification and background checks",
+          "type": "checkbox_single",
+          "required": true
+        },
+        {
+          "id": "terms_agreed",
+          "label": "I agree to FitOut Hub's Terms of Service and Reseller Agreement on behalf of the company",
+          "type": "checkbox_single",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

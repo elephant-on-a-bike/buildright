@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FitOut Hub — Transparent, Stress‑Free Renovations & Fit‑Outs</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta name="description" content="FitOut Hub connects clients, contractors, suppliers, and design professionals on one transparent platform with project oversight that prevents disputes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="small-projects.css" />
+</head>
+<body>
+  <!-- Site Header -->
+<header class="site-header" role="banner">
+  <div class="container header-inner">
+    <a class="logo" aria-label="FitOut Hub home" href="index.html">
+      <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+        <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+        <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>FitOut Hub</span>
+    </a>
+
+    <nav class="nav" role="navigation" aria-label="Primary">
+      <!-- Inline section links (desktop only) -->
+      <ul class="nav-inline">
+        <li><a href="#why">Why FitOut Hub</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#who">Who we help</a></li>
+        <li><a href="#choose">Why choose us</a></li>
+      </ul>
+
+      <!-- Hamburger (desktop only) -->
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <!-- Drawer -->
+      <ul class="nav-links" id="drawer">
+        <li><a href="howitworks.html">How it Works</a></li>
+        <li><a href="ourservices.html">Our Services</a></li>
+        <li><a href="smallprojects.html">Book a Tradesman</a></li>
+        <li><a href="forclients.html">For Clients</a></li>
+        <li><a href="forcontractors.html">For Contractors</a></li>
+        <li><a href="forsuppliers.html">For Suppliers</a></li>
+        <li><a href="projectmanagement.html">Project Management</a></li>
+        <li><a href="trustandsecurity.html">Trust and Security</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="aboutus.html">About Us</a></li>
+        <li><a href="contactus.html">Contact Us</a></li>
+        <li class="mobile-only"><a href="#why">Why FitOut Hub</a></li>
+        <li class="mobile-only"><a href="#how">How it works</a></li>
+        <li class="mobile-only"><a href="#who">Who we help</a></li>
+        <li class="mobile-only"><a href="#choose">Why choose us</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+  <!-- Hero -->
+  <section id="hero" class="hero" aria-label="Intro">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <h1>Transparent, stress‑free renovations & fit‑outs</h1>
+        <p>Connecting clients, contractors, suppliers, and design professionals on one trusted platform — with project management oversight that prevents disputes before they arise.</p>
+        <div class="hero-actions auth-actions">
+          <button id="openJoin" class="btn btn-primary" type="button">Join Now</button>
+          <button id="openLogin" class="btn btn-primary" type="button">Login</button>
+        </div>
+        <div id="greeting" class="greeting" aria-live="polite">
+          <a href="expert3.html" id="newProjectBtn" class="btn btn-primary" style="display:none;">New project</a>
+          <a href="projectmanagement.html" id="yourProjectsBtn" class="btn btn-primary" style="display:none;">Your projects</a>
+          <button id="logoutBtn" class="btn btn-primary" type="button" style="display:none;">Logout</button>
+        </div>
+      </div>
+
+      <!-- Hero artwork -->
+      <div class="hero-art hero-image nav-inline" aria-hidden="true">
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Trade Booking -->
+  <section id="trades" class="section section-alt" aria-label="Book a Tradesman">
+    <div class="container">
+      <h2>Book a Tradesman</h2>
+      <p>Select the type of professional you need and outline the work. We’ll route it to trusted, vetted specialists.</p>
+      <div id="tradesButtons" class="trades-grid" role="list" aria-label="Available trades"></div>
+    </div>
+  </section>
+
+  <!-- Submission Summary Modal -->
+  <div class="pd-overlay" id="summaryOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="summaryModal" role="dialog" aria-modal="true" aria-labelledby="summaryTitle" aria-describedby="summaryBody" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="summaryClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="summaryTitle">Submission Preview</h2>
+        <div id="summaryBody"></div>
+        <div class="form-group">
+          <label for="userIdInput" class="form-label">User ID (optional)</label>
+          <input id="userIdInput" class="form-control" type="text" placeholder="e.g., user-1234">
+        </div>
+        <div class="cta-actions">
+          <button class="btn btn-primary" id="summaryConfirm">Save locally</button>
+          <button class="btn btn-secondary" id="summaryCancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why FitOut Hub -->
+  <section id="why" class="section" aria-label="Why FitOut Hub">
+    <div class="container">
+      <h2>Why FitOut Hub?</h2>
+      <p>Renovations and fit‑outs don’t have to be stressful. FitOut Hub ensures every step is clear, fair, and transparent by combining secure contracts, milestone‑based payments, and independent project oversight.</p>
+
+      <div class="grid grid-4">
+        <article class="card">
+          <div class="icon">
+            <!-- Padlock -->
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect x="14" y="28" width="36" height="26" rx="6" fill="#93C5FD" stroke="#1E3A8A" stroke-width="4"/>
+              <path d="M22 28 v-10 a10 10 0 0 1 20 0 v10" stroke="#1E3A8A" stroke-width="4" fill="none"/>
+              <circle cx="32" cy="40" r="4" fill="#1E3A8A"/>
+            </svg>
+          </div>
+          <h3>Secure & transparent payments</h3>
+          <p>Funds are held safely and released only when verified milestones are met.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">
+            <!-- Document -->
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect x="14" y="8" width="36" height="48" rx="6" fill="#FFFFFF" stroke="#1E3A8A" stroke-width="4"/>
+              <line x1="22" y1="20" x2="42" y2="20" stroke="#2563EB" stroke-width="4"/>
+              <line x1="22" y1="30" x2="42" y2="30" stroke="#2563EB" stroke-width="4"/>
+              <line x1="22" y1="40" x2="36" y2="40" stroke="#2563EB" stroke-width="4"/>
+            </svg>
+          </div>
+          <h3>Clear contracts</h3>
+          <p>Standardized agreements reduce ambiguity and protect all parties.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">
+            <!-- Hard hat -->
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M12 40 a20 20 0 0 1 40 0 v10 h-40 z" fill="#93C5FD" stroke="#1E3A8A" stroke-width="4"/>
+              <path d="M24 40 v-12 M32 40 v-16 M40 40 v-12" stroke="#1E3A8A" stroke-width="4"/>
+            </svg>
+          </div>
+          <h3>Independent oversight</h3>
+          <p>Project managers monitor progress, verify work, and resolve issues early.</p>
+        </article>
+
+        <article class="card">
+          <div class="icon">
+            <!-- Handshake -->
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <path d="M10 34 h18 l6 6 h20" stroke="#1E3A8A" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <path d="M10 34 l8 -8 h22 l6 6" stroke="#2563EB" stroke-width="4" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Collaboration without friction</h3>
+          <p>Clients, contractors, and suppliers work together on one platform.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="how" class="section section-alt" aria-label="How it works">
+    <div class="container">
+      <h2>How it works</h2>
+      <div class="grid grid-4">
+        <article class="card step">
+          <div class="step-number">1</div>
+          <h3>Plan</h3>
+          <p>Define your project scope with expert guidance.</p>
+        </article>
+        <article class="card step">
+          <div class="step-number">2</div>
+          <h3>Match</h3>
+          <p>Connect with vetted contractors, suppliers, and professionals.</p>
+        </article>
+        <article class="card step">
+          <div class="step-number">3</div>
+          <h3>Manage</h3>
+          <p>Track progress, payments, and documentation in one place.</p>
+        </article>
+        <article class="card step">
+          <div class="step-number">4</div>
+          <h3>Complete</h3>
+          <p>Enjoy a smooth, dispute‑free handover.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who We Help -->
+  <section id="who" class="section" aria-label="Who we help">
+    <div class="container">
+      <h2>Who we help</h2>
+      <div class="grid grid-4">
+        <article class="card">
+          <div class="icon">
+            <!-- Clients -->
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="22" cy="22" r="10" fill="#93C5FD" stroke="#1E3A8A" stroke-width="3"/>
+              <circle cx="42" cy="22" r="10" fill="#93C5FD" stroke="#1E3A8A" stroke-width="3"/>
+              <rect x="14" y="34" width="36" height="16" rx="8" fill="#2563EB"/>
+            </svg>
+          </div>
+          <h3>Clients & property owners</h3>
+          <p>Peace of mind with secure payments, vetted professionals, and proactive oversight.</p>
+        </article>
+        <article class="card">
+          <div class="icon">
+            <!-- Contractors -->
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect x="10" y="28" width="44" height="22" rx="4" fill="#60A5FA"/>
+              <path d="M12 28 a20 12 0 0 1 40 0" fill="#93C5FD" stroke="#1E3A8A" stroke-width="3"/>
+            </svg>
+          </div>
+          <h3>Contractors & builders</h3>
+          <p>Fair contracts, timely payments, and fewer disputes.</p>
+        </article>
+        <article class="card">
+          <div class="icon">
+            <!-- Suppliers -->
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <rect x="14" y="22" width="36" height="26" rx="4" fill="#93C5FD" stroke="#1E3A8A" stroke-width="3"/>
+              <path d="M32 22 v-12" stroke="#1E3A8A" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="32" cy="8" r="4" fill="#2563EB"/>
+            </svg>
+          </div>
+          <h3>Suppliers</h3>
+          <p>Transparent terms and new opportunities across active projects.</p>
+        </article>
+        <article class="card">
+          <div class="icon">
+            <!-- Designers -->
+            <svg viewBox="0 0 64 64" aria-hidden="true">
+              <polygon points="14,44 50,44 50,40 14,40" fill="#2563EB"/>
+              <polygon points="20,20 44,20 48,24 16,24" fill="#93C5FD" stroke="#1E3A8A" stroke-width="3"/>
+            </svg>
+          </div>
+          <h3>Design professionals</h3>
+          <p>Seamless collaboration with contractors and clients in a structured environment.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section id="choose" class="section section-alt" aria-label="Why choose us">
+    <div class="container">
+      <h2>Why choose us</h2>
+      <p>Unlike traditional renovation processes that often lead to miscommunication, delays, and disputes, FitOut Hub provides:</p>
+      <ul class="benefits">
+        <li><strong>Neutral, professional project management</strong> that keeps work moving and issues contained.</li>
+        <li><strong>Transparent communication</strong> at every stage, with documented milestones and evidence.</li>
+        <li><strong>A single platform</strong> for all stakeholders, unifying scope, schedule, and payments.</li>
+        <li><strong>Reduced risk and stress</strong> with clear expectations and fair resolution paths.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section id="cta" class="cta" aria-label="Get started">
+    <div class="container cta-inner">
+      <h2>Ready to build with confidence?</h2>
+      <p>Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
+      <div class="cta-actions">
+        <a href="expert3.html" class="btn btn-primary">Start your project</a>
+        <a href="#" class="btn btn-secondary">Join as a professional</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <a class="logo" href="#hero">
+          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
+            <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+            <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>FitOut Hub</span>
+        </a>
+        <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#why">Why FitOut Hub</a>
+        <a href="#how">How it works</a>
+        <a href="#who">Who we help</a>
+        <a href="#choose">Why choose us</a>
+        <a href="expert3.html">Start your project</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Auth Overlays & Modals -->
+  <!-- Role Selection Modal -->
+  <div class="pd-overlay" id="roleOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="roleModal" role="dialog" aria-modal="true" aria-labelledby="roleTitle" aria-describedby="roleDesc" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="roleClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="roleTitle">Join FitOut Hub</h2>
+        <p id="roleDesc">Are you joining the hub as...</p>
+        <div class="role-options">
+          <div class="role-option">
+            <button type="button" id="roleClient" class="btn btn-primary btn-large">A Client</button>
+            <button type="button" class="btn-info" data-role="client" aria-label="What is a client?">?</button>
+          </div>
+          <div class="role-option">
+            <button type="button" id="roleContractor" class="btn btn-primary btn-large">A Contractor</button>
+            <button type="button" class="btn-info" data-role="contractor" aria-label="What is a contractor?">?</button>
+          </div>
+          <div class="role-option">
+            <button type="button" id="roleReseller" class="btn btn-primary btn-large">A Reseller</button>
+            <button type="button" class="btn-info" data-role="reseller" aria-label="What is a reseller?">?</button>
+          </div>
+        </div>
+        <div id="roleInfo" class="role-info" style="display:none;"></div>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="hero.png" alt="FitOut Hub" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Client Join Modal -->
+  <div class="pd-overlay" id="joinOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="joinModal" role="dialog" aria-modal="true" aria-labelledby="joinTitle" aria-describedby="joinDesc" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="joinClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="joinTitle">Create Your Account</h2>
+        <p id="joinDesc">Fill in your details to join FitOut Hub.</p>
+        <div id="joinErrors" class="auth-errors" aria-live="polite"></div>
+        <form id="joinForm" novalidate>
+          <div class="form-group"><label class="form-label" for="joinNickname">Nickname *</label><input id="joinNickname" name="joinNickname" class="form-control" required maxlength="32" /></div>
+          <div class="form-group"><label class="form-label" for="joinFirst">First Name *</label><input id="joinFirst" name="joinFirst" class="form-control" required maxlength="64" /></div>
+          <div class="form-group"><label class="form-label" for="joinSurname">Surname *</label><input id="joinSurname" name="joinSurname" class="form-control" required maxlength="64" /></div>
+          <div class="form-group"><label class="form-label" for="joinChinese">Chinese Name</label><input id="joinChinese" name="joinChinese" class="form-control" maxlength="64" /></div>
+          <div class="form-group"><label class="form-label" for="joinEmail">Email *</label><input id="joinEmail" name="joinEmail" type="email" class="form-control" required /></div>
+          <div class="form-group"><label class="form-label" for="joinMobile">Mobile *</label><input id="joinMobile" name="joinMobile" type="tel" class="form-control" required /></div>
+          <div class="form-group"><label class="form-label" for="joinPassword">Password *</label><input id="joinPassword" name="joinPassword" type="password" class="form-control" required minlength="8" /></div>
+          <div class="form-group"><label class="form-label" for="joinConfirm">Confirm Password *</label><input id="joinConfirm" name="joinConfirm" type="password" class="form-control" required minlength="8" /></div>
+          <div class="form-group small"><em>* required fields</em></div>
+          <div class="cta-actions">
+            <button type="submit" id="joinSubmit" class="btn btn-primary" disabled aria-disabled="true">Create Account</button>
+            <button type="button" id="joinToLogin" class="btn btn-secondary">Go to Login</button>
+          </div>
+        </form>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="hero.png" alt="FitOut Hub" />
+      </div>
+    </div>
+  </section>
+
+  <div class="pd-overlay" id="loginOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" aria-describedby="loginDesc" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="loginClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="loginTitle">Login</h2>
+        <p id="loginDesc">Enter your nickname and password.</p>
+        <div id="loginErrors" class="auth-errors" aria-live="polite"></div>
+        <form id="loginForm" novalidate>
+          <div class="form-group"><label class="form-label" for="loginNickname">Nickname</label><input id="loginNickname" name="loginNickname" class="form-control" required /></div>
+          <div class="form-group"><label class="form-label" for="loginPassword">Password</label><input id="loginPassword" name="loginPassword" type="password" class="form-control" required /></div>
+          <div class="cta-actions">
+            <button type="submit" id="loginSubmit" class="btn btn-primary" disabled aria-disabled="true">Login</button>
+            <button type="button" id="loginToJoin" class="btn btn-secondary">Create Account</button>
+          </div>
+        </form>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="hero.png" alt="FitOut Hub" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Contractor Join Modal -->
+  <div class="pd-overlay" id="contractorOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="contractorModal" role="dialog" aria-modal="true" aria-labelledby="contractorTitle" aria-describedby="contractorDesc" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="contractorClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="contractorTitle">Contractor Registration</h2>
+        <p id="contractorDesc">Register as a contractor on FitOut Hub.</p>
+        <div id="contractorErrors" class="auth-errors" aria-live="polite"></div>
+        <form id="contractorForm" novalidate>
+          <!-- Form sections will be dynamically generated by contractor-form.js -->
+          <div class="cta-actions">
+            <button type="submit" id="contractorSubmit" class="btn btn-primary" disabled>Submit Registration</button>
+            <button type="button" id="contractorCancel" class="btn btn-secondary">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="hero.png" alt="FitOut Hub" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Reseller Join Modal -->
+  <div class="pd-overlay" id="resellerOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="resellerModal" role="dialog" aria-modal="true" aria-labelledby="resellerTitle" aria-describedby="resellerDesc" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="resellerClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="resellerTitle">Reseller Registration</h2>
+        <p id="resellerDesc">Register as a reseller on FitOut Hub.</p>
+        <div id="resellerErrors" class="auth-errors" aria-live="polite"></div>
+        <form id="resellerForm" novalidate>
+          <!-- Form sections will be dynamically generated by reseller-form.js -->
+          <div class="cta-actions">
+            <button type="submit" id="resellerSubmit" class="btn btn-primary" disabled>Submit Registration</button>
+            <button type="button" id="resellerCancel" class="btn btn-secondary">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="hero.png" alt="FitOut Hub" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Overlay & Modal for Trades -->
+  <div class="pd-overlay" id="pdOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="pdModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="pdClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc"></p>
+        <div id="loginWarning" class="login-warning" style="display:none; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 0.75em 1em; margin: 1em 0;">
+          ⚠️ Please log in to book a tradesman
+        </div>
+        <ul id="modalSubservices" class="subservices-list" aria-label="Selectable jobs"></ul>
+        <div class="form-group">
+          <label for="workDescription" class="form-label">Description of Works / Other</label>
+          <textarea id="workDescription" name="workDescription" rows="4" class="form-control" style="width:100%" placeholder="Describe the works to be completed..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="regionSelect" class="form-label">Where is your project</label>
+          <select id="regionSelect" name="regionSelect" class="form-control" aria-label="Select a region">
+            <option value="">-- Please choose a region --</option>
+            <option value="hong-kong-island">Hong Kong Island</option>
+            <option value="kowloon">Kowloon</option>
+            <option value="new-territories">New Territories</option>
+            <option value="lantau">Lantau Island</option>
+            <option value="outlying-islands">Outlying Islands</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="photoInput" class="form-label">Add a photo (optional)</label>
+          <input id="photoInput" class="form-control" type="file" accept="image/*" capture="environment" multiple aria-label="Upload or take photos">
+          <small class="hint">You can take a photo on mobile or upload from your device.</small>
+          <div id="photoPreview" class="photo-preview" aria-live="polite"></div>
+          <div id="photoMessages" class="photo-messages" aria-live="polite"></div>
+        </div>
+        <div id="bookingGuidance" class="booking-guidance" aria-live="polite"></div>
+        <button class="btn btn-primary" id="modalCta">Book now</button>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img id="modalImage" src="" alt="" />
+      </div>
+    </div>
+  </section>
+
+  <script src="main.js"></script>
+  <script src="chat-widget.js"></script>
+  <script src="tradesmen.js"></script>
+  <script src="auth.js"></script>
+  <script src="contractor-form.js"></script>
+  <script src="reseller-form.js"></script>
+</body>
+</html>

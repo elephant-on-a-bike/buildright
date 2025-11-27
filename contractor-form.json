@@ -1,0 +1,254 @@
+{
+  "formTitle": "Contractor Registration",
+  "formDescription": "Register as a contractor on FitOut Hub",
+  "sections": [
+    {
+      "id": "personal_info",
+      "title": "Personal Information",
+      "fields": [
+        {
+          "id": "full_name",
+          "label": "Full Name",
+          "type": "text",
+          "required": true,
+          "maxlength": 100,
+          "placeholder": "Enter your full legal name"
+        },
+        {
+          "id": "phone",
+          "label": "Phone Number",
+          "type": "tel",
+          "required": true,
+          "pattern": "^[+\\d\\s-]{7,}$",
+          "placeholder": "+852 1234 5678"
+        },
+        {
+          "id": "email",
+          "label": "Email Address",
+          "type": "email",
+          "required": true,
+          "placeholder": "your.email@example.com"
+        },
+        {
+          "id": "address",
+          "label": "Business Address",
+          "type": "textarea",
+          "required": true,
+          "rows": 3,
+          "placeholder": "Street address, district, region"
+        },
+        {
+          "id": "id_verification",
+          "label": "ID Verification",
+          "type": "file",
+          "required": true,
+          "accept": "image/*,.pdf",
+          "help": "Upload HKID or passport (front and back)"
+        }
+      ]
+    },
+    {
+      "id": "professional_details",
+      "title": "Professional Details",
+      "fields": [
+        {
+          "id": "primary_trade",
+          "label": "Primary Trade",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Builder/General Contractor",
+            "Renovator",
+            "Project Manager",
+            "Painting & Decorating",
+            "Plasterer",
+            "Tiler",
+            "Flooring Specialist",
+            "Roofer",
+            "Landscaper",
+            "Fencing",
+            "Windows & Doors",
+            "Electrician",
+            "Plumber",
+            "HVAC Technician",
+            "Smart Home Installer",
+            "Carpenter",
+            "Bricklayer",
+            "Steel Worker",
+            "Insulation Specialist"
+          ]
+        },
+        {
+          "id": "years_experience",
+          "label": "Years of Experience",
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "max": 50,
+          "placeholder": "Enter number of years"
+        },
+        {
+          "id": "certifications",
+          "label": "Certifications & Licenses",
+          "type": "file",
+          "required": false,
+          "accept": "image/*,.pdf",
+          "multiple": true,
+          "help": "Upload copies of relevant certifications (optional)"
+        },
+        {
+          "id": "has_insurance",
+          "label": "Do you have professional liability insurance?",
+          "type": "radio",
+          "required": true,
+          "options": ["Yes", "No"]
+        },
+        {
+          "id": "insurance_document",
+          "label": "Insurance Certificate",
+          "type": "file",
+          "required": false,
+          "accept": "image/*,.pdf",
+          "help": "Upload if available",
+          "conditionalOn": {
+            "field": "has_insurance",
+            "value": "Yes"
+          }
+        },
+        {
+          "id": "service_area",
+          "label": "Service Areas",
+          "type": "checkbox",
+          "required": true,
+          "options": [
+            "Hong Kong Island",
+            "Kowloon",
+            "New Territories",
+            "Lantau Island",
+            "Outlying Islands"
+          ],
+          "help": "Select all areas you can service"
+        }
+      ]
+    },
+    {
+      "id": "work_preferences",
+      "title": "Work Preferences",
+      "fields": [
+        {
+          "id": "job_types",
+          "label": "Types of Jobs You Accept",
+          "type": "checkbox",
+          "required": true,
+          "options": [
+            "Small Repairs",
+            "Maintenance",
+            "Partial Renovations",
+            "Full Renovations",
+            "New Construction",
+            "Emergency Service"
+          ]
+        },
+        {
+          "id": "availability_days",
+          "label": "Available Days",
+          "type": "checkbox",
+          "required": true,
+          "options": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        },
+        {
+          "id": "availability_hours",
+          "label": "Typical Working Hours",
+          "type": "text",
+          "required": false,
+          "placeholder": "e.g., 09:00-18:00",
+          "pattern": "^\\d{2}:\\d{2}-\\d{2}:\\d{2}$"
+        },
+        {
+          "id": "emergency_service",
+          "label": "Do you offer emergency/after-hours service?",
+          "type": "radio",
+          "required": true,
+          "options": ["Yes", "No"]
+        }
+      ]
+    },
+    {
+      "id": "portfolio",
+      "title": "Portfolio (Optional)",
+      "fields": [
+        {
+          "id": "portfolio_images",
+          "label": "Upload Work Examples",
+          "type": "file",
+          "required": false,
+          "accept": "image/*",
+          "multiple": true,
+          "max": 10,
+          "help": "Upload up to 10 photos of completed projects"
+        },
+        {
+          "id": "portfolio_description",
+          "label": "Brief Description of Your Work",
+          "type": "textarea",
+          "required": false,
+          "rows": 4,
+          "maxlength": 500,
+          "placeholder": "Describe your typical projects and specialties..."
+        }
+      ]
+    },
+    {
+      "id": "references",
+      "title": "References (Optional)",
+      "fields": [
+        {
+          "id": "reference1_name",
+          "label": "Reference 1 - Name",
+          "type": "text",
+          "required": false,
+          "maxlength": 100
+        },
+        {
+          "id": "reference1_contact",
+          "label": "Reference 1 - Contact",
+          "type": "text",
+          "required": false,
+          "placeholder": "Email or phone"
+        },
+        {
+          "id": "reference2_name",
+          "label": "Reference 2 - Name",
+          "type": "text",
+          "required": false,
+          "maxlength": 100
+        },
+        {
+          "id": "reference2_contact",
+          "label": "Reference 2 - Contact",
+          "type": "text",
+          "required": false,
+          "placeholder": "Email or phone"
+        }
+      ]
+    },
+    {
+      "id": "compliance",
+      "title": "Compliance & Agreement",
+      "fields": [
+        {
+          "id": "background_check_consent",
+          "label": "I consent to background and credential verification",
+          "type": "checkbox_single",
+          "required": true
+        },
+        {
+          "id": "terms_agreed",
+          "label": "I agree to FitOut Hub's Terms of Service and Contractor Agreement",
+          "type": "checkbox_single",
+          "required": true
+        }
+      ]
+    }
+  ]
+}
