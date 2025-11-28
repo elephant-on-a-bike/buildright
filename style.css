@@ -81,9 +81,9 @@ textarea { min-height: 80px; }
 
 /* Modal / overlay canonical */
 .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; }
-.modal-content { margin: 6% auto; max-width: 720px; background: var(--white); padding: 1.5rem; border-radius: 12px; }
+.modal-content { margin: 6% auto; max-width: 720px; background: var(--white); padding: 1.5rem; border-radius: 12px; position: relative; }
 .modal.open { display: flex; align-items: center; justify-content: center; }
-.close-btn { position: absolute; top: 8px; right: 10px; cursor: pointer; }
+.close-btn { position: absolute; top: 8px; right: 10px; cursor: pointer; font-size: 1.5rem; line-height: 1; }
 
 /* Info icon used by logic.js */
 .label-with-info { display: flex; justify-content: space-between; align-items: center; }
@@ -141,8 +141,56 @@ body.is-exiting {
 
 /* Header basics (keep your existing styles) */
 .site-header { position: sticky; top: 0; background: var(--white); border-bottom: 1px solid var(--gray-200); z-index: 50; }
-.header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 64px; }
+.header-inner { display: flex; align-items: center; justify-content: flex-start; min-height: 64px; }
+.header-inner .logo { flex: 0 0 30%; max-width:30%; }
+.header-inner .nav { flex: 0 0 70%; max-width:70%; justify-content: flex-end; align-items:center; }
 .nav { position: relative; display: flex; align-items: center; gap: 14px; }
+/* Auth header inline adjustments */
+/* Greeting + auth buttons inline */
+.nav { position: relative; display: flex; align-items: center; flex-wrap: nowrap; justify-content: flex-end; }
+/* Unified header row housing greeting, auth buttons, and hamburger */
+.header-row { display:flex; align-items:center; justify-content:flex-end; gap:10px; width:100%; }
+.header-row > * { flex:0 0 auto; }
+/* Ensure greeting container and its inner buttons do not expand */
+#greeting, .greeting, .greeting-buttons { flex: 0 0 auto; max-width: auto; display:flex; align-items:center; }
+.greeting-buttons { gap: 10px; }
+/* Prevent greeting title from dominating width */
+.greeting h1 { font-size: 1rem; line-height:1; margin: 0 12px 0 0; white-space: nowrap; }
+/* Keep auth controls, drawer toggle, and any anchors aligned on one line */
+.nav > * { flex: 0 0 auto; }
+@media (max-width: 780px) {
+  .header-inner { flex-direction: column; align-items: stretch; }
+  .header-inner .logo, .header-inner .nav { flex: 0 0 auto; max-width:100%; }
+  .nav { flex-wrap: wrap; justify-content: flex-start; }
+  .nav-toggle { margin-left:0; }
+}
+/* Greeting + auth buttons inline (tighter text, clearer separation) */
+.nav > .greeting { display:flex; align-items:center; font-weight:500; font-size:.8rem; color: var(--gray-700); margin:0 18px 0 4px; white-space:nowrap; }
+.nav > #openLogin,
+.nav > #openJoin,
+.nav > #newProjectBtn,
+.nav > #logoutBtn { flex:0 0 auto; margin:0 10px; }
+/* Also handle any anchor-based buttons */
+.nav > .btn { margin:0 10px; }
+/* Explicit header button utility */
+.header-button { margin:0 10px !important; display:inline-flex; align-items:center; }
+/* Avoid crowding near the nav toggle */
+.nav-toggle { margin-left:18px; }
+@media (max-width:980px){
+  .nav { flex-wrap:wrap; }
+  .nav > .greeting { width:100%; margin:0 0 6px 0; }
+  .nav > #openLogin,
+  .nav > #openJoin,
+  .nav > #newProjectBtn,
+  .nav > #logoutBtn,
+  .nav > .btn { margin:6px 8px; }
+  .nav-toggle { margin:6px 8px; }
+}
+@media (max-width: 980px) {
+  /* Stack auth controls on small screens while keeping spacing */
+  .nav { flex-wrap: wrap; }
+  .nav > .greeting { width:100%; margin-bottom:6px; }
+}
 
 /* Permanent hamburger */
 .nav-toggle {
@@ -335,7 +383,34 @@ body.is-exiting {
   flex-wrap: wrap;
 }
 .footer-nav a {
-  margin-right: 14px;
+.site-header .header-inner { display: flex; align-items: center; gap: 12px; }
+.site-header .logo { flex: 0 0 30%; min-width: 160px; display: inline-flex; align-items: center; gap: 8px; }
+.site-header nav.nav { flex: 1 1 70%; display: flex; align-items: center; justify-content: flex-end; }
+.site-header nav.nav .header-row { display: inline-flex; align-items: center; gap: 10px; flex-wrap: nowrap; width: 100%; justify-content: flex-end; }
+.site-header .nav-inline { display: none; }
+.site-header .nav-toggle { flex: 0 0 auto; }
+.greeting { display: inline-flex; align-items: center; gap: 10px; margin: 0; }
+.greeting h1, .greeting span { font-size: 1rem; margin: 0; }
+.header-button { margin: 0 10px !important; }
+
+/* Ensure all header buttons have identical sizing (match Log Off) */
+.site-header .header-row .header-button,
+.site-header .header-row .btn,
+.site-header .header-row .btn-logoff {
+  padding: 10px 16px !important;
+  font-size: 0.95rem !important;
+  line-height: 1.2 !important;
+  border-radius: 12px !important;
+}
+
+/* Normalise button sizes across pages */
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 12px; font-size: 0.95rem; font-weight: 700; line-height: 1; }
+.btn-primary { background: #1e40af; color: #fff; }
+.btn-secondary { background: #e2e8f0; color: #0f172a; }
+.btn-outline { background: #ffffff; color: #0f172a; border: 1px solid #cbd5e1; }
+
+/* Prevent header wrapping */
+.site-header .header-inner, .site-header nav.nav .header-row { white-space: nowrap; }
   color: var(--gray-700);
   text-decoration: none;
   font-weight: 600;

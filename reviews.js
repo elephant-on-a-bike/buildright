@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .then(response => response.json())
       .then(data => {
         const grid = document.getElementById("reviews-grid");
+        if(!grid) { console.warn('reviews-grid not found on this page'); return; }
   
         data.forEach(review => {
           const card = document.createElement("div");
@@ -73,7 +74,8 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(error => {
         console.error("Error loading reviews:", error);
-        document.getElementById("reviews-grid").innerHTML = "<p>Unable to load reviews.</p>";
+        const grid = document.getElementById("reviews-grid");
+        if(grid) grid.innerHTML = "<p>Unable to load reviews.</p>";
       });
   });
   

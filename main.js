@@ -54,6 +54,30 @@ document.addEventListener('DOMContentLoaded', () => {
   // small delay so transitions apply
   requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('is-loaded')));
 
+  // Ensure Renovations Hub link exists in FitOut Hub hamburger (drawer)
+  try {
+    const inSubfolder = window.location.pathname.includes('/buildingrennovations/');
+    if (!inSubfolder) {
+      const drawer = document.getElementById('drawer') || document.querySelector('.nav-links');
+      if (drawer) {
+        const existing = drawer.querySelector('a[href$="buildingrennovations/index.html"]');
+        if (!existing) {
+          const divider = document.createElement('li');
+          divider.className = 'divider';
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = 'buildingrennovations/index.html';
+          a.textContent = 'Renovations Hub';
+          li.appendChild(a);
+          drawer.appendChild(divider);
+          drawer.appendChild(li);
+        }
+      }
+    }
+  } catch (e) {
+    // no-op if nav not present
+  }
+
   // Intercept link clicks for same-origin navigations (soft transitions)
   document.addEventListener('click', (e) => {
     const a = e.target.closest('a');

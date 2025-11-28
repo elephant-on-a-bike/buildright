@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="small-projects.css" />
   <link rel="stylesheet" href="reviews.css" />
 </head>
 <body class="page-reviews">
@@ -25,25 +26,18 @@
     </a>
 
     <nav class="nav" role="navigation" aria-label="Primary">
-      <!-- Inline section links (desktop only) -->
-      <ul class="nav-inline">
-        <li><a href="#why">Why FitOut Hub</a></li>
-        <li><a href="#how">How it works</a></li>
-        <li><a href="#who">Who we help</a></li>
-        <li><a href="#choose">Why choose us</a></li>
-      </ul>
+      <div class="greeting" id="greeting"></div>
+      <button id="openLogin" class="btn btn-outline header-button" type="button">Login</button>
+      <button id="openJoin" class="btn btn-primary header-button" type="button">Join</button>
+      <button id="newProjectBtn" class="btn btn-secondary header-button" type="button" style="display:none">Start Project</button>
+      <button id="logoutBtn" class="btn btn-outline header-button" type="button" style="display:none">Logout</button>
 
-      <!-- Always-visible CTA -->
-      <a href="expert3.html" class="btn btn-outline nav-cta">Start your project</a>
-
-      <!-- Hamburger (desktop only) -->
+      <!-- Hamburger -->
       <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
       </button>
-
-      <!-- Drawer -->
       <ul class="nav-links" id="drawer">
         <li><a href="howitworks.html">How it Works</a></li>
         <li><a href="ourservices.html">Our Services</a></li>
@@ -56,10 +50,6 @@
         <li><a href="reviews.html">Reviews</a></li>
         <li><a href="aboutus.html">About Us</a></li>
         <li><a href="contactus.html">Contact Us</a></li>
-        <li class="mobile-only"><a href="#why">Why FitOut Hub</a></li>
-        <li class="mobile-only"><a href="#how">How it works</a></li>
-        <li class="mobile-only"><a href="#who">Who we help</a></li>
-        <li class="mobile-only"><a href="#choose">Why choose us</a></li>
       </ul>
     </nav>
   </div>
@@ -118,6 +108,9 @@
   </footer>
 
   <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script src="contractor-form.js"></script>
+  <script src="reseller-form.js"></script>
   <script src="reviews.js" defer></script>
 </body>
 </html>

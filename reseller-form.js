@@ -62,7 +62,7 @@
 
     const label = document.createElement('label');
     label.className = 'form-label';
-    label.htmlFor = field.id;
+    label.htmlFor = 'reseller_' + field.id;
     label.textContent = field.label + (field.required ? ' *' : '');
 
     let input;
@@ -123,7 +123,7 @@
   function createTextInput(field) {
     const input = document.createElement('input');
     input.type = field.type;
-    input.id = field.id;
+    input.id = 'reseller_' + field.id;
     input.name = field.id;
     input.className = 'form-control';
     if (field.required) input.required = true;
@@ -136,7 +136,7 @@
   function createNumberInput(field) {
     const input = document.createElement('input');
     input.type = 'number';
-    input.id = field.id;
+    input.id = 'reseller_' + field.id;
     input.name = field.id;
     input.className = 'form-control';
     if (field.required) input.required = true;
@@ -148,7 +148,7 @@
 
   function createTextarea(field) {
     const textarea = document.createElement('textarea');
-    textarea.id = field.id;
+    textarea.id = 'reseller_' + field.id;
     textarea.name = field.id;
     textarea.className = 'form-control';
     if (field.required) textarea.required = true;
@@ -160,7 +160,7 @@
 
   function createSelect(field) {
     const select = document.createElement('select');
-    select.id = field.id;
+    select.id = 'reseller_' + field.id;
     select.name = field.id;
     select.className = 'form-control';
     if (field.required) select.required = true;
@@ -190,7 +190,7 @@
 
       const input = document.createElement('input');
       input.type = 'radio';
-      input.id = `${field.id}_${index}`;
+      input.id = `reseller_${field.id}_${index}`;
       input.name = field.id;
       input.value = option;
       if (field.required) input.required = true;
@@ -213,7 +213,7 @@
 
       const input = document.createElement('input');
       input.type = 'checkbox';
-      input.id = `${field.id}_${index}`;
+      input.id = `reseller_${field.id}_${index}`;
       input.name = field.id;
       input.value = option;
 
@@ -231,7 +231,7 @@
     
     const input = document.createElement('input');
     input.type = 'checkbox';
-    input.id = field.id;
+    input.id = 'reseller_' + field.id;
     input.name = field.id;
     if (field.required) input.required = true;
     
@@ -249,7 +249,7 @@
     
     const input = document.createElement('input');
     input.type = 'file';
-    input.id = field.id;
+    input.id = 'reseller_' + field.id;
     input.name = field.id;
     input.className = 'form-control';
     if (field.required) input.required = true;
@@ -258,7 +258,7 @@
     
     const preview = document.createElement('div');
     preview.className = 'file-preview';
-    preview.id = `${field.id}_preview`;
+    preview.id = `reseller_${field.id}_preview`;
     
     input.addEventListener('change', (e) => {
       handleFileUpload(field, e.target.files, preview);

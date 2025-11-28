@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Join FitOut Hub — Choose Your Account Type</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="small-projects.css" />
+  <style>
+    /* Join page specific styling */
+    .join-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    .join-hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .join-hero h1 {
+      font-size: 2.2rem;
+      color: var(--blue-900);
+      margin-bottom: 12px;
+    }
+    .join-hero p {
+      font-size: 1.1rem;
+      color: var(--gray-700);
+    }
+    /* Role selection cards */
+    .role-selection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .role-card {
+      background: var(--white);
+      border: 2px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .role-card:hover {
+      border-color: var(--blue-700);
+      box-shadow: 0 8px 24px rgba(37,99,235,0.15);
+      transform: translateY(-2px);
+    }
+    .role-card.selected {
+      border-color: var(--blue-700);
+      background: var(--blue-50);
+    }
+    .role-card h3 {
+      font-size: 1.3rem;
+      color: var(--blue-900);
+      margin-bottom: 8px;
+    }
+    .role-card p {
+      font-size: 0.95rem;
+      color: var(--gray-700);
+      margin-bottom: 16px;
+    }
+    .role-card .btn {
+      width: 100%;
+    }
+    /* Form container with hero image layout */
+    .join-form-wrapper {
+      display: none;
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .join-form-wrapper.active {
+      display: block;
+    }
+    .join-form-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 600px;
+    }
+    .join-form-left {
+      padding: 40px;
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+    .join-form-right {
+      background: linear-gradient(135deg, var(--blue-100) 0%, var(--blue-300) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+    .join-form-right img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .form-header {
+      margin-bottom: 24px;
+    }
+    .form-header h2 {
+      font-size: 1.8rem;
+      color: var(--blue-900);
+      margin-bottom: 8px;
+    }
+    .form-header p {
+      color: var(--gray-700);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      color: var(--blue-700);
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .back-link:hover {
+      color: var(--blue-900);
+    }
+    @media (max-width: 980px) {
+      .join-form-content {
+        grid-template-columns: 1fr;
+      }
+      .join-form-right {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Site Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="logo" aria-label="FitOut Hub home" href="index.html">
+        <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+          <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+          <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>FitOut Hub</span>
+      </a>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button">Join</button>
+        <button id="yourProjectsBtn" class="btn btn-secondary header-button" type="button" style="display:none">Your Projects</button>
+        <button id="newProjectBtn" class="btn btn-secondary header-button" type="button" style="display:none">Start Project</button>
+        <button id="logoutBtn" class="btn btn-outline header-button" type="button" style="display:none">Logout</button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <ul class="nav-links" id="drawer">
+          <li><a href="howitworks.html">How it Works</a></li>
+          <li><a href="ourservices.html">Our Services</a></li>
+          <li><a href="smallprojects.html">Book a Tradesman</a></li>
+          <li><a href="forclients.html">For Clients</a></li>
+          <li><a href="forcontractors.html">For Contractors</a></li>
+          <li><a href="forsuppliers.html">For Suppliers</a></li>
+          <li><a href="projectmanagement.html">Project Management</a></li>
+          <li><a href="trustandsecurity.html">Trust and Security</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="contactus.html">Contact Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="join-container">
+    <!-- Step 1: Role Selection -->
+    <div id="roleSelection" class="role-selection-container">
+      <div class="join-hero">
+        <h1>Join FitOut Hub</h1>
+        <p>Choose your account type to get started</p>
+      </div>
+      <div class="role-selection">
+        <div class="role-card" data-role="client">
+          <h3>Client Account</h3>
+          <p>For individuals and businesses looking to hire contractors for fitout, renovation, or construction projects.</p>
+          <button type="button" class="btn btn-primary" onclick="selectRole('client')">Join as Client</button>
+        </div>
+        <div class="role-card" data-role="contractor">
+          <h3>Contractor Account</h3>
+          <p>For contractors, builders, and tradespeople providing fitout and renovation services.</p>
+          <button type="button" class="btn btn-primary" onclick="selectRole('contractor')">Join as Contractor</button>
+        </div>
+        <div class="role-card" data-role="reseller">
+          <h3>Reseller Account</h3>
+          <p>For businesses partnering with FitOut Hub to offer our services to their customers.</p>
+          <button type="button" class="btn btn-primary" onclick="selectRole('reseller')">Join as Reseller</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Client Form -->
+    <div id="clientFormWrapper" class="join-form-wrapper">
+      <div class="join-form-content">
+        <div class="join-form-left">
+          <a href="#" class="back-link" onclick="backToRoleSelection(event)">← Back to role selection</a>
+          <div class="form-header">
+            <h2>Create Your Client Account</h2>
+            <p>Fill in your details to join FitOut Hub as a client.</p>
+          </div>
+          <div id="joinErrors" class="auth-errors" aria-live="polite"></div>
+          <form id="joinForm" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="joinNickname">Nickname *</label>
+              <input id="joinNickname" name="joinNickname" class="form-control" required maxlength="32" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="joinFirst">First Name *</label>
+              <input id="joinFirst" name="joinFirst" class="form-control" required maxlength="64" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="joinSurname">Surname *</label>
+              <input id="joinSurname" name="joinSurname" class="form-control" required maxlength="64" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="joinChinese">Chinese Name</label>
+              <input id="joinChinese" name="joinChinese" class="form-control" maxlength="64" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="joinEmail">Email *</label>
+              <input id="joinEmail" name="joinEmail" type="email" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="joinMobile">Mobile *</label>
+              <input id="joinMobile" name="joinMobile" type="tel" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="joinPassword">Password *</label>
+              <input id="joinPassword" name="joinPassword" type="password" class="form-control" required minlength="8" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="joinConfirm">Confirm Password *</label>
+              <input id="joinConfirm" name="joinConfirm" type="password" class="form-control" required minlength="8" />
+            </div>
+            <div class="form-group small"><em>* required fields</em></div>
+            <div class="cta-actions">
+              <button type="submit" id="joinSubmit" class="btn btn-primary" disabled aria-disabled="true">Create Account</button>
+              <a href="index.html" class="btn btn-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+        <div class="join-form-right">
+          <img src="hero.png" alt="FitOut Hub" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Contractor Form -->
+    <div id="contractorFormWrapper" class="join-form-wrapper">
+      <div class="join-form-content">
+        <div class="join-form-left">
+          <a href="#" class="back-link" onclick="backToRoleSelection(event)">← Back to role selection</a>
+          <div class="form-header">
+            <h2>Contractor Registration</h2>
+            <p>Register as a contractor on FitOut Hub.</p>
+          </div>
+          <div id="contractorErrors" class="auth-errors" aria-live="polite"></div>
+          <form id="contractorForm" novalidate>
+            <!-- Form sections will be dynamically generated by contractor-form.js -->
+            <div class="cta-actions">
+              <button type="submit" id="contractorSubmit" class="btn btn-primary" disabled>Submit Registration</button>
+              <a href="index.html" class="btn btn-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+        <div class="join-form-right">
+          <img src="hero.png" alt="FitOut Hub" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Reseller Form -->
+    <div id="resellerFormWrapper" class="join-form-wrapper">
+      <div class="join-form-content">
+        <div class="join-form-left">
+          <a href="#" class="back-link" onclick="backToRoleSelection(event)">← Back to role selection</a>
+          <div class="form-header">
+            <h2>Reseller Registration</h2>
+            <p>Register as a reseller on FitOut Hub.</p>
+          </div>
+          <div id="resellerErrors" class="auth-errors" aria-live="polite"></div>
+          <form id="resellerForm" novalidate>
+            <!-- Form sections will be dynamically generated by reseller-form.js -->
+            <div class="cta-actions">
+              <button type="submit" id="resellerSubmit" class="btn btn-primary" disabled>Submit Registration</button>
+              <a href="index.html" class="btn btn-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+        <div class="join-form-right">
+          <img src="hero.png" alt="FitOut Hub" />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <a class="logo" href="index.html">
+          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
+            <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+            <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>FitOut Hub</span>
+        </a>
+        <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="index.html#why">Why FitOut Hub</a>
+        <a href="index.html#how">How it works</a>
+        <a href="index.html#who">Who we help</a>
+        <a href="index.html#choose">Why choose us</a>
+        <a href="expert3.html">Start your project</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script src="contractor-form.js"></script>
+  <script src="reseller-form.js"></script>
+  <script>
+    // Join page flow management
+    function selectRole(role) {
+      // Hide role selection
+      document.getElementById('roleSelection').style.display = 'none';
+      
+      // Show appropriate form
+      if (role === 'client') {
+        document.getElementById('clientFormWrapper').classList.add('active');
+      } else if (role === 'contractor') {
+        document.getElementById('contractorFormWrapper').classList.add('active');
+      } else if (role === 'reseller') {
+        document.getElementById('resellerFormWrapper').classList.add('active');
+      }
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function backToRoleSelection(e) {
+      e.preventDefault();
+      
+      // Hide all forms
+      document.querySelectorAll('.join-form-wrapper').forEach(wrapper => {
+        wrapper.classList.remove('active');
+      });
+      
+      // Show role selection
+      document.getElementById('roleSelection').style.display = 'block';
+      
+      // Scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Check for URL parameter to pre-select role
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const role = params.get('role');
+      if (role && ['client', 'contractor', 'reseller'].includes(role)) {
+        selectRole(role);
+      }
+    });
+  </script>
+</body>
+</html>
