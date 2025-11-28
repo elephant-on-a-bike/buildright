@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" class="sub-app-orange">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Renovations Hub • FitoutHub</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../small-projects.css" />
+  <link rel="stylesheet" href="orange-theme.css" />
+</head>
+<body class="sub-app-orange is-loaded">
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo">Renovations Hub</a>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button">Join</button>
+        <button id="yourProjectsBtn" class="btn btn-secondary header-button" type="button" style="display:none">Your Projects</button>
+        <button id="newProjectBtn" class="btn btn-secondary header-button" type="button" style="display:none">Start Project</button>
+        <button id="logoutBtn" class="btn btn-outline header-button" type="button" style="display:none">Logout</button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <ul class="nav-links" id="drawer">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="estimator.html">Cost Estimator</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
+          <li><a href="registration.html">Registration</a></li>
+          <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="community.html">Community Reviews</a></li>
+          <li class="divider"></li>
+          <li><a href="../index.html">← Back to FitOut Hub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1>Building Renovations & Fitout Intelligence</h1>
+          <p>A focused workspace for cost estimation, compliance insights, specialist registration, material validation and community reputation — all integrated with your FitoutHub account.</p>
+          <div class="hero-actions">
+            <a href="estimator.html" class="btn btn-primary">Open Estimator</a>
+            <a href="registration.html" class="btn btn-secondary">Register Specialists</a>
+            <button class="btn btn-outline" onclick="openRole()">Role Selector</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Platform Modules</h2>
+      <div class="features-grid">
+        <div class="feature-card"><h3>Cost Estimator</h3><p>Generate ROM budgets with dynamic metrics.</p></div>
+        <div class="feature-card"><h3>Safety & Compliance</h3><p>Fire, structural, accessibility & energy guidance panels.</p></div>
+        <div class="feature-card"><h3>Registration Hub</h3><p>Contractor & reseller JSON-driven forms.</p></div>
+        <div class="feature-card"><h3>Material Certification</h3><p>Stage product documentation for future validation.</p></div>
+        <div class="feature-card"><h3>Community Reviews</h3><p>Surface project & supplier sentiment.</p></div>
+        <div class="feature-card"><h3>Auth Integration</h3><p>Reuses FitoutHub login, join & role flows.</p></div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <h2>Get Started</h2>
+      <p>Select a module above or use the quick actions below.</p>
+      <div class="hero-actions">
+        <a href="compliance.html" class="btn btn-primary">Explore Compliance</a>
+        <a href="certification.html" class="btn btn-secondary">Upload Materials</a>
+        <a href="community.html" class="btn btn-outline">View Reviews</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="../main.js"></script>
+  <script src="../auth.js"></script>
+  <script src="../contractor-form.js"></script>
+  <script src="../reseller-form.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

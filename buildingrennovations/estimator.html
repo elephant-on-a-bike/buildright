@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" class="sub-app-orange">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Building Cost Estimator • FitoutHub Renovations</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../small-projects.css" />
+  <link rel="stylesheet" href="orange-theme.css" />
+</head>
+<body class="sub-app-orange is-loaded">
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo">Renovations Hub</a>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button">Join</button>
+        <button id="yourProjectsBtn" class="btn btn-secondary header-button" type="button" style="display:none">Your Projects</button>
+        <button id="newProjectBtn" class="btn btn-secondary header-button" type="button" style="display:none">Start Project</button>
+        <button id="logoutBtn" class="btn btn-outline header-button" type="button" style="display:none">Logout</button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <ul class="nav-links" id="drawer">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="estimator.html">Cost Estimator</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
+          <li><a href="registration.html">Registration</a></li>
+          <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="community.html">Community Reviews</a></li>
+          <li class="divider"></li>
+          <li><a href="../index.html">← Back to FitOut Hub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1>Whole Building Cost Estimator</h1>
+          <p>Rough order-of-magnitude (ROM) cost projection for renovation / fitout projects. Adjust inputs to see dynamic estimates.</p>
+          <div class="hero-actions">
+            <a href="#estimator" class="btn btn-primary">Start Estimating</a>
+            <button class="btn btn-secondary" onclick="openRole()">Register Roles</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="estimator" class="section">
+      <h2>Estimator Inputs</h2>
+      <form class="estimator-form" oninput="updateEstimate()">
+        <div class="form-group">
+          <label for="floorArea">Total Internal Floor Area (m²)</label>
+          <input type="number" id="floorArea" min="0" step="1" placeholder="e.g. 3500" />
+        </div>
+        <div class="form-group">
+          <label for="floors">Number of Floors</label>
+          <input type="number" id="floors" min="1" step="1" placeholder="e.g. 5" />
+        </div>
+        <div class="form-group">
+          <label for="usage">Primary Usage Type</label>
+          <select id="usage">
+            <option value="office">Office</option>
+            <option value="retail">Retail</option>
+            <option value="mixed">Mixed Use</option>
+            <option value="industrial">Industrial</option>
+            <option value="hospitality">Hospitality</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="quality">Finish Quality Level</label>
+          <select id="quality">
+            <option value="standard">Standard</option>
+            <option value="enhanced">Enhanced</option>
+            <option value="premium">Premium</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="complexity">Services Complexity</label>
+          <select id="complexity">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label><input type="checkbox" id="heritage" /> Heritage / Listed Constraints</label>
+        </div>
+        <div class="form-group">
+          <label><input type="checkbox" id="phased" /> Phased Occupation / Night Work</label>
+        </div>
+        <div class="estimate-output" id="estimateOutput">Enter details to calculate...</div>
+        <div class="estimator-metrics" id="estimatorMetrics"></div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../main.js"></script>
+  <script src="../auth.js"></script>
+  <script src="../contractor-form.js"></script>
+  <script src="../reseller-form.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

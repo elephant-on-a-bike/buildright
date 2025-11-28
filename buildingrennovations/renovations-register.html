@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" class="sub-app-orange">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Register Renovation • Renovations Hub</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../small-projects.css" />
+  <link rel="stylesheet" href="orange-theme.css" />
+  <style>
+    .join-form-wrapper { background: var(--white); border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.1); overflow: hidden; }
+    .join-form-content { display: grid; grid-template-columns: 1fr 1fr; min-height: 600px; }
+    .join-form-left { padding: 32px; overflow-y: auto; max-height: 80vh; }
+    .join-form-right { background: linear-gradient(135deg, var(--orange-100, #ffe8d6) 0%, var(--orange-300, #ffcaa6) 100%); display: flex; align-items: center; justify-content: center; padding: 40px; }
+    .join-form-right img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+    .form-section { border: 1px solid var(--gray-200); border-radius: 12px; padding: 16px; margin-bottom: 16px; background: var(--white); }
+    .form-section h3 { margin: 0 0 8px 0; font-size: 1.2rem; color: var(--blue-900); }
+    .repeater-items { display: grid; gap: 12px; }
+    .repeater-row { border: 1px dashed var(--gray-300); border-radius: 8px; padding: 12px; }
+    .row-actions { display: flex; gap: 8px; margin-top: 8px; }
+    .json-preview { background: #0b1220; color: #cfe3ff; border-radius: 8px; padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; overflow: auto; max-height: 280px; }
+    .section-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+    @media (max-width: 980px) { .join-form-content { grid-template-columns: 1fr; } .join-form-right { display: none; } }
+  </style>
+</head>
+<body class="sub-app-orange is-loaded">
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo">Renovations Hub</a>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button">Join</button>
+        <button id="yourProjectsBtn" class="btn btn-secondary header-button" type="button" style="display:none">Your Projects</button>
+        <button id="newProjectBtn" class="btn btn-secondary header-button" type="button" style="display:none">Start Project</button>
+        <button id="logoutBtn" class="btn btn-outline header-button" type="button" style="display:none">Logout</button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <ul class="nav-links" id="drawer">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="estimator.html">Cost Estimator</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
+          <li><a href="registration.html">Registration</a></li>
+          <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="community.html">Community Reviews</a></li>
+          <li class="divider"></li>
+          <li><a href="../index.html">← Back to FitOut Hub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <h1>Register a Building Renovation</h1>
+      <p class="small">Provide account details and project information. Your data will be structured to match our schema.</p>
+    </section>
+
+    <section class="join-form-wrapper">
+      <div class="join-form-content">
+        <div class="join-form-left">
+          <div id="renErrors" class="auth-errors" aria-live="polite"></div>
+          <form id="renForm" novalidate>
+            <div class="form-section" id="sec_account">
+              <h3>Account</h3>
+              <div class="section-grid">
+                <div class="form-group">
+                  <label class="form-label" for="ren_type">Account Type</label>
+                  <select id="ren_type" class="form-control">
+                    <option value="tradesman">Tradesman</option>
+                    <option value="company" selected>Company</option>
+                    <option value="reseller">Reseller</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="ren_name">Name</label>
+                  <input id="ren_name" class="form-control" placeholder="ABC Renovations Ltd" />
+                </div>
+                <div class="form-group"><label class="form-label" for="ren_phone">Phone</label><input id="ren_phone" class="form-control" placeholder="+85212345678" /></div>
+                <div class="form-group"><label class="form-label" for="ren_email">Email</label><input id="ren_email" type="email" class="form-control" placeholder="info@abc.com" /></div>
+                <div class="form-group" style="grid-column: 1 / -1"><label class="form-label" for="ren_address">Address</label><input id="ren_address" class="form-control" placeholder="456 Queen's Road, Hong Kong" /></div>
+              </div>
+              <div class="section-grid">
+                <div class="form-group"><label class="form-label" for="ren_license">License URL</label><input id="ren_license" class="form-control" placeholder="https://..." /></div>
+                <div class="form-group"><label class="form-label" for="ren_insurance">Insurance URL</label><input id="ren_insurance" class="form-control" placeholder="https://..." /></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Certifications</label>
+                <div class="repeater-items" id="rep_certs"></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_cert">Add Certification</button></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Services</label>
+                <div class="repeater-items" id="rep_job_types"></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_job_type">Add Job Type</button></div>
+                <div class="repeater-items" id="rep_service_areas" style="margin-top:8px"></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_service_area">Add Service Area</button></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Products</label>
+                <div class="repeater-items" id="rep_products"></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_product_cat">Add Product Category</button></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Portfolio</label>
+                <div class="repeater-items" id="rep_portfolio"></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_portfolio">Add Portfolio Entry</button></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">References</label>
+                <div class="repeater-items" id="rep_refs"></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_ref">Add Reference</button></div>
+              </div>
+              <div class="form-group section-grid">
+                <label class="form-label"><input type="checkbox" id="ren_bgcheck" /> Background check consent</label>
+                <label class="form-label"><input type="checkbox" id="ren_terms" /> Agree to terms</label>
+              </div>
+            </div>
+
+            <div class="form-section" id="sec_project">
+              <h3>Project</h3>
+              <div class="section-grid">
+                <div class="form-group"><label class="form-label" for="prj_name">Building Name</label><input id="prj_name" class="form-control" placeholder="Sunrise Tower" /></div>
+                <div class="form-group"><label class="form-label" for="prj_floor_size">Floor Size (m²)</label><input id="prj_floor_size" type="number" class="form-control" /></div>
+                <div class="form-group"><label class="form-label" for="prj_floors">Number of Floors</label><input id="prj_floors" type="number" class="form-control" /></div>
+                <div class="form-group"><label class="form-label" for="prj_btype">Building Type</label><input id="prj_btype" class="form-control" placeholder="Residential" /></div>
+                <div class="form-group" style="grid-column:1 / -1"><label class="form-label" for="prj_scope">Scope</label><input id="prj_scope" class="form-control" placeholder="Full Renovation" /></div>
+                <div class="form-group"><label class="form-label" for="prj_total_area">Total Area (m²)</label><input id="prj_total_area" type="number" class="form-control" /></div>
+                <div class="form-group"><label class="form-label" for="prj_min">Cost Min</label><input id="prj_min" type="number" class="form-control" /></div>
+                <div class="form-group"><label class="form-label" for="prj_max">Cost Max</label><input id="prj_max" type="number" class="form-control" /></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Fire Safety Checklist</label>
+                <div class="repeater-items" id="rep_fire"></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_fire">Add Fire Safety Item</button></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Material Approval Checklist</label>
+                <div class="repeater-items" id="rep_mat"></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_mat">Add Material Approval Item</button></div>
+              </div>
+              <div class="form-group"><label class="form-label" for="prj_bond">Bonding Agreement URL</label><input id="prj_bond" class="form-control" placeholder="https://..." /></div>
+            </div>
+
+            <div class="cta-actions" style="margin-top: 12px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+              <button type="button" id="btnPreview" class="btn btn-secondary">Preview JSON</button>
+              <button type="button" id="btnDownload" class="btn btn-primary" disabled>Download JSON</button>
+              <span class="small" id="saveStatus" style="color:var(--gray-600)"></span>
+            </div>
+            <div class="json-preview" id="jsonPreview" style="display:none"></div>
+          </form>
+        </div>
+        <div class="join-form-right">
+          <img src="../hero.png" alt="Renovations" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../main.js"></script>
+  <script src="../auth.js"></script>
+  <script src="app.js"></script>
+  <script src="renovations-register.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" class="sub-app-orange">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Material Certification • FitoutHub Renovations</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../small-projects.css" />
+  <link rel="stylesheet" href="orange-theme.css" />
+</head>
+<body class="sub-app-orange is-loaded">
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo">Renovations Hub</a>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button">Join</button>
+        <button id="yourProjectsBtn" class="btn btn-secondary header-button" type="button" style="display:none">Your Projects</button>
+        <button id="newProjectBtn" class="btn btn-secondary header-button" type="button" style="display:none">Start Project</button>
+        <button id="logoutBtn" class="btn btn-outline header-button" type="button" style="display:none">Logout</button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <ul class="nav-links" id="drawer">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="estimator.html">Cost Estimator</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
+          <li><a href="registration.html">Registration</a></li>
+          <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="community.html">Community Reviews</a></li>
+          <li class="divider"></li>
+          <li><a href="../index.html">← Back to FitOut Hub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1>Material Certification Portal</h1>
+          <p>Submit product data sheets, environmental declarations, conformity and performance certificates for review.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <h2>Upload Centre</h2>
+      <form id="certUploadForm" onsubmit="return false;">
+        <div class="form-group">
+          <label for="materialName">Material / Product Name</label>
+          <input id="materialName" required placeholder="e.g. Low-VOC Acoustic Panel" />
+        </div>
+        <div class="form-group">
+          <label for="materialCategory">Category</label>
+          <select id="materialCategory">
+            <option>Partitions</option>
+            <option>Flooring</option>
+            <option>Ceilings</option>
+            <option>Lighting</option>
+            <option>HVAC Components</option>
+            <option>Furniture</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="certFiles">Certification Files (PDF)</label>
+          <div class="cert-upload" id="certDrop">Drag & drop or click to select</div>
+          <input id="certFiles" type="file" accept="application/pdf" multiple style="display:none" />
+        </div>
+        <div class="form-group">
+          <label for="environmental">Environmental Declaration (optional)</label>
+          <input id="environmental" type="file" accept="application/pdf" />
+        </div>
+        <button class="btn btn-primary" id="certSubmitBtn" disabled>Submit Package</button>
+        <div id="certStatus" class="small" style="margin-top:10px"></div>
+      </form>
+    </section>
+  </main>
+  <script src="../main.js"></script>
+  <script src="../auth.js"></script>
+  <script src="../contractor-form.js"></script>
+  <script src="../reseller-form.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+/* Green theme overrides for Building Renovations sub-app */
+:root {
+  --blue-900: #065F46; /* deep green */
+  --blue-700: #0D9E6F; /* primary accent (slightly darker than emerald) */
+  --blue-500: #10B981; /* emerald mid */
+  --blue-300: #34D399; /* soft green */
+  --blue-100: #D1FAE5; /* panel bg */
+  --blue-50:  #ECFDF5; /* section bg */
+  --overlay: rgba(16,185,129,.25);
+}
+
+/* Optional subtle adjustments unique to sub-app */
+body.sub-app-green {
+  background: var(--blue-50);
+}
+
+.sub-app-green .hero {
+  background: linear-gradient(180deg, var(--blue-50) 0%, var(--white) 70%);
+}
+
+.sub-app-green .nav-inline a.active,
+.sub-app-green .nav-links a.active {
+  color: var(--blue-900);
+  background: var(--blue-100);
+  border-radius: 6px;
+}
+
+.sub-app-green .card:hover { background: var(--blue-100); }
+
+.sub-app-green .step .step-number { background: var(--blue-300); color: var(--blue-900); }
+
+/* Cost estimator specific */
+.estimator-form .estimate-output {
+  background: var(--white);
+  border: 2px solid var(--blue-300);
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  font-weight: 600;
+  color: var(--blue-900);
+  box-shadow: 0 6px 16px rgba(6,95,70,.08);
+}
+
+.estimator-metrics { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+.estimator-metrics .metric-box {
+  flex: 1 1 180px;
+  background: var(--white);
+  border: 1px solid var(--blue-100);
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  color: var(--gray-700);
+}
+.estimator-metrics .metric-box strong { display: block; font-size: 1.05rem; color: var(--blue-900); margin-bottom: 4px; }
+
+/* Certification upload styles */
+.cert-upload {
+  background: var(--white);
+  border: 1px dashed var(--blue-300);
+  padding: 1.25rem;
+  border-radius: 12px;
+  text-align: center;
+  transition: background .2s ease, border-color .2s ease;
+}
+.cert-upload.dragover { background: var(--blue-100); border-color: var(--blue-500); }
+
+/* Reviews layout tweaks */
+.community-reviews-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); margin-top: 20px; }
+.community-review-card { background: var(--white); border:1px solid var(--blue-100); border-radius: 12px; padding: 1rem; box-shadow:0 6px 16px rgba(0,0,0,.06); }
+.community-review-card h4 { margin:0 0 6px; font-size: 1rem; color: var(--blue-900); }
+.community-review-card p { margin:0; font-size: 0.85rem; color: var(--gray-700); }
+
+/* Registration shortcuts */
+.registration-shortcuts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
+.registration-shortcuts .btn { flex: 1 1 220px; text-align: center; }
+
+/* Responsive refinements */
+@media (max-width: 760px) {
+  .estimator-form { padding: 0.75rem; }
+  .estimator-metrics { flex-direction: column; }
+  .registration-shortcuts .btn { flex: 1 1 100%; }
+}

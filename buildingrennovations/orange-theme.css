@@ -1,0 +1,55 @@
+.sub-app-orange .site-header .header-row .header-button,
+.sub-app-orange .site-header .header-row .btn,
+.sub-app-orange .site-header .header-row .btn-logoff {
+  padding: 10px 16px !important;
+  font-size: 0.95rem !important;
+  line-height: 1.2 !important;
+  border-radius: 12px !important;
+}
+/* Orange theme overrides for Building Renovations landing + pages */
+:root {
+  --blue-900: #7F3B00; /* deep burnt orange */
+  --blue-700: #FF7F00; /* primary accent orange */
+  --blue-500: #FF9A33; /* mid orange */
+  --blue-300: #FFB969; /* soft orange */
+  --blue-100: #FFE3C2; /* panel bg */
+  --blue-50:  #FFF5E9; /* section bg */
+  --overlay: rgba(255,127,0,0.25);
+}
+
+body.sub-app-orange { background: var(--blue-50); }
+.sub-app-orange .hero { background: linear-gradient(180deg, var(--blue-50) 0%, var(--white) 70%); }
+.sub-app-orange .nav-inline a.active, .sub-app-orange .nav-links a.active { color: var(--blue-900); background: var(--blue-100); border-radius: 6px; }
+.sub-app-orange .card:hover { background: var(--blue-100); }
+.sub-app-orange .step .step-number { background: var(--blue-300); color: var(--blue-900); }
+
+/* Landing page feature badges */
+.features-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); margin-top: 24px; }
+.feature-card { background: var(--white); border:1px solid var(--blue-100); border-radius:14px; padding:16px; box-shadow:0 6px 16px rgba(127,59,0,.08); }
+.feature-card h3 { margin:0 0 6px; font-size:1.05rem; color: var(--blue-900); }
+.feature-card p { margin:0; font-size:.85rem; color: var(--gray-700); }
+
+/* Shared estimator + certification tweaks retained from green version */
+.estimator-form .estimate-output { background: var(--white); border: 2px solid var(--blue-300); padding: 1rem 1.25rem; border-radius: 12px; font-weight: 600; color: var(--blue-900); box-shadow: 0 6px 16px rgba(127,59,0,.08); }
+.estimator-metrics { display:flex; flex-wrap:wrap; gap:14px; margin-top:18px; }
+.estimator-metrics .metric-box { flex:1 1 180px; background:var(--white); border:1px solid var(--blue-100); padding:.75rem .9rem; border-radius:10px; font-size:.85rem; color:var(--gray-700); }
+.estimator-metrics .metric-box strong { display:block; font-size:1.05rem; color:var(--blue-900); margin-bottom:4px; }
+
+.cert-upload { background:var(--white); border:1px dashed var(--blue-300); padding:1.25rem; border-radius:12px; text-align:center; transition:background .2s ease, border-color .2s ease; }
+.cert-upload.dragover { background:var(--blue-100); border-color:var(--blue-500); }
+
+.community-reviews-grid { display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); margin-top:20px; }
+.community-review-card { background:var(--white); border:1px solid var(--blue-100); border-radius:12px; padding:1rem; box-shadow:0 6px 16px rgba(0,0,0,.06); }
+.community-review-card h4 { margin:0 0 6px; font-size:1rem; color:var(--blue-900); }
+.community-review-card p { margin:0; font-size:.85rem; color:var(--gray-700); }
+
+.registration-shortcuts { display:flex; flex-wrap:wrap; gap:12px; margin-top:18px; }
+.registration-shortcuts .btn { flex:1 1 220px; text-align:center; }
+/* Header guards to keep unified layout in orange theme */
+.sub-app-orange .site-header .logo { flex: 0 0 30%; }
+.sub-app-orange .site-header nav.nav { flex: 1 1 70%; }
+.sub-app-orange .site-header nav.nav .header-row { display: inline-flex; align-items: center; gap: 10px; flex-wrap: nowrap; justify-content: flex-end; }
+.sub-app-orange .header-button { margin: 0 10px !important; }
+.sub-app-orange .btn { padding: 10px 16px; border-radius: 12px; font-size: 0.95rem; font-weight: 700; }
+
+@media (max-width:760px){ .estimator-form { padding:.75rem; } .estimator-metrics { flex-direction:column; } .registration-shortcuts .btn { flex:1 1 100%; } }
