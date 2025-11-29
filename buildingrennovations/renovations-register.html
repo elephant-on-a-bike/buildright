@@ -42,9 +42,11 @@
         <ul class="nav-links" id="drawer">
           <li><a href="index.html">Home</a></li>
           <li><a href="estimator.html">Cost Estimator</a></li>
-          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="registration.html">Registration</a></li>
+          <li><a href="renovations-register.html">Register Renovation</a></li>
           <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="materials-database.html">Materials Database</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="community.html">Community Reviews</a></li>
           <li class="divider"></li>
           <li><a href="../index.html">← Back to FitOut Hub</a></li>
@@ -55,8 +57,8 @@
 
   <main class="container">
     <section class="section">
-      <h1>Register a Building Renovation</h1>
-      <p class="small">Provide account details and project information. Your data will be structured to match our schema.</p>
+      <h1 data-i18n="renreg.hero.title">Register a Building Renovation</h1>
+      <p class="small" data-i18n="renreg.hero.desc">Provide account details and project information. Your data will be structured to match our schema.</p>
     </section>
 
     <section class="join-form-wrapper">
@@ -65,89 +67,89 @@
           <div id="renErrors" class="auth-errors" aria-live="polite"></div>
           <form id="renForm" novalidate>
             <div class="form-section" id="sec_account">
-              <h3>Account</h3>
+              <h3 data-i18n="renreg.account.title">Account</h3>
               <div class="section-grid">
                 <div class="form-group">
-                  <label class="form-label" for="ren_type">Account Type</label>
+                  <label class="form-label" for="ren_type" data-i18n="renreg.account.type">Account Type</label>
                   <select id="ren_type" class="form-control">
-                    <option value="tradesman">Tradesman</option>
-                    <option value="company" selected>Company</option>
-                    <option value="reseller">Reseller</option>
+                    <option value="tradesman" data-i18n="renreg.account.tradesman">Tradesman</option>
+                    <option value="company" selected data-i18n="renreg.account.company">Company</option>
+                    <option value="reseller" data-i18n="renreg.account.reseller">Reseller</option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label class="form-label" for="ren_name">Name</label>
-                  <input id="ren_name" class="form-control" placeholder="ABC Renovations Ltd" />
+                  <label class="form-label" for="ren_name" data-i18n="renreg.account.name">Name</label>
+                  <input id="ren_name" class="form-control" data-i18n-attr="placeholder:renreg.account.namePh" placeholder="ABC Renovations Ltd" />
                 </div>
-                <div class="form-group"><label class="form-label" for="ren_phone">Phone</label><input id="ren_phone" class="form-control" placeholder="+85212345678" /></div>
-                <div class="form-group"><label class="form-label" for="ren_email">Email</label><input id="ren_email" type="email" class="form-control" placeholder="info@abc.com" /></div>
-                <div class="form-group" style="grid-column: 1 / -1"><label class="form-label" for="ren_address">Address</label><input id="ren_address" class="form-control" placeholder="456 Queen's Road, Hong Kong" /></div>
+                <div class="form-group"><label class="form-label" for="ren_phone" data-i18n="renreg.account.phone">Phone</label><input id="ren_phone" class="form-control" data-i18n-attr="placeholder:renreg.account.phonePh" placeholder="+85212345678" /></div>
+                <div class="form-group"><label class="form-label" for="ren_email" data-i18n="renreg.account.email">Email</label><input id="ren_email" type="email" class="form-control" data-i18n-attr="placeholder:renreg.account.emailPh" placeholder="info@abc.com" /></div>
+                <div class="form-group" style="grid-column: 1 / -1"><label class="form-label" for="ren_address" data-i18n="renreg.account.address">Address</label><input id="ren_address" class="form-control" data-i18n-attr="placeholder:renreg.account.addressPh" placeholder="456 Queen's Road, Hong Kong" /></div>
               </div>
               <div class="section-grid">
-                <div class="form-group"><label class="form-label" for="ren_license">License URL</label><input id="ren_license" class="form-control" placeholder="https://..." /></div>
-                <div class="form-group"><label class="form-label" for="ren_insurance">Insurance URL</label><input id="ren_insurance" class="form-control" placeholder="https://..." /></div>
+                <div class="form-group"><label class="form-label" for="ren_license" data-i18n="renreg.account.license">License URL</label><input id="ren_license" class="form-control" placeholder="https://..." /></div>
+                <div class="form-group"><label class="form-label" for="ren_insurance" data-i18n="renreg.account.insurance">Insurance URL</label><input id="ren_insurance" class="form-control" placeholder="https://..." /></div>
               </div>
               <div class="form-group">
-                <label class="form-label">Certifications</label>
+                <label class="form-label" data-i18n="renreg.account.certifications">Certifications</label>
                 <div class="repeater-items" id="rep_certs"></div>
-                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_cert">Add Certification</button></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_cert" data-i18n="renreg.btn.addCert">Add Certification</button></div>
               </div>
               <div class="form-group">
-                <label class="form-label">Services</label>
+                <label class="form-label" data-i18n="renreg.account.services">Services</label>
                 <div class="repeater-items" id="rep_job_types"></div>
-                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_job_type">Add Job Type</button></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_job_type" data-i18n="renreg.btn.addJobType">Add Job Type</button></div>
                 <div class="repeater-items" id="rep_service_areas" style="margin-top:8px"></div>
-                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_service_area">Add Service Area</button></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_service_area" data-i18n="renreg.btn.addServiceArea">Add Service Area</button></div>
               </div>
               <div class="form-group">
-                <label class="form-label">Products</label>
+                <label class="form-label" data-i18n="renreg.account.products">Products</label>
                 <div class="repeater-items" id="rep_products"></div>
-                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_product_cat">Add Product Category</button></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_product_cat" data-i18n="renreg.btn.addProduct">Add Product Category</button></div>
               </div>
               <div class="form-group">
-                <label class="form-label">Portfolio</label>
+                <label class="form-label" data-i18n="renreg.account.portfolio">Portfolio</label>
                 <div class="repeater-items" id="rep_portfolio"></div>
-                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_portfolio">Add Portfolio Entry</button></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_portfolio" data-i18n="renreg.btn.addPortfolio">Add Portfolio Entry</button></div>
               </div>
               <div class="form-group">
-                <label class="form-label">References</label>
+                <label class="form-label" data-i18n="renreg.account.references">References</label>
                 <div class="repeater-items" id="rep_refs"></div>
-                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_ref">Add Reference</button></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_ref" data-i18n="renreg.btn.addRef">Add Reference</button></div>
               </div>
               <div class="form-group section-grid">
-                <label class="form-label"><input type="checkbox" id="ren_bgcheck" /> Background check consent</label>
-                <label class="form-label"><input type="checkbox" id="ren_terms" /> Agree to terms</label>
+                <label class="form-label"><input type="checkbox" id="ren_bgcheck" /> <span data-i18n="renreg.account.bgcheck">Background check consent</span></label>
+                <label class="form-label"><input type="checkbox" id="ren_terms" /> <span data-i18n="renreg.account.terms">Agree to terms</span></label>
               </div>
             </div>
 
             <div class="form-section" id="sec_project">
-              <h3>Project</h3>
+              <h3 data-i18n="renreg.project.title">Project</h3>
               <div class="section-grid">
-                <div class="form-group"><label class="form-label" for="prj_name">Building Name</label><input id="prj_name" class="form-control" placeholder="Sunrise Tower" /></div>
-                <div class="form-group"><label class="form-label" for="prj_floor_size">Floor Size (m²)</label><input id="prj_floor_size" type="number" class="form-control" /></div>
-                <div class="form-group"><label class="form-label" for="prj_floors">Number of Floors</label><input id="prj_floors" type="number" class="form-control" /></div>
-                <div class="form-group"><label class="form-label" for="prj_btype">Building Type</label><input id="prj_btype" class="form-control" placeholder="Residential" /></div>
-                <div class="form-group" style="grid-column:1 / -1"><label class="form-label" for="prj_scope">Scope</label><input id="prj_scope" class="form-control" placeholder="Full Renovation" /></div>
-                <div class="form-group"><label class="form-label" for="prj_total_area">Total Area (m²)</label><input id="prj_total_area" type="number" class="form-control" /></div>
-                <div class="form-group"><label class="form-label" for="prj_min">Cost Min</label><input id="prj_min" type="number" class="form-control" /></div>
-                <div class="form-group"><label class="form-label" for="prj_max">Cost Max</label><input id="prj_max" type="number" class="form-control" /></div>
+                <div class="form-group"><label class="form-label" for="prj_name" data-i18n="renreg.project.buildingName">Building Name</label><input id="prj_name" class="form-control" data-i18n-attr="placeholder:renreg.project.buildingNamePh" placeholder="Sunrise Tower" /></div>
+                <div class="form-group"><label class="form-label" for="prj_floor_size" data-i18n="renreg.project.floorSize">Floor Size (m²)</label><input id="prj_floor_size" type="number" class="form-control" /></div>
+                <div class="form-group"><label class="form-label" for="prj_floors" data-i18n="renreg.project.floors">Number of Floors</label><input id="prj_floors" type="number" class="form-control" /></div>
+                <div class="form-group"><label class="form-label" for="prj_btype" data-i18n="renreg.project.buildingType">Building Type</label><input id="prj_btype" class="form-control" data-i18n-attr="placeholder:renreg.project.buildingTypePh" placeholder="Residential" /></div>
+                <div class="form-group" style="grid-column:1 / -1"><label class="form-label" for="prj_scope" data-i18n="renreg.project.scope">Scope</label><input id="prj_scope" class="form-control" data-i18n-attr="placeholder:renreg.project.scopePh" placeholder="Full Renovation" /></div>
+                <div class="form-group"><label class="form-label" for="prj_total_area" data-i18n="renreg.project.totalArea">Total Area (m²)</label><input id="prj_total_area" type="number" class="form-control" /></div>
+                <div class="form-group"><label class="form-label" for="prj_min" data-i18n="renreg.project.costMin">Cost Min</label><input id="prj_min" type="number" class="form-control" /></div>
+                <div class="form-group"><label class="form-label" for="prj_max" data-i18n="renreg.project.costMax">Cost Max</label><input id="prj_max" type="number" class="form-control" /></div>
               </div>
               <div class="form-group">
-                <label class="form-label">Fire Safety Checklist</label>
+                <label class="form-label" data-i18n="renreg.project.fireSafety">Fire Safety Checklist</label>
                 <div class="repeater-items" id="rep_fire"></div>
-                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_fire">Add Fire Safety Item</button></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_fire" data-i18n="renreg.btn.addFire">Add Fire Safety Item</button></div>
               </div>
               <div class="form-group">
-                <label class="form-label">Material Approval Checklist</label>
+                <label class="form-label" data-i18n="renreg.project.materialApproval">Material Approval Checklist</label>
                 <div class="repeater-items" id="rep_mat"></div>
-                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_mat">Add Material Approval Item</button></div>
+                <div class="row-actions"><button type="button" class="btn btn-outline" id="add_mat" data-i18n="renreg.btn.addMaterial">Add Material Approval Item</button></div>
               </div>
-              <div class="form-group"><label class="form-label" for="prj_bond">Bonding Agreement URL</label><input id="prj_bond" class="form-control" placeholder="https://..." /></div>
+              <div class="form-group"><label class="form-label" for="prj_bond" data-i18n="renreg.project.bondingAgreement">Bonding Agreement URL</label><input id="prj_bond" class="form-control" placeholder="https://..." /></div>
             </div>
 
             <div class="cta-actions" style="margin-top: 12px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-              <button type="button" id="btnPreview" class="btn btn-secondary">Preview JSON</button>
-              <button type="button" id="btnDownload" class="btn btn-primary" disabled>Download JSON</button>
+              <button type="button" id="btnPreview" class="btn btn-secondary" data-i18n="renreg.btn.preview">Preview JSON</button>
+              <button type="button" id="btnDownload" class="btn btn-primary" disabled data-i18n="renreg.btn.download">Download JSON</button>
               <span class="small" id="saveStatus" style="color:var(--gray-600)"></span>
             </div>
             <div class="json-preview" id="jsonPreview" style="display:none"></div>
@@ -160,6 +162,7 @@
     </section>
   </main>
 
+  <script src="../i18n.js"></script>
   <script src="../main.js"></script>
   <script src="../auth.js"></script>
   <script src="app.js"></script>

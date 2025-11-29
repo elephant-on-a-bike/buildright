@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" class="sub-app-orange">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Materials Database • Renovations Hub</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../small-projects.css" />
+  <link rel="stylesheet" href="orange-theme.css" />
+  <style>
+    .materials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 16px; margin-top: 16px; }
+    @media (max-width: 768px) { .materials-grid { grid-template-columns: 1fr; } }
+    .material-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 16px; box-shadow: var(--shadow-sm); transition: transform 160ms ease, box-shadow 160ms ease; }
+    .material-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .material-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 8px; }
+    .material-header h3 { margin: 0; font-size: clamp(1rem, 1vw + 0.8rem, 1.25rem); color: var(--blue-900); letter-spacing: 0.2px; }
+    .material-meta { font-size: 0.85rem; color: var(--gray-600); margin: 4px 0; }
+    .material-channels { display: flex; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+    .channel-badge { padding: 4px 10px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; }
+    .badge-fitout { background: #dbeafe; color: #1e40af; }
+    .badge-renovation { background: #fed7aa; color: #9a3412; }
+    .material-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .search-bar { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
+    .search-bar input { flex: 1; }
+    .empty-state { text-align: center; padding: 40px; color: var(--gray-600); }
+    .stats-row { display: flex; gap: 16px; margin-bottom: 16px; }
+    .stat-card { flex: 1; background: var(--blue-50); border-radius: var(--radius-md); padding: 12px; text-align: center; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); }
+    .stat-card .value { font-size: 1.8rem; font-weight: 700; color: var(--blue-900); font-variant-numeric: tabular-nums; }
+    .stat-card .label { font-size: 0.85rem; color: var(--gray-700); }
+  </style>
+</head>
+<body class="sub-app-orange is-loaded">
+  <header class="site-header">
+    <div class="header-inner container">
+      <a href="index.html" class="logo">Renovations Hub</a>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button" data-i18n="btn.login">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button" data-i18n="btn.join">Join</button>
+        <button id="yourProjectsBtn" class="btn btn-secondary header-button" type="button" style="display:none" data-i18n="btn.yourProjects">Your Projects</button>
+        <button id="newProjectBtn" class="btn btn-secondary header-button" type="button" style="display:none" data-i18n="btn.startProject">Start Project</button>
+        <button id="logoutBtn" class="btn btn-outline header-button" type="button" style="display:none" data-i18n="btn.logout">Logout</button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <ul class="nav-links" id="drawer">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="estimator.html">Cost Estimator</a></li>
+          <li><a href="registration.html">Registration</a></li>
+          <li><a href="renovations-register.html">Register Renovation</a></li>
+          <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="materials-database.html">Materials Database</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
+          <li><a href="community.html">Community Reviews</a></li>
+          <li class="divider"></li>
+          <li><a href="../index.html">← Back to FitOut Hub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <div style="margin-bottom:16px">
+        <h1 data-i18n="materials.title">Materials Database</h1>
+        <p class="small" data-i18n="materials.subtitle">Manage your locally staged materials and certifications.</p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="value" id="statTotal">0</div>
+          <div class="label" data-i18n="materials.stats.total">Total Materials</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="statFitout">0</div>
+          <div class="label" data-i18n="materials.stats.fitout">FitOut Hub</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="statRenovation">0</div>
+          <div class="label" data-i18n="materials.stats.renovation">Renovations Hub</div>
+        </div>
+        <div class="stat-card">
+          <div class="value" id="statSuppliers">0</div>
+          <div class="label" data-i18n="materials.stats.suppliers">Suppliers</div>
+        </div>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search by name, category, supplier, or project ID..." />
+        <button class="btn btn-outline" id="btnClearSearch">Clear</button>
+        <button class="btn btn-secondary" id="btnExport" data-i18n="materials.btn.export">Export All</button>
+        <button class="btn btn-primary" id="btnAdd" style="font-size:1.2rem;padding:8px 20px" data-i18n="materials.btn.add">+ Add Material</button>
+      </div>
+
+      <div id="materialsGrid" class="materials-grid"></div>
+      <div id="emptyState" class="empty-state" style="display:none">
+        <h3>No materials found</h3>
+        <p>Click "+ Add Material" to create your first entry.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- View Modal -->
+  <div class="pd-overlay" id="viewOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="viewModal" role="dialog" aria-modal="true" aria-labelledby="viewTitle" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="viewClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="viewTitle">Material Details</h2>
+        <div id="viewBody" class="modal-body"></div>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="../hero.png" alt="Material Details" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Edit Modal -->
+  <div class="pd-overlay" id="editOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editTitle" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="editClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="editTitle">Edit Material</h2>
+        <div id="editErrors" class="auth-errors" aria-live="polite"></div>
+        <form id="editForm" novalidate>
+          <input type="hidden" id="editId" />
+          <div class="form-group">
+            <label class="form-label" for="editSupplier" data-i18n="materials.form.supplier">Supplier Name</label>
+            <input id="editSupplier" class="form-control" required data-i18n="materials.form.supplierPh" data-i18n-attr="placeholder" placeholder="e.g. ABC Supplies Ltd" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editName" data-i18n="materials.form.name">Material Name</label>
+            <input id="editName" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="editCategory" data-i18n="materials.form.category">Category</label>
+            <select id="editCategory" class="form-control">
+              <option>Partitions</option>
+              <option>Flooring</option>
+              <option>Ceilings</option>
+              <option>Lighting</option>
+              <option>HVAC Components</option>
+              <option>Furniture</option>
+            </select>
+          </div>
+          <div class="section-grid">
+            <div class="form-group">
+              <label class="form-label" for="editUnit" data-i18n="materials.form.unit">Delivery Unit</label>
+              <input id="editUnit" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="editPrice" data-i18n="materials.form.price">Price</label>
+              <input id="editPrice" type="number" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="editLead" data-i18n="materials.form.lead">Lead Time (days)</label>
+              <input id="editLead" type="number" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="materials.form.channels">Channels</label>
+            <div class="section-grid">
+              <label class="form-label"><input type="checkbox" id="editFitout" /> <span data-i18n="materials.channel.fitout">FitOut Hub</span></label>
+              <label class="form-label"><input type="checkbox" id="editRenov" /> <span data-i18n="materials.channel.renovation">Renovations Hub</span></label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="materials.form.certs">Certification Files</label>
+            <div class="cert-upload" id="editCertDrop" data-i18n="materials.form.uploadHintCerts">Drag & drop or click to select</div>
+            <input id="editCertFiles" type="file" accept="application/pdf" multiple style="display:none" />
+            <div id="editCertList" class="small" style="margin-top:6px"></div>
+            <button type="button" class="btn btn-outline" id="btnViewCerts" style="margin-top:8px;font-size:0.85rem" data-i18n="materials.viewFiles.cert">View Stored Files</button>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="materials.form.envs">Environmental Declarations</label>
+            <div class="cert-upload" id="editEnvDrop" data-i18n="materials.form.uploadHintEnv">Drag & drop or click to select</div>
+            <input id="editEnvFiles" type="file" accept="application/pdf" multiple style="display:none" />
+            <div id="editEnvList" class="small" style="margin-top:6px"></div>
+            <button type="button" class="btn btn-outline" id="btnViewEnvs" style="margin-top:8px;font-size:0.85rem" data-i18n="materials.viewFiles.env">View Stored Files</button>
+          </div>
+          <div class="form-group">
+            <label class="form-label" data-i18n="materials.form.linked">Linked Projects (comma-separated IDs)</label>
+            <input id="editLinks" class="form-control" data-i18n="materials.form.linkedPh" data-i18n-attr="placeholder" placeholder="prj-123, prj-456" />
+          </div>
+          <div class="cta-actions">
+            <button type="submit" class="btn btn-primary" data-i18n="materials.form.save">Save Changes</button>
+            <button type="button" class="btn btn-outline" id="editCancel" data-i18n="materials.form.cancel">Cancel</button>
+          </div>
+        </form>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="../hero.png" alt="Edit Material" />
+      </div>
+    </div>
+  </section>
+
+  <script src="../main.js"></script>
+  <script src="../auth.js"></script>
+  <script src="../i18n.js"></script>
+  <script src="app.js"></script>
+  <script src="materials-database.js"></script>
+</body>
+</html>

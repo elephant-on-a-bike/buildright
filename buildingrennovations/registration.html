@@ -27,9 +27,11 @@
         <ul class="nav-links" id="drawer">
           <li><a href="index.html">Home</a></li>
           <li><a href="estimator.html">Cost Estimator</a></li>
-          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="registration.html">Registration</a></li>
+          <li><a href="renovations-register.html">Register Renovation</a></li>
           <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="materials-database.html">Materials Database</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="community.html">Community Reviews</a></li>
           <li class="divider"></li>
           <li><a href="../index.html">← Back to FitOut Hub</a></li>
@@ -41,26 +43,26 @@
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <h1>Specialist Registration</h1>
-          <p>Register as a contractor or reseller to participate in renovation projects and showcase approved materials/services.</p>
+          <h1 data-i18n="registration.hero.title">Specialist Registration</h1>
+          <p data-i18n="registration.hero.desc">Register as a contractor or reseller to participate in renovation projects and showcase approved materials/services.</p>
           <div class="hero-actions">
-            <button class="btn btn-primary" onclick="openContractor()">Contractor Form</button>
-            <button class="btn btn-secondary" onclick="openReseller()">Reseller Form</button>
-            <button class="btn btn-outline" onclick="openRole()">Role Selector</button>
+            <a class="btn btn-primary" href="../join.html?role=contractor" data-no-transition data-i18n="registration.hero.contractor">Contractor Registration</a>
+            <a class="btn btn-secondary" href="../join.html?role=reseller" data-no-transition data-i18n="registration.hero.reseller">Reseller Registration</a>
           </div>
         </div>
       </div>
     </section>
     <section class="section">
-      <h2>Why Register?</h2>
+      <h2 data-i18n="registration.section.title">Why Register?</h2>
       <div class="grid grid-4">
-        <div class="card"><h3>Visibility</h3><p>Be discoverable for suitable projects.</p></div>
-        <div class="card"><h3>Credibility</h3><p>Showcase verified certifications and references.</p></div>
-        <div class="card"><h3>Material Synergy</h3><p>Link preferred materials to project scopes.</p></div>
-        <div class="card"><h3>Community Trust</h3><p>Gather reviews and performance metrics.</p></div>
+        <div class="card"><h3 data-i18n="registration.card.visibility.title">Visibility</h3><p data-i18n="registration.card.visibility.desc">Be discoverable for suitable projects.</p></div>
+        <div class="card"><h3 data-i18n="registration.card.credibility.title">Credibility</h3><p data-i18n="registration.card.credibility.desc">Showcase verified certifications and references.</p></div>
+        <div class="card"><h3 data-i18n="registration.card.synergy.title">Material Synergy</h3><p data-i18n="registration.card.synergy.desc">Link preferred materials to project scopes.</p></div>
+        <div class="card"><h3 data-i18n="registration.card.trust.title">Community Trust</h3><p data-i18n="registration.card.trust.desc">Gather reviews and performance metrics.</p></div>
       </div>
     </section>
   </main>
+  <script src="../i18n.js"></script>
   <script src="../main.js"></script>
   <script src="../auth.js"></script>
   <script src="../contractor-form.js"></script>

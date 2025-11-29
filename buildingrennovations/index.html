@@ -27,9 +27,11 @@
         <ul class="nav-links" id="drawer">
           <li><a href="index.html">Home</a></li>
           <li><a href="estimator.html">Cost Estimator</a></li>
-          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="registration.html">Registration</a></li>
+          <li><a href="renovations-register.html">Register Renovation</a></li>
           <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="materials-database.html">Materials Database</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="community.html">Community Reviews</a></li>
           <li class="divider"></li>
           <li><a href="../index.html">← Back to FitOut Hub</a></li>
@@ -42,40 +44,41 @@
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <h1>Building Renovations & Fitout Intelligence</h1>
-          <p>A focused workspace for cost estimation, compliance insights, specialist registration, material validation and community reputation — all integrated with your FitoutHub account.</p>
+          <h1 data-i18n="index.hero.title">Building Renovations & Fitout Intelligence</h1>
+          <p data-i18n="index.hero.desc">A focused workspace for cost estimation, compliance insights, specialist registration, material validation and community reputation — all integrated with your FitoutHub account.</p>
           <div class="hero-actions">
-            <a href="estimator.html" class="btn btn-primary">Open Estimator</a>
-            <a href="registration.html" class="btn btn-secondary">Register Specialists</a>
-            <button class="btn btn-outline" onclick="openRole()">Role Selector</button>
+            <a href="estimator.html" class="btn btn-primary" data-i18n="index.hero.openEstimator">Open Estimator</a>
+            <a href="registration.html" class="btn btn-secondary" data-i18n="index.hero.registerSpecialists">Register Specialists</a>
+            <button class="btn btn-outline" onclick="openRole()" data-i18n="index.hero.roleSelector">Role Selector</button>
           </div>
         </div>
       </div>
     </section>
 
     <section class="section">
-      <h2>Platform Modules</h2>
+      <h2 data-i18n="index.modules.title">Platform Modules</h2>
       <div class="features-grid">
-        <div class="feature-card"><h3>Cost Estimator</h3><p>Generate ROM budgets with dynamic metrics.</p></div>
-        <div class="feature-card"><h3>Safety & Compliance</h3><p>Fire, structural, accessibility & energy guidance panels.</p></div>
-        <div class="feature-card"><h3>Registration Hub</h3><p>Contractor & reseller JSON-driven forms.</p></div>
-        <div class="feature-card"><h3>Material Certification</h3><p>Stage product documentation for future validation.</p></div>
-        <div class="feature-card"><h3>Community Reviews</h3><p>Surface project & supplier sentiment.</p></div>
-        <div class="feature-card"><h3>Auth Integration</h3><p>Reuses FitoutHub login, join & role flows.</p></div>
+        <div class="feature-card"><h3 data-i18n="index.modules.estimator.title">Cost Estimator</h3><p data-i18n="index.modules.estimator.desc">Generate ROM budgets with dynamic metrics.</p></div>
+        <div class="feature-card"><h3 data-i18n="index.modules.compliance.title">Safety & Compliance</h3><p data-i18n="index.modules.compliance.desc">Fire, structural, accessibility & energy guidance panels.</p></div>
+        <div class="feature-card"><h3 data-i18n="index.modules.registration.title">Registration Hub</h3><p data-i18n="index.modules.registration.desc">Contractor & reseller JSON-driven forms.</p></div>
+        <div class="feature-card"><h3 data-i18n="index.modules.certification.title">Material Certification</h3><p data-i18n="index.modules.certification.desc">Stage product documentation for future validation.</p></div>
+        <div class="feature-card"><h3 data-i18n="index.modules.community.title">Community Reviews</h3><p data-i18n="index.modules.community.desc">Surface project & supplier sentiment.</p></div>
+        <div class="feature-card"><h3 data-i18n="index.modules.auth.title">Auth Integration</h3><p data-i18n="index.modules.auth.desc">Reuses FitoutHub login, join & role flows.</p></div>
       </div>
     </section>
 
     <section class="section section-alt">
-      <h2>Get Started</h2>
-      <p>Select a module above or use the quick actions below.</p>
+      <h2 data-i18n="index.start.title">Get Started</h2>
+      <p data-i18n="index.start.desc">Select a module above or use the quick actions below.</p>
       <div class="hero-actions">
-        <a href="compliance.html" class="btn btn-primary">Explore Compliance</a>
-        <a href="certification.html" class="btn btn-secondary">Upload Materials</a>
-        <a href="community.html" class="btn btn-outline">View Reviews</a>
+        <a href="compliance.html" class="btn btn-primary" data-i18n="index.start.exploreCompliance">Explore Compliance</a>
+        <a href="certification.html" class="btn btn-secondary" data-i18n="index.start.uploadMaterials">Upload Materials</a>
+        <a href="community.html" class="btn btn-outline" data-i18n="index.start.viewReviews">View Reviews</a>
       </div>
     </section>
   </main>
 
+  <script src="../i18n.js"></script>
   <script src="../main.js"></script>
   <script src="../auth.js"></script>
   <script src="../contractor-form.js"></script>

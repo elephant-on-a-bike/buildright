@@ -27,9 +27,11 @@
         <ul class="nav-links" id="drawer">
           <li><a href="index.html">Home</a></li>
           <li><a href="estimator.html">Cost Estimator</a></li>
-          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="registration.html">Registration</a></li>
+          <li><a href="renovations-register.html">Register Renovation</a></li>
           <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="materials-database.html">Materials Database</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="community.html">Community Reviews</a></li>
           <li class="divider"></li>
           <li><a href="../index.html">← Back to FitOut Hub</a></li>
@@ -41,43 +43,80 @@
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <h1>Material Certification Portal</h1>
-          <p>Submit product data sheets, environmental declarations, conformity and performance certificates for review.</p>
+          <h1 data-i18n="cert.hero.title">Material Certification Portal</h1>
+          <p data-i18n="cert.hero.desc">Submit product data sheets, environmental declarations, conformity and performance certificates for review.</p>
         </div>
       </div>
     </section>
     <section class="section">
-      <h2>Upload Centre</h2>
+      <h2 data-i18n="cert.section.title">Upload Centre</h2>
+      <p class="small" style="margin-bottom:20px" data-i18n="cert.section.desc">
+        Use the <a href="materials-database.html" style="color:var(--blue-700);font-weight:600">Materials Database</a> to add and manage materials with full certification tracking.
+      </p>
       <form id="certUploadForm" onsubmit="return false;">
         <div class="form-group">
-          <label for="materialName">Material / Product Name</label>
+          <label for="supplierName" data-i18n="materials.form.supplier">Supplier Name</label>
+          <input id="supplierName" required placeholder="e.g. ABC Supplies Ltd" />
+        </div>
+        <div class="form-group">
+          <label for="materialName" data-i18n="materials.form.name">Material / Product Name</label>
           <input id="materialName" required placeholder="e.g. Low-VOC Acoustic Panel" />
         </div>
         <div class="form-group">
-          <label for="materialCategory">Category</label>
+          <label for="materialCategory" data-i18n="materials.form.category">Category</label>
           <select id="materialCategory">
-            <option>Partitions</option>
-            <option>Flooring</option>
-            <option>Ceilings</option>
-            <option>Lighting</option>
-            <option>HVAC Components</option>
-            <option>Furniture</option>
+            <option data-i18n="cert.category.partitions">Partitions</option>
+            <option data-i18n="cert.category.flooring">Flooring</option>
+            <option data-i18n="cert.category.ceilings">Ceilings</option>
+            <option data-i18n="cert.category.lighting">Lighting</option>
+            <option data-i18n="cert.category.hvac">HVAC Components</option>
+            <option data-i18n="cert.category.furniture">Furniture</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="certFiles">Certification Files (PDF)</label>
-          <div class="cert-upload" id="certDrop">Drag & drop or click to select</div>
-          <input id="certFiles" type="file" accept="application/pdf" multiple style="display:none" />
+          <label class="form-label" data-i18n="materials.form.channels">Channels</label>
+          <div class="section-grid">
+            <label class="form-label"><input type="checkbox" id="chFitout" checked /> <span data-i18n="materials.channel.fitout">FitOut Hub</span></label>
+            <label class="form-label"><input type="checkbox" id="chRenovation" checked /> <span data-i18n="materials.channel.renovation">Renovations Hub</span></label>
+          </div>
+        </div>
+        <div class="section-grid">
+          <div class="form-group">
+            <label class="form-label" for="deliveryUnit" data-i18n="materials.form.unit">Delivery Unit</label>
+            <input id="deliveryUnit" class="form-control" placeholder="e.g. box / roll / m²" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="price" data-i18n="materials.form.price">Price</label>
+            <input id="price" type="number" class="form-control" placeholder="e.g. 500" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="leadTime" data-i18n="materials.form.lead">Lead Time (days)</label>
+            <input id="leadTime" type="number" class="form-control" placeholder="e.g. 14" />
+          </div>
         </div>
         <div class="form-group">
-          <label for="environmental">Environmental Declaration (optional)</label>
-          <input id="environmental" type="file" accept="application/pdf" />
+          <label for="certFiles" data-i18n="materials.form.certs">Certification Files (PDF)</label>
+          <div class="cert-upload" id="certDrop" data-i18n="materials.form.uploadHintCerts">Drag & drop or click to select</div>
+          <input id="certFiles" type="file" accept="application/pdf" multiple style="display:none" />
+          <div id="certList" class="small" style="margin-top:6px"></div>
         </div>
-        <button class="btn btn-primary" id="certSubmitBtn" disabled>Submit Package</button>
+        <div class="form-group">
+          <label for="envFiles" data-i18n="cert.form.envLabel">Environmental Declarations (optional)</label>
+          <div class="cert-upload" id="envDrop" data-i18n="materials.form.uploadHintEnv">Drag & drop or click to select</div>
+          <input id="envFiles" type="file" accept="application/pdf" multiple style="display:none" />
+          <div id="envList" class="small" style="margin-top:6px"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="cert.form.linkedLabel">Linked Renovations (Project IDs)</label>
+          <div id="linkedProjects" class="repeater-items"></div>
+          <div class="row-actions"><button type="button" class="btn btn-outline" id="addLink" data-i18n="cert.form.addLink">Add Project Link</button></div>
+        </div>
+        <button class="btn btn-primary" id="certSubmitBtn" disabled data-i18n="cert.form.submit">Submit Package</button>
         <div id="certStatus" class="small" style="margin-top:10px"></div>
       </form>
     </section>
   </main>
+  <script src="../i18n.js"></script>
   <script src="../main.js"></script>
   <script src="../auth.js"></script>
   <script src="../contractor-form.js"></script>

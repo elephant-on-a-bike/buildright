@@ -27,9 +27,11 @@
         <ul class="nav-links" id="drawer">
           <li><a href="index.html">Home</a></li>
           <li><a href="estimator.html">Cost Estimator</a></li>
-          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="registration.html">Registration</a></li>
+          <li><a href="renovations-register.html">Register Renovation</a></li>
           <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="materials-database.html">Materials Database</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="community.html">Community Reviews</a></li>
           <li class="divider"></li>
           <li><a href="../index.html">← Back to FitOut Hub</a></li>
@@ -41,26 +43,27 @@
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <h1>Safety & Compliance Hub</h1>
-          <p>Centralised guidance for building safety, statutory compliance, certifications, and renovation best practices.</p>
+          <h1 data-i18n="compliance.page.title">Safety & Compliance Hub</h1>
+          <p data-i18n="compliance.page.desc">Centralised guidance for building safety, statutory compliance, certifications, and renovation best practices.</p>
         </div>
       </div>
     </section>
     <section class="section">
-      <h2>Key Domains</h2>
+      <h2 data-i18n="compliance.hero.title">Key Domains</h2>
       <div class="grid grid-4">
-        <div class="card" data-panel="fire"><h3>Fire Strategy</h3><p>Compartmentation, alarms, egress.</p></div>
-        <div class="card" data-panel="structural"><h3>Structural</h3><p>Load paths, alterations, temporary works.</p></div>
-        <div class="card" data-panel="access"><h3>Accessibility</h3><p>Inclusive design & regulations.</p></div>
-        <div class="card" data-panel="energy"><h3>Energy & HVAC</h3><p>Efficiency, ventilation, commissioning.</p></div>
-        <div class="card" data-panel="water"><h3>Water Hygiene</h3><p>Legionella risk & controls.</p></div>
-        <div class="card" data-panel="waste"><h3>Waste & Recycling</h3><p>Segregation & disposal.</p></div>
-        <div class="card" data-panel="permits"><h3>Permits & Notices</h3><p>Authorities, planning, notifications.</p></div>
-        <div class="card" data-panel="digital"><h3>Digital Records</h3><p>O&M manuals & asset logs.</p></div>
+        <div class="card" data-panel="fire"><h3 data-i18n="compliance.card.fire.title">Fire Strategy</h3><p data-i18n="compliance.card.fire.desc">Compartmentation, alarms, egress.</p></div>
+        <div class="card" data-panel="structural"><h3 data-i18n="compliance.card.structural.title">Structural</h3><p data-i18n="compliance.card.structural.desc">Load paths, alterations, temporary works.</p></div>
+        <div class="card" data-panel="access"><h3 data-i18n="compliance.card.access.title">Accessibility</h3><p data-i18n="compliance.card.access.desc">Inclusive design & regulations.</p></div>
+        <div class="card" data-panel="energy"><h3 data-i18n="compliance.card.energy.title">Energy & HVAC</h3><p data-i18n="compliance.card.energy.desc">Efficiency, ventilation, commissioning.</p></div>
+        <div class="card" data-panel="water"><h3 data-i18n="compliance.card.water.title">Water Hygiene</h3><p data-i18n="compliance.card.water.desc">Legionella risk & controls.</p></div>
+        <div class="card" data-panel="waste"><h3 data-i18n="compliance.card.waste.title">Waste & Recycling</h3><p data-i18n="compliance.card.waste.desc">Segregation & disposal.</p></div>
+        <div class="card" data-panel="permits"><h3 data-i18n="compliance.card.permits.title">Permits & Notices</h3><p data-i18n="compliance.card.permits.desc">Authorities, planning, notifications.</p></div>
+        <div class="card" data-panel="digital"><h3 data-i18n="compliance.card.digital.title">Digital Records</h3><p data-i18n="compliance.card.digital.desc">O&M manuals & asset logs.</p></div>
       </div>
       <div id="compliancePanels"></div>
     </section>
   </main>
+  <script src="../i18n.js"></script>
   <script src="../main.js"></script>
   <script src="../auth.js"></script>
   <script src="../contractor-form.js"></script>

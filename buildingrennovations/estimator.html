@@ -27,9 +27,11 @@
         <ul class="nav-links" id="drawer">
           <li><a href="index.html">Home</a></li>
           <li><a href="estimator.html">Cost Estimator</a></li>
-          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="registration.html">Registration</a></li>
+          <li><a href="renovations-register.html">Register Renovation</a></li>
           <li><a href="certification.html">Material Certification</a></li>
+          <li><a href="materials-database.html">Materials Database</a></li>
+          <li><a href="compliance.html">Safety & Compliance</a></li>
           <li><a href="community.html">Community Reviews</a></li>
           <li class="divider"></li>
           <li><a href="../index.html">← Back to FitOut Hub</a></li>
@@ -42,58 +44,58 @@
     <section class="hero">
       <div class="hero-inner">
         <div>
-          <h1>Whole Building Cost Estimator</h1>
-          <p>Rough order-of-magnitude (ROM) cost projection for renovation / fitout projects. Adjust inputs to see dynamic estimates.</p>
+          <h1 data-i18n="estimator.hero.title">Whole Building Cost Estimator</h1>
+          <p data-i18n="estimator.hero.desc">Rough order-of-magnitude (ROM) cost projection for renovation / fitout projects. Adjust inputs to see dynamic estimates.</p>
           <div class="hero-actions">
-            <a href="#estimator" class="btn btn-primary">Start Estimating</a>
-            <button class="btn btn-secondary" onclick="openRole()">Register Roles</button>
+            <a href="#estimator" class="btn btn-primary" data-i18n="estimator.hero.start">Start Estimating</a>
+            <button class="btn btn-secondary" onclick="openRole()" data-i18n="estimator.hero.register">Register Roles</button>
           </div>
         </div>
       </div>
     </section>
 
     <section id="estimator" class="section">
-      <h2>Estimator Inputs</h2>
+      <h2 data-i18n="estimator.form.title">Estimator Inputs</h2>
       <form class="estimator-form" oninput="updateEstimate()">
         <div class="form-group">
-          <label for="floorArea">Total Internal Floor Area (m²)</label>
+          <label for="floorArea" data-i18n="estimator.form.floorArea">Total Internal Floor Area (m²)</label>
           <input type="number" id="floorArea" min="0" step="1" placeholder="e.g. 3500" />
         </div>
         <div class="form-group">
-          <label for="floors">Number of Floors</label>
+          <label for="floors" data-i18n="estimator.form.floors">Number of Floors</label>
           <input type="number" id="floors" min="1" step="1" placeholder="e.g. 5" />
         </div>
         <div class="form-group">
-          <label for="usage">Primary Usage Type</label>
+          <label for="usage" data-i18n="estimator.form.usage">Primary Usage Type</label>
           <select id="usage">
-            <option value="office">Office</option>
-            <option value="retail">Retail</option>
-            <option value="mixed">Mixed Use</option>
-            <option value="industrial">Industrial</option>
-            <option value="hospitality">Hospitality</option>
+            <option value="office" data-i18n="estimator.usage.office">Office</option>
+            <option value="retail" data-i18n="estimator.usage.retail">Retail</option>
+            <option value="mixed" data-i18n="estimator.usage.mixed">Mixed Use</option>
+            <option value="industrial" data-i18n="estimator.usage.industrial">Industrial</option>
+            <option value="hospitality" data-i18n="estimator.usage.hospitality">Hospitality</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="quality">Finish Quality Level</label>
+          <label for="quality" data-i18n="estimator.form.quality">Finish Quality Level</label>
           <select id="quality">
-            <option value="standard">Standard</option>
-            <option value="enhanced">Enhanced</option>
-            <option value="premium">Premium</option>
+            <option value="standard" data-i18n="estimator.quality.standard">Standard</option>
+            <option value="enhanced" data-i18n="estimator.quality.enhanced">Enhanced</option>
+            <option value="premium" data-i18n="estimator.quality.premium">Premium</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="complexity">Services Complexity</label>
+          <label for="complexity" data-i18n="estimator.form.complexity">Services Complexity</label>
           <select id="complexity">
-            <option value="low">Low</option>
-            <option value="medium" selected>Medium</option>
-            <option value="high">High</option>
+            <option value="low" data-i18n="estimator.complexity.low">Low</option>
+            <option value="medium" selected data-i18n="estimator.complexity.medium">Medium</option>
+            <option value="high" data-i18n="estimator.complexity.high">High</option>
           </select>
         </div>
         <div class="form-group">
-          <label><input type="checkbox" id="heritage" /> Heritage / Listed Constraints</label>
+          <label><input type="checkbox" id="heritage" /> <span data-i18n="estimator.form.heritage">Heritage / Listed Constraints</span></label>
         </div>
         <div class="form-group">
-          <label><input type="checkbox" id="phased" /> Phased Occupation / Night Work</label>
+          <label><input type="checkbox" id="phased" /> <span data-i18n="estimator.form.phased">Phased Occupation / Night Work</span></label>
         </div>
         <div class="estimate-output" id="estimateOutput">Enter details to calculate...</div>
         <div class="estimator-metrics" id="estimatorMetrics"></div>
@@ -101,6 +103,7 @@
     </section>
   </main>
 
+  <script src="../i18n.js"></script>
   <script src="../main.js"></script>
   <script src="../auth.js"></script>
   <script src="../contractor-form.js"></script>
