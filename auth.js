@@ -81,29 +81,30 @@
     const heroImagePath = isSubfolder() ? '../hero.png' : 'hero.png';
     const joinHref = getJoinPath('client');
     
+    const t = (k,f)=> (window.t?window.t(k,f):f);
     const modalHTML = `
       <div class="pd-overlay" id="loginOverlay" aria-hidden="true"></div>
       <section class="pd-modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" aria-describedby="loginModalDesc" tabindex="-1">
         <div class="pd-content">
           <button class="pd-close" id="loginClose" aria-label="Close">×</button>
           <div class="pd-copy">
-            <h2 id="loginModalTitle">Login to FitOut Hub</h2>
-            <p id="loginModalDesc">Access your projects, track progress, and manage your account.</p>
+            <h2 id="loginModalTitle">${t('auth.login.title','Login to FitOut Hub')}</h2>
+            <p id="loginModalDesc">${t('auth.login.desc','Access your projects, track progress, and manage your account.')}</p>
             <div id="loginErrors" class="auth-errors" aria-live="polite"></div>
             <form id="loginForm" novalidate>
               <div class="form-group">
-                <label for="loginNickname" class="form-label">Nickname</label>
-                <input id="loginNickname" name="loginNickname" class="form-control" required>
+                <label for="loginNickname" class="form-label">${t('auth.login.nickname','Nickname')}</label>
+                <input id="loginNickname" name="loginNickname" class="form-control" required autocomplete="username">
               </div>
               <div class="form-group">
-                <label for="loginPassword" class="form-label">Password</label>
-                <input id="loginPassword" name="loginPassword" type="password" class="form-control" required>
+                <label for="loginPassword" class="form-label">${t('auth.login.password','Password')}</label>
+                <input id="loginPassword" name="loginPassword" type="password" class="form-control" required autocomplete="current-password">
               </div>
               <div class="cta-actions" style="display: flex; gap: 12px; margin-top: 1.5em;">
-                <button id="loginSubmit" type="submit" class="btn btn-primary" disabled>Login</button>
+                <button id="loginSubmit" type="submit" class="btn btn-primary" disabled>${t('btn.login','Login')}</button>
               </div>
               <div style="margin-top: 1em; text-align: center; font-size: 0.95rem;">
-                New here? <a href="${joinHref}" id="loginToJoin" style="color: #2563eb; font-weight: 600;">Join now</a>
+                ${t('auth.login.newHere','New here?')} <a href="${joinHref}" id="loginToJoin" style="color: #2563eb; font-weight: 600;">${t('btn.join','Join')}</a>
               </div>
             </form>
           </div>
@@ -114,6 +115,23 @@
       </section>
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
+  }
+
+  function updateLoginModalTexts(){
+    if(!window.t) return;
+    const t = window.t;
+    const title = document.getElementById('loginModalTitle');
+    const desc = document.getElementById('loginModalDesc');
+    const nickLabel = document.querySelector('label[for="loginNickname"]');
+    const passLabel = document.querySelector('label[for="loginPassword"]');
+    const submit = document.getElementById('loginSubmit');
+    const joinLink = document.getElementById('loginToJoin');
+    if(title) title.textContent = t('auth.login.title','Login to FitOut Hub');
+    if(desc) desc.textContent = t('auth.login.desc','Access your projects, track progress, and manage your account.');
+    if(nickLabel) nickLabel.textContent = t('auth.login.nickname','Nickname');
+    if(passLabel) passLabel.textContent = t('auth.login.password','Password');
+    if(submit) submit.textContent = t('btn.login','Login');
+    if(joinLink) joinLink.textContent = t('btn.join','Join');
   }
 
   function loadSeed() {
@@ -453,6 +471,9 @@
 
   function initAuth() {
     injectLoginModal(); // Ensure modal is available before any interactions
+    // Update modal texts once i18n is ready, and on subsequent changes
+    document.addEventListener('i18n:ready', updateLoginModalTexts);
+    document.addEventListener('i18n:changed', updateLoginModalTexts);
     
     // Small delay to ensure DOM is fully updated after injection
     setTimeout(() => {
@@ -467,6 +488,9 @@
       const sid = sessionStorage.getItem(SESSION_KEY);
       if(sid){ currentUser = users.find(u=>u.id===sid) || null; }
       updateGreeting();
+      // Ensure header buttons reflect i18n-applied texts
+      document.addEventListener('i18n:ready', updateGreeting);
+      document.addEventListener('i18n:changed', updateGreeting);
       // Expose globally for other scripts (non-secure demo)
       window.fitouthubUserId = currentUser ? currentUser.id : null;
       // Provide a global handler for inline onclick usage across pages

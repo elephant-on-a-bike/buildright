@@ -54,10 +54,72 @@ document.addEventListener('DOMContentLoaded', () => {
   // small delay so transitions apply
   requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('is-loaded')));
 
+  // Inject language switcher into header
+  function injectLangToggle(){
+    // Check if already exists (avoid duplicates)
+    if (document.getElementById('langToggle')) return;
+    
+    const nav = document.querySelector('nav.nav') || document.querySelector('header, .header-row');
+    if (!nav) return;
+    
+    // Prefer placing inside unified header row if present
+    const headerRow = nav.querySelector('.header-row') || nav;
+    
+    const sel = document.createElement('select');
+    sel.id = 'langToggle';
+    sel.className = 'btn';
+    sel.style.marginLeft = '8px';
+    sel.style.fontSize = '0.9rem';
+    sel.style.padding = '6px 8px';
+    sel.setAttribute('aria-label', 'Language');
+    
+    const optEn = document.createElement('option'); 
+    optEn.value = 'en'; 
+    optEn.textContent = 'EN';
+    const optZh = document.createElement('option'); 
+    optZh.value = 'zh-HK'; 
+    optZh.textContent = '中文';
+    
+    sel.appendChild(optEn); 
+    sel.appendChild(optZh);
+    
+    try {
+      const current = localStorage.getItem('fitouthub_lang') || 'en';
+      sel.value = current;
+    } catch(e) {}
+    
+    headerRow.appendChild(sel);
+  }
+
+  // Centralized navigation menu for FitOut Hub (root pages only)
+  function injectFitOutMenu() {
+    const inSubfolder = window.location.pathname.includes('/buildingrennovations/');
+    if (inSubfolder) return; // only apply on FitOut Hub root pages
+    const drawer = document.getElementById('drawer') || document.querySelector('.nav-links');
+    if (!drawer) return;
+    const t = (k, f) => (window.t ? window.t(k, f) : f);
+    const items = [
+      { href: 'index.html', text: t('nav.home','Home') },
+      { href: 'forclients.html', text: t('forclients.nav','For Clients') },
+      { href: 'forcontractors.html', text: t('forcontractors.nav','For Contractors') },
+      { href: 'forsuppliers.html', text: t('forsuppliers.nav','For Suppliers') },
+      { href: 'services.html', text: t('services.nav','Our Services') },
+      { href: 'reviews.html', text: t('reviews.nav','Client Reviews') },
+      { href: 'expert.html', text: t('expert.nav','Expert Advice') },
+      { href: 'contactus.html', text: t('contact.nav','Contact Us') },
+      { divider: true },
+      { href: 'buildingrennovations/index.html', text: t('renovations.nav','Renovations Hub') }
+    ];
+    drawer.innerHTML = items.map(item => item.divider ? '<li class="divider"></li>' : `<li><a href="${item.href}">${item.text}</a></li>`).join('');
+  }
+
   // Ensure Renovations Hub link exists in FitOut Hub hamburger (drawer)
   try {
     const inSubfolder = window.location.pathname.includes('/buildingrennovations/');
     if (!inSubfolder) {
+      // Replace entire drawer with centralized FitOut Hub menu
+      injectFitOutMenu();
+      injectLangToggle();
       const drawer = document.getElementById('drawer') || document.querySelector('.nav-links');
       if (drawer) {
         const existing = drawer.querySelector('a[href$="buildingrennovations/index.html"]');
@@ -67,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const li = document.createElement('li');
           const a = document.createElement('a');
           a.href = 'buildingrennovations/index.html';
-          a.textContent = 'Renovations Hub';
+          a.textContent = (window.t ? window.t('renovations.nav','Renovations Hub') : 'Renovations Hub');
           li.appendChild(a);
           drawer.appendChild(divider);
           drawer.appendChild(li);
@@ -77,6 +139,13 @@ document.addEventListener('DOMContentLoaded', () => {
   } catch (e) {
     // no-op if nav not present
   }
+
+  // Also inject language toggle for Renovations pages
+  try { const inSubfolder = window.location.pathname.includes('/buildingrennovations/'); if (inSubfolder) injectLangToggle(); } catch(e) {}
+
+  // Re-inject FitOut menu when language initializes or changes
+  document.addEventListener('i18n:ready', injectFitOutMenu);
+  document.addEventListener('i18n:changed', injectFitOutMenu);
 
   // Intercept link clicks for same-origin navigations (soft transitions)
   document.addEventListener('click', (e) => {
