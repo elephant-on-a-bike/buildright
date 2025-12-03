@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="chatbot.css" />
 </head>
-<body class="page-chat-widget">
+<body class="page-chat-widget" data-no-auth-inject="true">
   <!-- Site Header -->
   <header class="site-header" role="banner">
     <div class="container header-inner">
@@ -21,42 +21,22 @@
           <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
           <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <span>FitOut Hub</span>
+        <span data-i18n="nav.home">FitOut Hub</span>
       </a>
 
       <nav class="nav" role="navigation" aria-label="Primary">
-        <ul class="nav-inline">
-          <li><a href="#why">Why FitOut Hub</a></li>
-          <li><a href="#how">How it works</a></li>
-          <li><a href="#who">Who we help</a></li>
-          <li><a href="#choose">Why choose us</a></li>
-        </ul>
-
-        <a href="#cta" class="btn btn-outline nav-cta">Start your project</a>
-
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button" data-i18n="btn.login">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button" data-i18n="btn.join">Join</button>
+        <button id="yourProjectsBtn" class="btn btn-secondary header-button" type="button" style="display:none" data-i18n="btn.yourProjects">Your Projects</button>
+        <button id="newProjectBtn" class="btn btn-secondary header-button" type="button" style="display:none" data-i18n="btn.startProject">Start Project</button>
+        <button id="logoutBtn" class="btn btn-outline header-button" type="button" style="display:none" data-i18n="btn.logout">Logout</button>
         <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
           <span class="nav-toggle-bar"></span>
           <span class="nav-toggle-bar"></span>
           <span class="nav-toggle-bar"></span>
         </button>
-
-        <ul class="nav-links" id="drawer">
-          <li><a href="howitworks.html">How it Works</a></li>
-          <li><a href="ourservices.html">Our Services</a></li>
-          <li><a href="smallprojects.html">Book a Tradesman</a></li>
-          <li><a href="forclients.html">For Clients</a></li>
-          <li><a href="forcontractors.html">For Contractors</a></li>
-          <li><a href="forsuppliers.html">For Suppliers</a></li>
-          <li><a href="projectmanagement.html">Project Management</a></li>
-          <li><a href="trustandsecurity.html">Trust and Security</a></li>
-          <li><a href="reviews.html">Reviews</a></li>
-          <li><a href="aboutus.html">About Us</a></li>
-          <li><a href="contactus.html">Contact Us</a></li>
-          <li class="mobile-only"><a href="#why">Why FitOut Hub</a></li>
-          <li class="mobile-only"><a href="#how">How it works</a></li>
-          <li class="mobile-only"><a href="#who">Who we help</a></li>
-          <li class="mobile-only"><a href="#choose">Why choose us</a></li>
-        </ul>
+        <ul class="nav-links" id="drawer"></ul>
       </nav>
     </div>
   </header>
@@ -64,23 +44,23 @@
   <main>
     <section class="section">
       <div class="container">
-        <h1 class="section-title">Start Your Project</h1>
+        <h1 class="section-title" data-i18n="expert.title">Start Your Project</h1>
         <div id="chat-container" class="chat-container"></div>
         <div class="loader" id="loader" style="display: none;">
           <span></span><span></span><span></span>
         </div>
-        <button id="start-btn" class="btn btn-primary">Begin</button>
+        <button id="start-btn" class="btn btn-primary" data-i18n="expert.begin">Begin</button>
       </div>
     </section>
   </main>
 
   <section id="cta" class="cta" aria-label="Get started">
     <div class="container cta-inner">
-      <h2>Ready to build with confidence?</h2>
-      <p>Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
+      <h2 data-i18n="home.cta.title">Ready to build with confidence?</h2>
+      <p data-i18n="home.cta.desc">Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
       <div class="cta-actions">
-        <a href="#" class="btn btn-primary">Start your project</a>
-        <a href="#" class="btn btn-secondary">Join as a professional</a>
+        <a href="expert3.html" class="btn btn-primary" data-i18n="home.hero.start">Start your project</a>
+        <a href="#" class="btn btn-secondary professional-join" data-i18n="home.hero.join">Join as a professional</a>
       </div>
     </div>
   </section>
@@ -88,26 +68,20 @@
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
       <div class="footer-left">
-        <a class="logo" href="#hero">
-          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
-            <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
-            <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>FitOut Hub</span>
-        </a>
         <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
       </div>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="#why">Why FitOut Hub</a>
-        <a href="#how">How it works</a>
-        <a href="#who">Who we help</a>
-        <a href="#choose">Why choose us</a>
-        <a href="#cta">Start your project</a>
-      </nav>
     </div>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="main.js"></script>
+  <script src="auth.js"></script>
   <script src="chatbot.js"></script>
+  <!-- Corner Banner -->
+  <div class="corner-banner" aria-label="Promotional banner" id="cornerBanner">
+    <!-- Loaded dynamically from corner-banner.json -->
+  </div>
+
+  <script src="corner-banner-loader.js"></script>
 </body>
 </html>

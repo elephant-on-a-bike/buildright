@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects Admin - FitOut Hub</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="small-projects.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .admin-container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .stat-card { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; text-align: center; }
+    .stat-card h3 { margin: 0 0 0.5rem 0; font-size: 2rem; color: #2563EB; }
+    .stat-card p { margin: 0; color: #6B7280; }
+    .controls { display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
+    .table-container { overflow-x: auto; margin: 2rem 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #E5E7EB; }
+    th { background: #F3F4F6; font-weight: 600; }
+    .type-badge { padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.875rem; background: #E0E7FF; color: #3730A3; }
+    .actions button { padding: 0.5rem 1rem; margin-right: 0.5rem; border-radius: 6px; border: none; cursor: pointer; font-size: 0.875rem; }
+    .btn-view { background: #2563EB; color: white; }
+    .btn-approve { background: #10B981; color: white; }
+    .btn-reject { background: #EF4444; color: white; }
+    .btn-delete { background: #6B7280; color: white; }
+    .action-group { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+    /* Status dot */
+    .status-badge { display:inline-block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid currentColor; background: transparent; }
+    .status-pending { color: #F59E42; }
+    .status-approved { color: #10B981; }
+    .status-rejected { color: #EF4444; }
+    .status-unknown { color: #EAB308; }
+    /* Project modal layout matching professionals */
+    .pd-modal { transition: border-color 0.3s, box-shadow 0.3s; position: fixed; z-index: 1001; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 80%; max-width: 1200px; height: 90vh; max-height: 90vh; background: #fff; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); overflow: hidden; display: flex; flex-direction: column; }
+    .pd-top { display:grid; grid-template-columns: 4fr 1fr; gap:0; align-items:stretch; height:10vh; max-height:10vh; width:100%; }
+    .pd-header { display:flex; align-items:center; justify-content:space-between; padding: 10px 16px; border-bottom:none; position:relative; }
+    .pd-header-inner h2 { margin:0; font-size: 1.5rem; }
+    .pd-header-inner p { margin:4px 0 0 0; color:#6B7280; }
+    .pd-close { position:absolute; left: 12px; top: 12px; font-size: 24px; line-height: 1; background:none; border:none; cursor:pointer; z-index:2; }
+    .pd-art { width:100%; overflow:hidden; display:block; }
+    .pd-art img { width:100%; height:100%; display:block; object-fit:scale-down; }
+    .pd-header { --pd-header-height: 10vh; }
+    .pd-art { max-height: var(--pd-header-height); }
+    .pd-content { width:100%; padding: 12px 16px; display:block; clear: both; flex: 1 1 auto; overflow-y: auto; margin-top: 10px; }
+    @media (max-width: 640px) { .pd-top { grid-template-columns: 1fr; } .pd-top .pd-art { display:none; } }
+  </style>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="logo" aria-label="FitOut Hub home" href="index.html">
+        <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+          <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+          <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>FitOut Hub</span>
+      </a>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button">Join</button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <ul class="nav-links" id="drawer">
+          <li><a href="howitworks.html">How it Works</a></li>
+          <li><a href="ourservices.html">Our Services</a></li>
+          <li><a href="smallprojects.html">Book a Tradesman</a></li>
+          <li><a href="forclients.html">For Clients</a></li>
+          <li><a href="forcontractors.html">For Contractors</a></li>
+          <li><a href="forsuppliers.html">For Suppliers</a></li>
+          <li><a href="projectmanagement.html">Project Management</a></li>
+          <li><a href="trustandsecurity.html">Trust and Security</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="contactus.html">Contact Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="admin-container">
+    <h1>Projects Admin</h1>
+    <div class="stats-grid" id="stats"></div>
+    <div class="controls">
+      <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh</button>
+      <button class="btn btn-secondary" onclick="exportProjects()">📥 Export JSON</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importProjects(event)" />
+      <button class="btn btn-outline" onclick="importLegacyRequests()">📦 Import Legacy Requests</button>
+      <button class="btn btn-outline" onclick="if(confirm('Clear all projects?')) clearProjects()">🗑️ Clear All</button>
+    </div>
+    <div class="table-container">
+      <table id="projectsTable">
+        <thead>
+          <tr>
+            <th>Project Name</th>
+            <th>Client</th>
+            <th>Region</th>
+            <th>Registration Date</th>
+            <th>Actions</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <div class="modal-header">
+        <h2>Project Details</h2>
+      </div>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="pd-overlay" id="editOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editTitle" aria-describedby="editDesc" tabindex="-1">
+    <div class="pd-top">
+      <button class="pd-close" id="editClose" aria-label="Close">×</button>
+      <div class="pd-header">
+        <div class="pd-header-inner">
+          <h2 id="editTitle">Edit Project</h2>
+          <p id="editDesc">Update the project's details below.</p>
+        </div>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="hero.png" alt="FitOut Hub" />
+      </div>
+    </div>
+    <div class="pd-content">
+      <form id="editForm" novalidate>
+        <div class="cta-actions">
+          <button type="submit" id="editSubmit" class="btn btn-primary">Update</button>
+          <button type="button" id="editCancel" class="btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="auth.js"></script>
+  <script src="main.js"></script>
+  <script src="projects-db.js"></script>
+  <script src="projects-seed.js"></script>
+  <script src="dynamic-form.js"></script>
+  <script>
+    function refreshData(){
+      const stats = ProjectsDB.getStats();
+      document.getElementById('stats').innerHTML = `
+        <div class="stat-card"><h3>${stats.total}</h3><p>Total Projects</p></div>
+        <div class="stat-card"><h3>${stats.pending}</h3><p>Pending</p></div>
+        <div class="stat-card"><h3>${stats.approved}</h3><p>Approved</p></div>
+        <div class="stat-card"><h3>${stats.rejected}</h3><p>Rejected</p></div>
+      `;
+      renderTable();
+    }
+    function renderTable(){
+      const projects = ProjectsDB.getAll().sort((a,b)=> new Date(b.registrationDate) - new Date(a.registrationDate));
+      const tbody = document.getElementById('tableBody');
+      if (!projects.length){ tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">No projects yet</td></tr>'; return; }
+      tbody.innerHTML = projects.map(p=>{
+        const name = p.projectName || 'Unnamed Project';
+        const client = p.clientName || 'Unknown Client';
+        const region = (p.data && p.data.region) ? p.data.region : '—';
+        const date = new Date(p.registrationDate).toLocaleDateString();
+        let actions = `<div class='action-group'>
+          <button class=\"btn-view\" onclick=\"viewDetail('${p.id}')\">View</button>
+          <button class=\"btn\" onclick=\"openEditModal('${p.id}')\">Edit</button>`;
+        if (p.status === 'pending') {
+          actions += `<button class=\"btn-approve\" onclick=\"approve('${p.id}')\">✓</button>
+          <button class=\"btn-reject\" onclick=\"reject('${p.id}')\">✗</button>`;
+        }
+        actions += `<button class=\"btn-delete\" onclick=\"deleteProject('${p.id}')\">Delete</button></div>`;
+        return `
+          <tr>
+            <td>${name}</td>
+            <td>${client}</td>
+            <td>${region}</td>
+            <td>${date}</td>
+            <td class=\"actions\">${actions}</td>
+            <td><span class=\"status-badge status-${p.status || 'unknown'}\"></span></td>
+          </tr>
+        `;
+      }).join('');
+    }
+    function viewDetail(id){
+      const p = ProjectsDB.getById(id); if (!p) return;
+      document.getElementById('detailContent').innerHTML = `<pre>${JSON.stringify(p, null, 2)}</pre>`;
+      document.getElementById('detailModal').classList.add('open');
+    }
+    function closeModal(){ document.getElementById('detailModal').classList.remove('open'); }
+    function approve(id){ ProjectsDB.updateStatus(id,'approved'); refreshData(); }
+    function reject(id){ ProjectsDB.updateStatus(id,'rejected'); refreshData(); }
+    function deleteProject(id){ if (confirm('Delete this project?')) { ProjectsDB.remove(id); refreshData(); } }
+    function exportProjects(){ ProjectsDB.exportToJSON(); }
+    function importProjects(e){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload = (ev)=>{ const res=ProjectsDB.importFromJSON(ev.target.result); if(res.success){ alert(`Imported ${res.count} projects`); refreshData(); } else { alert('Import failed: '+res.error); } }; r.readAsText(f); }
+
+    async function importLegacyRequests(){
+      try {
+        const res = await fetch('archive/requests.jsonl', { cache: 'no-cache' });
+        if (!res.ok) { alert('No legacy requests file found.'); return; }
+        const text = await res.text();
+        const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length);
+        let imported = 0;
+        for (const line of lines){
+          try {
+            const obj = JSON.parse(line);
+            // Map legacy booking payload to ProjectsDB schema
+            const id = 'project_' + Math.random().toString(36).slice(2,10);
+            const record = {
+              id,
+              projectName: `${obj.trade || 'Project'} • ${obj.region || ''}`.trim(),
+              clientName: obj.userId ? `Client ${obj.userId}` : 'Anonymous Client',
+              contractorName: '',
+              registrationDate: new Date().toISOString(),
+              status: 'pending',
+              data: {
+                region: obj.region || '',
+                budget: '',
+                notes: obj.description || '',
+                jobs: Array.isArray(obj.jobs) ? obj.jobs : [],
+                photos: Array.isArray(obj.photos) ? obj.photos : [],
+                trade: obj.trade || '',
+                userId: obj.userId || null
+              }
+            };
+            ProjectsDB.add(record);
+            imported++;
+          } catch (e) {
+            console.warn('Skipping invalid line:', e);
+          }
+        }
+        alert(`Imported ${imported} legacy requests as projects`);
+        refreshData();
+      } catch (e) {
+        console.error('Legacy import failed:', e);
+        alert('Legacy import failed: ' + e.message);
+      }
+    }
+
+    async function openEditModal(id){
+      const p = ProjectsDB.getById(id); if (!p) return;
+      // Title + subtitle
+      const titleEl = document.getElementById('editTitle');
+      const subEl = document.getElementById('editDesc');
+      titleEl.textContent = `Project — Admin Edit`;
+      subEl.textContent = `Editing: ${p.projectName || 'Unnamed Project'}`;
+      // Build form from project-form.json
+      const res = await fetch('project-form.json');
+      const def = await res.json();
+      const initialData = {
+        projectName: p.projectName || '',
+        clientName: p.clientName || '',
+        contractorName: p.contractorName || '',
+        region: (p.data && p.data.region) || '',
+        budget: (p.data && p.data.budget) || '',
+        status: p.status || 'pending',
+        notes: (p.data && p.data.notes) || ''
+      };
+      const formEl = document.getElementById('editForm');
+      formEl.innerHTML = '';
+      dynamicForm.render({
+        container: formEl,
+        definition: def,
+        prefix: 'proj_',
+        initialData,
+        onSubmit: function(updated){
+          const merged = {
+            ...p,
+            projectName: updated.projectName,
+            clientName: updated.clientName,
+            contractorName: updated.contractorName,
+            status: updated.status,
+            data: {
+              ...p.data,
+              region: updated.region,
+              budget: updated.budget,
+              notes: updated.notes
+            }
+          };
+          ProjectsDB.update(p.id, merged);
+          formEl.innerHTML = `
+            <div style=\"display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;text-align:center;\">
+              <img src=\"assets/check-mark.gif\" alt=\"Success\" style=\"width:120px;height:120px;margin-bottom:1.5rem;\" />
+              <h3 style=\"font-size:1.5rem;color:#10B981;margin:0 0 0.5rem;\">Changes Saved Successfully!</h3>
+              <p style=\"color:#6B7280;margin:0;\">The project has been updated.</p>
+            </div>
+          `;
+          setTimeout(()=>{ document.getElementById('editModal').classList.remove('open'); document.getElementById('editOverlay').setAttribute('aria-hidden','true'); refreshData(); }, 3000);
+        }
+      });
+      const modal = document.getElementById('editModal');
+      modal.classList.add('open');
+      document.getElementById('editOverlay').setAttribute('aria-hidden','false');
+      const color = (p.status==='approved') ? '#10B981' : (p.status==='rejected') ? '#EF4444' : '#F59E42';
+      modal.style.border = '14px solid ' + color;
+      modal.style.boxShadow = `0 0 0 8px ${color}22`;
+    }
+    document.getElementById('editClose').onclick = function(){ const m=document.getElementById('editModal'); m.classList.remove('open'); document.getElementById('editOverlay').setAttribute('aria-hidden','true'); m.style.border=''; m.style.boxShadow=''; };
+    document.getElementById('editCancel').onclick = function(){ const m=document.getElementById('editModal'); m.classList.remove('open'); document.getElementById('editOverlay').setAttribute('aria-hidden','true'); m.style.border=''; m.style.boxShadow=''; };
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', refreshData); else refreshData();
+  </script>
+</body>
+</html>

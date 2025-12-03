@@ -1,0 +1,21 @@
+{
+  "sections": [
+    {
+      "title": "Project Overview",
+      "fields": [
+        { "id": "projectName", "label": "Project Name", "type": "text", "required": true },
+        { "id": "clientName", "label": "Client Name", "type": "text", "required": true },
+        { "id": "contractorName", "label": "Contractor Name", "type": "text" },
+        { "id": "region", "label": "Region", "type": "select", "options": ["Hong Kong Island","Kowloon","New Territories","Lantau Island","Outlying Islands"], "required": true },
+        { "id": "budget", "label": "Budget (HKD)", "type": "number" },
+        { "id": "status", "label": "Status", "type": "select", "options": ["pending","approved","rejected"] }
+      ]
+    },
+    {
+      "title": "Notes",
+      "fields": [
+        { "id": "notes", "label": "Project Notes", "type": "textarea" }
+      ]
+    }
+  ]
+}

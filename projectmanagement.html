@@ -60,12 +60,12 @@
 <main>
     <section class="section">
       <div class="container">
-        <h1 class="section-title">Project Management Services</h1>
-        <p class="lead">
+        <h1 class="section-title" data-i18n="pm.title">Project Management Services</h1>
+        <p class="lead" data-i18n="pm.lead">
           Whether you need light oversight or full on-site supervision, BuildRight offers flexible project management options tailored to your needs. From initial quoting to final handover, we help keep your project on time, on budget, and on track.
         </p>
   
-        <p>
+        <p data-i18n="pm.intro">
           Our services scale from high-level coordination to boots-on-the-ground site management. You choose the level of involvement — and we make sure everything runs smoothly.
         </p>
   
@@ -73,51 +73,51 @@
           <table class="pm-table">
             <thead>
               <tr>
-                <th>Service Feature</th>
-                <th>Level 1<br><small>Oversight Only</small></th>
-                <th>Level 2<br><small>Active Coordination</small></th>
-                <th>Level 3<br><small>Full Site Supervision</small></th>
+                <th data-i18n="pm.table.feature">Service Feature</th>
+                <th data-i18n="pm.table.level1">Level 1<br><small>Oversight Only</small></th>
+                <th data-i18n="pm.table.level2">Level 2<br><small>Active Coordination</small></th>
+                <th data-i18n="pm.table.level3">Level 3<br><small>Full Site Supervision</small></th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Initial Quote Review</td>
+                <td data-i18n="pm.table.quoteReview">Initial Quote Review</td>
                 <td>✔️</td>
                 <td>✔️</td>
                 <td>✔️</td>
               </tr>
               <tr>
-                <td>Contract & Scope Clarification</td>
+                <td data-i18n="pm.table.contract">Contract & Scope Clarification</td>
                 <td>✔️</td>
                 <td>✔️</td>
                 <td>✔️</td>
               </tr>
               <tr>
-                <td>Timeline Monitoring</td>
+                <td data-i18n="pm.table.timeline">Timeline Monitoring</td>
                 <td>✔️</td>
                 <td>✔️</td>
                 <td>✔️</td>
               </tr>
               <tr>
-                <td>Milestone Check-ins</td>
+                <td data-i18n="pm.table.milestones">Milestone Check-ins</td>
                 <td>❌</td>
                 <td>✔️</td>
                 <td>✔️</td>
               </tr>
               <tr>
-                <td>Budget Tracking</td>
+                <td data-i18n="pm.table.budget">Budget Tracking</td>
                 <td>❌</td>
                 <td>✔️</td>
                 <td>✔️</td>
               </tr>
               <tr>
-                <td>On-site Supervision</td>
+                <td data-i18n="pm.table.supervision">On-site Supervision</td>
                 <td>❌</td>
                 <td>❌</td>
                 <td>✔️</td>
               </tr>
               <tr>
-                <td>Issue Resolution & Arbitration</td>
+                <td data-i18n="pm.table.resolution">Issue Resolution & Arbitration</td>
                 <td>✔️</td>
                 <td>✔️</td>
                 <td>✔️</td>
@@ -127,10 +127,10 @@
         </div>
   
         <div class="section-note">
-          <p>
-            Need something custom? We offer bespoke solutions for complex or high-value projects. Just let us know what you need — and we’ll tailor a management plan to match.
+          <p data-i18n="pm.note1">
+            Need something custom? We offer bespoke solutions for complex or high-value projects. Just let us know what you need — and we'll tailor a management plan to match.
           </p>
-          <p><strong>On time. On budget. On your side.</strong></p>
+          <p><strong data-i18n="pm.note2">On time. On budget. On your side.</strong></p>
         </div>
       </div>
     </section>
@@ -142,11 +142,11 @@
     <!-- Final CTA -->
     <section id="cta" class="cta" aria-label="Get started">
         <div class="container cta-inner">
-          <h2>Ready to build with confidence?</h2>
-          <p>Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
+          <h2 data-i18n="reviews.cta.title">Ready to build with confidence?</h2>
+          <p data-i18n="reviews.cta.desc">Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
           <div class="cta-actions">
-            <a href="expert3.html" class="btn btn-primary">Start your project</a>
-            <a href="#" class="btn btn-secondary">Join as a professional</a>
+            <a href="expert3.html" class="btn btn-primary" data-i18n="home.hero.start">Start your project</a>
+            <a href="#" class="btn btn-secondary professional-join" data-i18n="home.hero.join">Join as a professional</a>
           </div>
         </div>
       </section>
@@ -156,25 +156,18 @@
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
       <div class="footer-left">
-        <a class="logo" href="#hero">
-          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
-            <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
-            <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>FitOut Hub</span>
-        </a>
         <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
       </div>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="#why">Why FitOut Hub</a>
-        <a href="#how">How it works</a>
-        <a href="#who">Who we help</a>
-        <a href="#choose">Why choose us</a>
-        <a href="expert3.html">Start your project</a>
-      </nav>
     </div>
   </footer>
 
+  <!-- Corner Banner -->
+  <div class="corner-banner" aria-label="Promotional banner" id="cornerBanner">
+    <!-- Loaded dynamically from corner-banner.json -->
+  </div>
+
+  <script src="corner-banner-loader.js"></script>
+  <script src="i18n.js"></script>
   <script src="main.js"></script>
   <script src="auth.js"></script>
   <script src="contractor-form.js"></script>

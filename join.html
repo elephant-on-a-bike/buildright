@@ -214,35 +214,35 @@
           <form id="joinForm" novalidate>
             <div class="form-group">
               <label class="form-label" for="joinNickname">Nickname *</label>
-              <input id="joinNickname" name="joinNickname" class="form-control" required maxlength="32" />
+              <input id="joinNickname" name="joinNickname" class="form-control" required maxlength="32" autocomplete="username" />
             </div>
             <div class="form-group">
               <label class="form-label" for="joinFirst">First Name *</label>
-              <input id="joinFirst" name="joinFirst" class="form-control" required maxlength="64" />
+              <input id="joinFirst" name="joinFirst" class="form-control" required maxlength="64" autocomplete="given-name" />
             </div>
             <div class="form-group">
               <label class="form-label" for="joinSurname">Surname *</label>
-              <input id="joinSurname" name="joinSurname" class="form-control" required maxlength="64" />
+              <input id="joinSurname" name="joinSurname" class="form-control" required maxlength="64" autocomplete="family-name" />
             </div>
             <div class="form-group">
               <label class="form-label" for="joinChinese">Chinese Name</label>
-              <input id="joinChinese" name="joinChinese" class="form-control" maxlength="64" />
+              <input id="joinChinese" name="joinChinese" class="form-control" maxlength="64" autocomplete="name" />
             </div>
             <div class="form-group">
               <label class="form-label" for="joinEmail">Email *</label>
-              <input id="joinEmail" name="joinEmail" type="email" class="form-control" required />
+              <input id="joinEmail" name="joinEmail" type="email" class="form-control" required autocomplete="email" />
             </div>
             <div class="form-group">
               <label class="form-label" for="joinMobile">Mobile *</label>
-              <input id="joinMobile" name="joinMobile" type="tel" class="form-control" required />
+              <input id="joinMobile" name="joinMobile" type="tel" class="form-control" required autocomplete="tel" />
             </div>
             <div class="form-group">
               <label class="form-label" for="joinPassword">Password *</label>
-              <input id="joinPassword" name="joinPassword" type="password" class="form-control" required minlength="8" />
+              <input id="joinPassword" name="joinPassword" type="password" class="form-control" required minlength="8" autocomplete="new-password" />
             </div>
             <div class="form-group">
               <label class="form-label" for="joinConfirm">Confirm Password *</label>
-              <input id="joinConfirm" name="joinConfirm" type="password" class="form-control" required minlength="8" />
+              <input id="joinConfirm" name="joinConfirm" type="password" class="form-control" required minlength="8" autocomplete="new-password" />
             </div>
             <div class="form-group small"><em>* required fields</em></div>
             <div class="cta-actions">
@@ -376,5 +376,11 @@
       }
     });
   </script>
+  <!-- Corner Banner -->
+  <div class="corner-banner" aria-label="Promotional banner" id="cornerBanner">
+    <!-- Loaded dynamically from corner-banner.json -->
+  </div>
+
+  <script src="corner-banner-loader.js"></script>
 </body>
 </html>

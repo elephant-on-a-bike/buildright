@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Management - FitOut Hub Admin</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="small-projects.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .admin-container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .stat-card { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; text-align: center; }
+    .stat-card h3 { margin: 0 0 0.5rem 0; font-size: 2rem; color: #2563EB; }
+    .stat-card p { margin: 0; color: #6B7280; }
+    .controls { display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
+    .table-container { overflow-x: auto; margin: 2rem 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #E5E7EB; }
+    th { background: #F3F4F6; font-weight: 600; }
+    .role-badge { padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.875rem; font-weight: 600; }
+    .role-client { background: #DBEAFE; color: #1E40AF; }
+    .role-contractor { background: #D1FAE5; color: #065F46; }
+    .role-reseller { background: #FEF3C7; color: #92400E; }
+    .actions button { padding: 0.5rem 1rem; margin-right: 0.5rem; border-radius: 6px; border: none; cursor: pointer; font-size: 0.875rem; }
+    .btn-view { background: #2563EB; color: white; }
+    .btn-delete { background: #6B7280; color: white; }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+    .modal.open { display: flex; }
+    .modal-content { background: white; padding: 2rem; border-radius: 12px; max-width: 800px; max-height: 80vh; overflow-y: auto; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .close-btn { cursor: pointer; font-size: 1.5rem; border: none; background: none; }
+    pre { background: #F3F4F6; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+    .action-group { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-start; align-items: center; }
+  </style>
+</head>
+<body>
+  <!-- Site Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="logo" aria-label="FitOut Hub home" href="index.html">
+        <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+          <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+          <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>FitOut Hub</span>
+      </a>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button">Join</button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <ul class="nav-links" id="drawer">
+          <li><a href="howitworks.html">How it Works</a></li>
+          <li><a href="ourservices.html">Our Services</a></li>
+          <li><a href="smallprojects.html">Book a Tradesman</a></li>
+          <li><a href="forclients.html">For Clients</a></li>
+          <li><a href="forcontractors.html">For Contractors</a></li>
+          <li><a href="forsuppliers.html">For Suppliers</a></li>
+          <li><a href="projectmanagement.html">Project Management</a></li>
+          <li><a href="trustandsecurity.html">Trust and Security</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="contactus.html">Contact Us</a></li>
+          <li><a href="professionals-admin.html">Professionals Admin</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="admin-container">
+    <h1>User Management</h1>
+    
+    <div class="stats-grid" id="stats">
+      <!-- Stats will be injected here -->
+    </div>
+    
+    <div class="controls">
+      <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh</button>
+      <button class="btn btn-secondary" onclick="exportData()">📥 Export JSON</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)" />
+      <button class="btn btn-outline" onclick="if(confirm('Clear all users?')) clearData()">🗑️ Clear All</button>
+    </div>
+    
+    <div class="table-container">
+      <table id="usersTable">
+        <thead>
+          <tr>
+            <th>Nickname</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Data will be injected here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>User Details</h2>
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+      </div>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // Ensure page is visible
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => document.body.classList.add('is-loaded'));
+    } else {
+      document.body.classList.add('is-loaded');
+    }
+
+    const LS_KEY = 'fitouthub_users';
+
+    function getUsers() {
+      try {
+        return JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+      } catch (e) {
+        console.error('Error reading users:', e);
+        return [];
+      }
+    }
+
+    function saveUsers(users) {
+      try {
+        localStorage.setItem(LS_KEY, JSON.stringify(users));
+        return true;
+      } catch (e) {
+        console.error('Error saving users:', e);
+        return false;
+      }
+    }
+
+    function renderStats() {
+      const users = getUsers();
+      const clients = users.filter(u => u.role === 'client').length;
+      const contractors = users.filter(u => u.role === 'contractor').length;
+      const resellers = users.filter(u => u.role === 'reseller').length;
+      
+      const statsHtml = `
+        <div class="stat-card"><h3>${users.length}</h3><p>Total Users</p></div>
+        <div class="stat-card"><h3>${clients}</h3><p>Clients</p></div>
+        <div class="stat-card"><h3>${contractors}</h3><p>Contractors</p></div>
+        <div class="stat-card"><h3>${resellers}</h3><p>Resellers</p></div>
+      `;
+      document.getElementById('stats').innerHTML = statsHtml;
+    }
+
+    function renderTable() {
+      const users = getUsers();
+      const tbody = document.getElementById('tableBody');
+      
+      if (users.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">No users registered yet</td></tr>';
+        return;
+      }
+      
+      tbody.innerHTML = users.map(u => {
+        const fullName = [u.firstName, u.surname].filter(Boolean).join(' ') || 'N/A';
+        const roleClass = `role-${u.role || 'client'}`;
+        
+        return `
+          <tr>
+            <td><strong>${u.nickname || 'N/A'}</strong></td>
+            <td>${fullName}</td>
+            <td><span class="role-badge ${roleClass}">${u.role || 'client'}</span></td>
+            <td>${u.email || 'N/A'}</td>
+            <td>${u.mobile || 'N/A'}</td>
+            <td class="actions">
+              <div class="action-group">
+                <button class="btn-view" onclick="viewDetail('${u.nickname}')">View</button>
+                <button class="btn-delete" onclick="deleteUser('${u.nickname}')">Delete</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function viewDetail(nickname) {
+      const users = getUsers();
+      const user = users.find(u => u.nickname === nickname);
+      if (!user) return;
+      
+      // Hide password for security
+      const userCopy = { ...user };
+      if (userCopy.password) userCopy.password = '••••••••';
+      
+      document.getElementById('detailContent').innerHTML = `
+        <pre>${JSON.stringify(userCopy, null, 2)}</pre>
+      `;
+      document.getElementById('detailModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.remove('open');
+    }
+
+    function deleteUser(nickname) {
+      if (confirm(`Delete user "${nickname}"?`)) {
+        const users = getUsers();
+        const filtered = users.filter(u => u.nickname !== nickname);
+        saveUsers(filtered);
+        refreshData();
+      }
+    }
+
+    function exportData() {
+      const users = getUsers();
+      const blob = new Blob([JSON.stringify(users, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'fitouthub-users-' + new Date().toISOString().split('T')[0] + '.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (Array.isArray(data)) {
+            saveUsers(data);
+            alert(`Successfully imported ${data.length} users`);
+            refreshData();
+          } else {
+            alert('Invalid data format');
+          }
+        } catch (err) {
+          alert('Import failed: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function clearData() {
+      localStorage.removeItem(LS_KEY);
+      refreshData();
+    }
+
+    function refreshData() {
+      renderStats();
+      renderTable();
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      refreshData();
+      document.getElementById('year').textContent = new Date().getFullYear();
+    });
+  </script>
+</body>
+</html>

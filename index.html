@@ -50,10 +50,6 @@
         <li><a href="reviews.html">Reviews</a></li>
         <li><a href="aboutus.html">About Us</a></li>
         <li><a href="contactus.html">Contact Us</a></li>
-        <li class="mobile-only"><a href="#why">Why FitOut Hub</a></li>
-        <li class="mobile-only"><a href="#how">How it works</a></li>
-        <li class="mobile-only"><a href="#who">Who we help</a></li>
-        <li class="mobile-only"><a href="#choose">Why choose us</a></li>
       </ul>
     </nav>
   </div>
@@ -63,11 +59,11 @@
   <section id="hero" class="hero" aria-label="Intro">
     <div class="container hero-inner">
       <div class="hero-copy">
-        <h1>Transparent, stress‑free renovations & fit‑outs</h1>
-        <p>Connecting clients, contractors, suppliers, and design professionals on one trusted platform — with project management oversight that prevents disputes before they arise.</p>
+        <h1 data-i18n="home.hero.title">Transparent, stress‑free renovations & fit‑outs</h1>
+        <p data-i18n="home.hero.desc">Connecting clients, contractors, suppliers, and design professionals on one trusted platform — with project management oversight that prevents disputes before they arise.</p>
         <div class="hero-actions">
-          <a href="expert3.html" class="btn btn-primary">Start your project</a>
-          <a href="#how" class="btn btn-secondary">Learn more</a>
+          <a href="expert3.html" class="btn btn-primary" data-i18n="home.hero.start">Start your project</a>
+          <a href="#" class="btn btn-secondary professional-join" data-i18n="home.hero.join">Join as a professional</a>
         </div>
       </div>
 
@@ -77,11 +73,34 @@
     </div>
   </section>
 
+  <!-- Matching Professionals Modal -->
+  <div class="pd-overlay" id="matchesOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="matchesModal" role="dialog" aria-modal="true" aria-labelledby="matchesTitle" aria-describedby="matchesDesc" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="matchesClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="matchesTitle">Matching Professionals</h2>
+        <p id="matchesDesc">Based on your selected trade and region, here are nearby professionals.</p>
+        <div id="matchesSummary" class="small"></div>
+        <ul id="matchesList" class="subservices-list" aria-label="Matching professionals"></ul>
+        <div class="cta-actions">
+          <button class="btn btn-outline" id="matchesBack" style="display:none">Back</button>
+          <button class="btn btn-secondary" id="matchesMore">Show more</button>
+          <button class="btn btn-primary" id="matchesContact" style="display:none">Contact</button>
+          <button class="btn btn-primary" id="matchesOk">OK</button>
+        </div>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="hero.png" alt="FitOut Hub" />
+      </div>
+    </div>
+  </section>
+
   <!-- Quick Trade Booking -->
   <section id="trades" class="section section-alt" aria-label="Book a Tradesman">
     <div class="container">
-      <h2>Book a Tradesman</h2>
-      <p>Select the type of professional you need and outline the work. We’ll route it to trusted, vetted specialists.</p>
+      <h2 data-i18n="home.trades.title">Book a Tradesman</h2>
+      <p data-i18n="home.trades.desc">Select the type of professional you need and outline the work. We’ll route it to trusted, vetted specialists.</p>
       <div id="tradesButtons" class="trades-grid" role="list" aria-label="Available trades"></div>
     </div>
   </section>
@@ -109,8 +128,8 @@
   <!-- Why FitOut Hub -->
   <section id="why" class="section" aria-label="Why FitOut Hub">
     <div class="container">
-      <h2>Why FitOut Hub?</h2>
-      <p>Renovations and fit‑outs don’t have to be stressful. FitOut Hub ensures every step is clear, fair, and transparent by combining secure contracts, milestone‑based payments, and independent project oversight.</p>
+      <h2 data-i18n="home.why.title">Why FitOut Hub?</h2>
+      <p data-i18n="home.choose.desc">Renovations and fit‑outs don’t have to be stressful. FitOut Hub ensures every step is clear, fair, and transparent by combining secure contracts, milestone‑based payments, and independent project oversight.</p>
 
       <div class="grid grid-4">
         <article class="card">
@@ -122,8 +141,8 @@
               <circle cx="32" cy="40" r="4" fill="#1E3A8A"/>
             </svg>
           </div>
-          <h3>Secure & transparent payments</h3>
-          <p>Funds are held safely and released only when verified milestones are met.</p>
+          <h3 data-i18n="home.feature.payments.title">Secure & transparent payments</h3>
+          <p data-i18n="home.feature.payments.desc">Funds are held safely and released only when verified milestones are met.</p>
         </article>
 
         <article class="card">
@@ -136,8 +155,8 @@
               <line x1="22" y1="40" x2="36" y2="40" stroke="#2563EB" stroke-width="4"/>
             </svg>
           </div>
-          <h3>Clear contracts</h3>
-          <p>Standardized agreements reduce ambiguity and protect all parties.</p>
+          <h3 data-i18n="home.feature.contracts.title">Clear contracts</h3>
+          <p data-i18n="home.feature.contracts.desc">Standardized agreements reduce ambiguity and protect all parties.</p>
         </article>
 
         <article class="card">
@@ -148,8 +167,8 @@
               <path d="M24 40 v-12 M32 40 v-16 M40 40 v-12" stroke="#1E3A8A" stroke-width="4"/>
             </svg>
           </div>
-          <h3>Independent oversight</h3>
-          <p>Project managers monitor progress, verify work, and resolve issues early.</p>
+          <h3 data-i18n="home.feature.oversight.title">Independent oversight</h3>
+          <p data-i18n="home.feature.oversight.desc">Project managers monitor progress, verify work, and resolve issues early.</p>
         </article>
 
         <article class="card">
@@ -160,8 +179,8 @@
               <path d="M10 34 l8 -8 h22 l6 6" stroke="#2563EB" stroke-width="4" fill="none" stroke-linecap="round"/>
             </svg>
           </div>
-          <h3>Collaboration without friction</h3>
-          <p>Clients, contractors, and suppliers work together on one platform.</p>
+          <h3 data-i18n="home.feature.collaboration.title">Collaboration without friction</h3>
+          <p data-i18n="home.feature.collaboration.desc">Clients, contractors, and suppliers work together on one platform.</p>
         </article>
       </div>
     </div>
@@ -170,27 +189,27 @@
   <!-- How It Works -->
   <section id="how" class="section section-alt" aria-label="How it works">
     <div class="container">
-      <h2>How it works</h2>
+      <h2 data-i18n="home.how.title">How it works</h2>
       <div class="grid grid-4">
         <article class="card step">
           <div class="step-number">1</div>
-          <h3>Plan</h3>
-          <p>Define your project scope with expert guidance.</p>
+          <h3 data-i18n="home.step.plan.title">Plan</h3>
+          <p data-i18n="home.step.plan.desc">Define your project scope with expert guidance.</p>
         </article>
         <article class="card step">
           <div class="step-number">2</div>
-          <h3>Match</h3>
-          <p>Connect with vetted contractors, suppliers, and professionals.</p>
+          <h3 data-i18n="home.step.match.title">Match</h3>
+          <p data-i18n="home.step.match.desc">Connect with vetted contractors, suppliers, and professionals.</p>
         </article>
         <article class="card step">
           <div class="step-number">3</div>
-          <h3>Manage</h3>
-          <p>Track progress, payments, and documentation in one place.</p>
+          <h3 data-i18n="home.step.manage.title">Manage</h3>
+          <p data-i18n="home.step.manage.desc">Track progress, payments, and documentation in one place.</p>
         </article>
         <article class="card step">
           <div class="step-number">4</div>
-          <h3>Complete</h3>
-          <p>Enjoy a smooth, dispute‑free handover.</p>
+          <h3 data-i18n="home.step.complete.title">Complete</h3>
+          <p data-i18n="home.step.complete.desc">Enjoy a smooth, dispute‑free handover.</p>
         </article>
       </div>
     </div>
@@ -199,7 +218,7 @@
   <!-- Who We Help -->
   <section id="who" class="section" aria-label="Who we help">
     <div class="container">
-      <h2>Who we help</h2>
+      <h2 data-i18n="home.who.title">Who we help</h2>
       <div class="grid grid-4">
         <article class="card">
           <div class="icon">
@@ -210,8 +229,8 @@
               <rect x="14" y="34" width="36" height="16" rx="8" fill="#2563EB"/>
             </svg>
           </div>
-          <h3>Clients & property owners</h3>
-          <p>Peace of mind with secure payments, vetted professionals, and proactive oversight.</p>
+          <h3 data-i18n="home.who.clients.title">Clients & property owners</h3>
+          <p data-i18n="home.who.clients.desc">Peace of mind with secure payments, vetted professionals, and proactive oversight.</p>
         </article>
         <article class="card">
           <div class="icon">
@@ -221,8 +240,8 @@
               <path d="M12 28 a20 12 0 0 1 40 0" fill="#93C5FD" stroke="#1E3A8A" stroke-width="3"/>
             </svg>
           </div>
-          <h3>Contractors & builders</h3>
-          <p>Fair contracts, timely payments, and fewer disputes.</p>
+          <h3 data-i18n="home.who.contractors.title">Contractors & builders</h3>
+          <p data-i18n="home.who.contractors.desc">Fair contracts, timely payments, and fewer disputes.</p>
         </article>
         <article class="card">
           <div class="icon">
@@ -233,8 +252,8 @@
               <circle cx="32" cy="8" r="4" fill="#2563EB"/>
             </svg>
           </div>
-          <h3>Suppliers</h3>
-          <p>Transparent terms and new opportunities across active projects.</p>
+          <h3 data-i18n="home.who.suppliers.title">Suppliers</h3>
+          <p data-i18n="home.who.suppliers.desc">Transparent terms and new opportunities across active projects.</p>
         </article>
         <article class="card">
           <div class="icon">
@@ -244,8 +263,8 @@
               <polygon points="20,20 44,20 48,24 16,24" fill="#93C5FD" stroke="#1E3A8A" stroke-width="3"/>
             </svg>
           </div>
-          <h3>Design professionals</h3>
-          <p>Seamless collaboration with contractors and clients in a structured environment.</p>
+          <h3 data-i18n="home.who.designers.title">Design professionals</h3>
+          <p data-i18n="home.who.designers.desc">Seamless collaboration with contractors and clients in a structured environment.</p>
         </article>
       </div>
     </div>
@@ -254,13 +273,13 @@
   <!-- Why Choose Us -->
   <section id="choose" class="section section-alt" aria-label="Why choose us">
     <div class="container">
-      <h2>Why choose us</h2>
-      <p>Unlike traditional renovation processes that often lead to miscommunication, delays, and disputes, FitOut Hub provides:</p>
+      <h2 data-i18n="home.choose.title">Why choose us</h2>
+      <p data-i18n="home.choose.desc">Unlike traditional renovation processes that often lead to miscommunication, delays, and disputes, FitOut Hub provides:</p>
       <ul class="benefits">
-        <li><strong>Neutral, professional project management</strong> that keeps work moving and issues contained.</li>
-        <li><strong>Transparent communication</strong> at every stage, with documented milestones and evidence.</li>
-        <li><strong>A single platform</strong> for all stakeholders, unifying scope, schedule, and payments.</li>
-        <li><strong>Reduced risk and stress</strong> with clear expectations and fair resolution paths.</li>
+        <li><strong data-i18n="home.choose.pm">Neutral, professional project management</strong><span data-i18n="home.choose.pm.desc"> that keeps work moving and issues contained.</span></li>
+        <li><strong data-i18n="home.choose.comm">Transparent communication</strong><span data-i18n="home.choose.comm.desc"> at every stage, with documented milestones and evidence.</span></li>
+        <li><strong data-i18n="home.choose.platform">A single platform</strong><span data-i18n="home.choose.platform.desc"> for all stakeholders, unifying scope, schedule, and payments.</span></li>
+        <li><strong data-i18n="home.choose.risk">Reduced risk and stress</strong><span data-i18n="home.choose.risk.desc"> with clear expectations and fair resolution paths.</span></li>
       </ul>
     </div>
   </section>
@@ -268,11 +287,11 @@
   <!-- Final CTA -->
   <section id="cta" class="cta" aria-label="Get started">
     <div class="container cta-inner">
-      <h2>Ready to build with confidence?</h2>
-      <p>Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
+      <h2 data-i18n="home.cta.title">Ready to build with confidence?</h2>
+      <p data-i18n="home.cta.desc">Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
       <div class="cta-actions">
-        <a href="expert3.html" class="btn btn-primary">Start your project</a>
-        <a href="#" class="btn btn-secondary">Join as a professional</a>
+        <a href="expert3.html" class="btn btn-primary" data-i18n="home.hero.start">Start your project</a>
+        <a href="#" class="btn btn-secondary professional-join" data-i18n="home.hero.join">Join as a professional</a>
       </div>
     </div>
   </section>
@@ -281,26 +300,38 @@
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
       <div class="footer-left">
-        <a class="logo" href="#hero">
-          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
-            <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
-            <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>FitOut Hub</span>
-        </a>
         <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
       </div>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="#why">Why FitOut Hub</a>
-        <a href="#how">How it works</a>
-        <a href="#who">Who we help</a>
-        <a href="#choose">Why choose us</a>
-        <a href="expert3.html">Start your project</a>
-      </nav>
     </div>
   </footer>
 
   <!-- Auth Overlays & Modals -->
+  <!-- Professional Role Selection Modal -->
+  <div class="pd-overlay" id="professionalRoleOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="professionalRoleModal" role="dialog" aria-modal="true" aria-labelledby="professionalRoleTitle" aria-describedby="professionalRoleDesc" tabindex="-1">
+    <div class="pd-content">
+      <button class="pd-close" id="professionalRoleClose" aria-label="Close">×</button>
+      <div class="pd-copy">
+        <h2 id="professionalRoleTitle">Join as a Professional</h2>
+        <p id="professionalRoleDesc">Select your professional type to register:</p>
+        <div class="role-options">
+          <div class="role-option">
+            <button type="button" id="professionalContractor" class="btn btn-primary btn-large">Contractor</button>
+          </div>
+          <div class="role-option">
+            <button type="button" id="professionalReseller" class="btn btn-primary btn-large">Reseller</button>
+          </div>
+        </div>
+        <div class="cta-actions" style="margin-top: 1.5rem;">
+          <button type="button" id="professionalCancel" class="btn btn-outline">Cancel</button>
+        </div>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="hero.png" alt="FitOut Hub" />
+      </div>
+    </div>
+  </section>
+
   <!-- Role Selection Modal -->
   <div class="pd-overlay" id="roleOverlay" aria-hidden="true"></div>
   <section class="pd-modal" id="roleModal" role="dialog" aria-modal="true" aria-labelledby="roleTitle" aria-describedby="roleDesc" tabindex="-1">
@@ -341,14 +372,14 @@
         <p id="joinDesc">Fill in your details to join FitOut Hub.</p>
         <div id="joinErrors" class="auth-errors" aria-live="polite"></div>
         <form id="joinForm" novalidate>
-          <div class="form-group"><label class="form-label" for="joinNickname">Nickname *</label><input id="joinNickname" name="joinNickname" class="form-control" required maxlength="32" /></div>
-          <div class="form-group"><label class="form-label" for="joinFirst">First Name *</label><input id="joinFirst" name="joinFirst" class="form-control" required maxlength="64" /></div>
-          <div class="form-group"><label class="form-label" for="joinSurname">Surname *</label><input id="joinSurname" name="joinSurname" class="form-control" required maxlength="64" /></div>
-          <div class="form-group"><label class="form-label" for="joinChinese">Chinese Name</label><input id="joinChinese" name="joinChinese" class="form-control" maxlength="64" /></div>
-          <div class="form-group"><label class="form-label" for="joinEmail">Email *</label><input id="joinEmail" name="joinEmail" type="email" class="form-control" required /></div>
-          <div class="form-group"><label class="form-label" for="joinMobile">Mobile *</label><input id="joinMobile" name="joinMobile" type="tel" class="form-control" required /></div>
-          <div class="form-group"><label class="form-label" for="joinPassword">Password *</label><input id="joinPassword" name="joinPassword" type="password" class="form-control" required minlength="8" /></div>
-          <div class="form-group"><label class="form-label" for="joinConfirm">Confirm Password *</label><input id="joinConfirm" name="joinConfirm" type="password" class="form-control" required minlength="8" /></div>
+          <div class="form-group"><label class="form-label" for="joinNickname">Nickname *</label><input id="joinNickname" name="joinNickname" class="form-control" required maxlength="32" autocomplete="username" /></div>
+          <div class="form-group"><label class="form-label" for="joinFirst">First Name *</label><input id="joinFirst" name="joinFirst" class="form-control" required maxlength="64" autocomplete="given-name" /></div>
+          <div class="form-group"><label class="form-label" for="joinSurname">Surname *</label><input id="joinSurname" name="joinSurname" class="form-control" required maxlength="64" autocomplete="family-name" /></div>
+          <div class="form-group"><label class="form-label" for="joinChinese">Chinese Name</label><input id="joinChinese" name="joinChinese" class="form-control" maxlength="64" autocomplete="name" /></div>
+          <div class="form-group"><label class="form-label" for="joinEmail">Email *</label><input id="joinEmail" name="joinEmail" type="email" class="form-control" required autocomplete="email" /></div>
+          <div class="form-group"><label class="form-label" for="joinMobile">Mobile *</label><input id="joinMobile" name="joinMobile" type="tel" class="form-control" required autocomplete="tel" /></div>
+          <div class="form-group"><label class="form-label" for="joinPassword">Password *</label><input id="joinPassword" name="joinPassword" type="password" class="form-control" required minlength="8" autocomplete="new-password" /></div>
+          <div class="form-group"><label class="form-label" for="joinConfirm">Confirm Password *</label><input id="joinConfirm" name="joinConfirm" type="password" class="form-control" required minlength="8" autocomplete="new-password" /></div>
           <div class="form-group small"><em>* required fields</em></div>
           <div class="cta-actions">
             <button type="submit" id="joinSubmit" class="btn btn-primary" disabled aria-disabled="true">Create Account</button>
@@ -451,6 +482,23 @@
     </div>
   </section>
 
+    <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Corner Banner -->
+  <div class="corner-banner" aria-label="Promotional banner" id="cornerBanner">
+    <!-- Loaded dynamically from corner-banner.json -->
+  </div>
+
+  <script src="corner-banner-loader.js"></script>
+  <script src="professionals-db.js"></script>
+  <script src="professionals-seed.js"></script>
+  <script src="i18n.js"></script>
   <script src="main.js"></script>
   <script src="chat-widget.js"></script>
   <script src="tradesmen.js"></script>

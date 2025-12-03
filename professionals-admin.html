@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Professionals Database - FitOut Hub Admin</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="small-projects.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    .admin-container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .stat-card { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; text-align: center; }
+    .stat-card h3 { margin: 0 0 0.5rem 0; font-size: 2rem; color: #2563EB; }
+    .stat-card p { margin: 0; color: #6B7280; }
+    .controls { display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
+    .table-container { overflow-x: auto; margin: 2rem 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #E5E7EB; }
+    th { background: #F3F4F6; font-weight: 600; }
+    .status-badge { display:inline-block; width: 14px; height: 14px; border-radius: 50%; border: 2px solid currentColor; background: transparent; }
+    .status-pending { color: #F59E42; }
+    .status-approved { color: #10B981; }
+    .status-rejected { color: #EF4444; }
+    .status-unknown { color: #EAB308; }
+    .type-badge { padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.875rem; background: #E0E7FF; color: #3730A3; }
+    .actions button { padding: 0.5rem 1rem; margin-right: 0.5rem; border-radius: 6px; border: none; cursor: pointer; font-size: 0.875rem; }
+    .btn-view { background: #2563EB; color: white; }
+    .btn-approve { background: #10B981; color: white; }
+    .btn-reject { background: #EF4444; color: white; }
+    .btn-delete { background: #6B7280; color: white; }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+    .modal.open { display: flex; }
+    .modal-content { background: white; padding: 2rem; border-radius: 12px; width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; position: relative; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .close-btn { cursor: pointer; font-size: 1.5rem; border: none; background: none; position: absolute; right: 16px; top: 12px; z-index: 2; }
+    pre { background: #F3F4F6; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+    /* Responsive action group for table buttons */
+    .action-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    /* Modal border transition */
+    .pd-modal {
+      transition: border-color 0.3s, box-shadow 0.3s;
+      position: fixed;
+      z-index: 1001;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 1200px;
+      height: 90vh;
+      max-height: 90vh;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      overflow: hidden;
+      display: flex; /* stack with flexible content area for scrolling */
+      flex-direction: column;
+    }
+    /* Modal header + art + full-width content */
+    .pd-top { display:grid; grid-template-columns: 4fr 1fr; gap: 0; align-items: stretch; height: 10vh; max-height: 10vh; width:100%; }
+    .pd-header { display:flex; align-items:center; justify-content:space-between; padding: 10px 16px; border-bottom: none; position: relative;}
+    .pd-header-inner h2 { margin:0; font-size: 1.5rem; }
+    .pd-header-inner p { margin:4px 0 0 0; color:#6B7280; }
+    .pd-close { position:absolute; right: 12px; top: 12px; font-size: 24px; line-height: 1; background:none; border:none; cursor:pointer; z-index:2; }
+    .pd-art { width:100%; overflow:hidden; display:block; }
+    .pd-art img { width:100%; height:100%; display:block; object-fit:scale-down; }
+    /* Limit art to header/image row height (10% of viewport) */
+    .pd-header { --pd-header-height: 10vh; }
+    .pd-art { max-height: var(--pd-header-height); }
+    .pd-art img { height: 100%; }
+    .pd-top .pd-art { border-left: 1px solid #E5E7EB; }
+    .pd-content { width:100%; padding: 12px 16px; display:block; clear: both; flex: 1 1 auto; overflow-y: auto; margin-top: 10px; }
+    /* Ensure consistent spacing between header/image row and form */
+    .pd-modal .pd-content { margin-top: 10px !important; }
+    .pd-modal > .pd-content { grid-column: 1 / -1; }
+    .pd-modal > .pd-top { grid-column: 1 / -1; }
+    @media (max-width: 640px) {
+      .pd-top { grid-template-columns: 1fr; }
+      .pd-top .pd-art { display:none; }
+    }
+    .pd-content form { max-width: 100%; width: 100%; }
+    .pd-content .cta-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    /* Toggle button grid for checkbox and radio fields */
+    .checkbox-buttons, .radio-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+    .checkbox-button, .radio-button { display: inline-flex; align-items: center; justify-content: center; padding: 10px 12px; border: 2px solid #cbd5e1; border-radius: 10px; background: #fff; color: #0f172a; cursor: pointer; user-select: none; font-weight: 600; transition: all 0.15s; }
+    .checkbox-button:hover, .radio-button:hover { border-color: #94a3b8; }
+    .checkbox-button.active, .radio-button.active { border-color: #2563EB; background: #eff6ff; color: #1e40af; box-shadow: 0 0 0 4px rgba(37,99,235,0.12); }
+  </style>
+</head>
+<body>
+  <!-- Site Header -->
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="logo" aria-label="FitOut Hub home" href="index.html">
+        <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+          <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+          <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>FitOut Hub</span>
+      </a>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button">Join</button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <ul class="nav-links" id="drawer">
+          <li><a href="howitworks.html">How it Works</a></li>
+          <li><a href="ourservices.html">Our Services</a></li>
+          <li><a href="smallprojects.html">Book a Tradesman</a></li>
+          <li><a href="forclients.html">For Clients</a></li>
+          <li><a href="forcontractors.html">For Contractors</a></li>
+          <li><a href="forsuppliers.html">For Suppliers</a></li>
+          <li><a href="projectmanagement.html">Project Management</a></li>
+          <li><a href="trustandsecurity.html">Trust and Security</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li><a href="aboutus.html">About Us</a></li>
+          <li><a href="contactus.html">Contact Us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="admin-container">
+    <h1>Professionals Database Admin</h1>
+    
+    <div class="stats-grid" id="stats">
+      <!-- Stats will be injected here -->
+    </div>
+    
+    <div class="controls">
+      <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh</button>
+      <button class="btn btn-secondary" onclick="exportData()">📥 Export JSON</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('importFile').click()">📤 Import JSON</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)" />
+      <button class="btn btn-outline" onclick="if(confirm('Clear all data?')) clearData()">🗑️ Clear All</button>
+    </div>
+    
+    <div class="table-container">
+      <table id="professionalsTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Business Type</th>
+            <th>Registration Date</th>
+            <th>Actions</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Data will be injected here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal" id="detailModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <div class="modal-header">
+        <h2>Professional Details</h2>
+      </div>
+      <div id="detailContent"></div>
+    </div>
+  </div>
+
+  <!-- Editing Modal restructured: header, art (header-height), full-width form -->
+  <div class="pd-overlay" id="editOverlay" aria-hidden="true"></div>
+  <section class="pd-modal" id="editModal" role="dialog" aria-modal="true" aria-labelledby="editTitle" aria-describedby="editDesc" tabindex="-1">
+    <div class="pd-top">
+        <button class="pd-close" id="editClose" aria-label="Close">×</button>
+      <div class="pd-header">
+        <div class="pd-header-inner">
+          <h2 id="editTitle">Edit Professional</h2>
+          <p id="editDesc">Update the professional's details below.</p>
+        </div>
+      </div>
+      <div class="pd-art" aria-hidden="true">
+        <img src="hero.png" alt="FitOut Hub" />
+      </div>
+    </div>
+    <div class="pd-content">
+      <form id="editForm" novalidate>
+        <!-- Form fields will be injected dynamically -->
+        <div class="cta-actions">
+          <button type="submit" id="editSubmit" class="btn btn-primary">Update</button>
+          <button type="button" id="editCancel" class="btn btn-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="professionals-db.js"></script>
+  <script src="professionals-seed.js"></script>
+  <script src="dynamic-form.js"></script>
+  <script>
+    // Ensure page is visible without main.js page transition helper
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => document.body.classList.add('is-loaded'));
+    } else {
+      document.body.classList.add('is-loaded');
+    }
+
+    function refreshData() {
+      renderStats();
+      renderTable();
+      // Debug: show number of professionals and log to console
+      const professionals = ProfessionalsDB.getAll();
+      console.log('Admin: professionals count', professionals.length, professionals);
+      document.getElementById('tableBody').insertAdjacentHTML('beforebegin', `<div id="debugCount" style="color:#b91c1c;font-size:0.95em;margin-bottom:8px;">Loaded professionals: ${professionals.length}</div>`);
+    }
+    // Refresh when the seeder finishes populating localStorage
+    window.addEventListener('professionals-seeded', () => {
+      console.log('[Admin] professionals-seeded event received');
+      refreshData();
+    });
+
+    function renderStats() {
+      const stats = ProfessionalsDB.getStats();
+      const statsHtml = `
+        <div class="stat-card"><h3>${stats.total}</h3><p>Total Registrations</p></div>
+        <div class="stat-card"><h3>${stats.contractors}</h3><p>Contractors</p></div>
+        <div class="stat-card"><h3>${stats.resellers}</h3><p>Resellers</p></div>
+        <div class="stat-card"><h3>${stats.pending}</h3><p>Pending</p></div>
+        <div class="stat-card"><h3>${stats.approved}</h3><p>Approved</p></div>
+        <div class="stat-card"><h3>${stats.rejected}</h3><p>Rejected</p></div>
+      `;
+      document.getElementById('stats').innerHTML = statsHtml;
+    }
+    
+    // Editing modal logic
+    async function openEditModal(id) {
+      const professional = ProfessionalsDB.getById(id);
+      if (!professional) return;
+      console.log('Opening edit modal for:', professional);
+      // Build dynamic title with fun, humanized name and account type
+      try {
+        const index = ProfessionalsDB.getAll().findIndex(p => p.id === id);
+        const ordinal = index >= 0 ? index + 1 : '';
+        const typeLabel = professional.type === 'contractor' ? 'Contractor' : professional.type === 'reseller' ? 'Reseller' : 'Professional';
+        const accountLabel = (professional.type === 'contractor')
+          ? (professional.businessType === 'sole_trader' ? 'contractor sole trader account' : 'contractor company account')
+          : 'reseller account';
+        const rawName = professional.data.business_name || professional.data.full_name || professional.data.reseller_business_name || professional.data.contractor_full_name || '';
+        const displayName = humanizeName(rawName, typeLabel, ordinal);
+        const titleEl = document.getElementById('editTitle');
+        if (titleEl) {
+          titleEl.textContent = `${typeLabel} ${ordinal} - ${accountLabel}`;
+        }
+        const subEl = document.getElementById('editDesc');
+        if (subEl) {
+          subEl.textContent = displayName ? `Editing: ${displayName}` : `Update the professional's details below.`;
+        }
+      } catch(e) { console.warn('Title update error', e); }
+      let definition, prefix;
+      if (professional.type === 'contractor') {
+        // Load correct form definition (sole trader/company)
+        const soleTraderRes = await fetch('contractor-form.json');
+        const companyRes = await fetch('company-form.json');
+        const soleTraderDef = await soleTraderRes.json();
+        const companyDef = await companyRes.json();
+        definition = professional.businessType === 'sole_trader' ? soleTraderDef : companyDef;
+        prefix = 'edit_';
+      } else if (professional.type === 'reseller') {
+        const resellerRes = await fetch('reseller-form.json');
+        definition = await resellerRes.json();
+        prefix = 'edit_';
+      } else {
+        return;
+      }
+      // Map professional.data to initialData matching form field IDs
+      const flat = flattenProfessionalData(professional.data);
+      const initialData = {};
+      definition.sections.forEach(sec => {
+        sec.fields.forEach(field => {
+          let val = flat[field.id];
+          // Special mappings and fallbacks
+          if (field.id === 'business_name' && (val === undefined || val === '')) {
+            val = flat.full_name || '';
+          }
+          if (field.id === 'full_name' && (val === undefined || val === '')) {
+            val = flat.business_name || '';
+          }
+          // Company form: map sole-trader primary_trade into trades_covered checkboxes
+          if (field.id === 'trades_covered') {
+            const current = Array.isArray(val) ? val.slice() : [];
+            if (flat.primary_trade && !current.includes(flat.primary_trade)) {
+              current.push(flat.primary_trade);
+            }
+            val = current;
+          }
+          if (field.type === 'select' && Array.isArray(field.options)) {
+            // Ensure select value is one of the options
+            if (!field.options.includes(val)) {
+              val = '';
+            }
+          }
+          initialData[field.id] = val;
+        });
+      });
+      console.log('Initial data for form:', initialData);
+      const container = document.getElementById('editForm');
+      container.innerHTML = '';
+      dynamicForm.render({
+        container,
+        definition,
+        prefix,
+        initialData,
+        onSubmit: function(updatedData) {
+          console.log('Form submitted with data:', updatedData);
+          // Merge updated data back into the original structure
+          const mergedData = { ...professional.data, ...updatedData };
+          ProfessionalsDB.update(id, { data: mergedData });
+          // Show success confirmation
+          const container = document.getElementById('editForm');
+          container.innerHTML = `
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;text-align:center;">
+              <img src="assets/check-mark.gif" alt="Success" style="width:120px;height:120px;margin-bottom:1.5rem;" />
+              <h3 style="font-size:1.5rem;color:#10B981;margin:0 0 0.5rem;">Changes Saved Successfully!</h3>
+              <p style="color:#6B7280;margin:0;">The professional's details have been updated.</p>
+            </div>
+          `;
+          setTimeout(() => {
+            document.getElementById('editModal').classList.remove('open');
+            document.getElementById('editOverlay').setAttribute('aria-hidden', 'true');
+            document.getElementById('editModal').style.border = '';
+            document.getElementById('editModal').style.boxShadow = '';
+            refreshData();
+          }, 4000);
+        }
+      });
+      // Set modal border color based on status
+      const modal = document.getElementById('editModal');
+      modal.classList.add('open');
+      document.getElementById('editOverlay').setAttribute('aria-hidden', 'false');
+      const color = getStatusColor(professional.status);
+      modal.style.border = '14px solid ' + color;
+      modal.style.boxShadow = `0 0 0 8px ${color}22`;
+    }
+    function getStatusColor(status) {
+      switch (status) {
+        case 'approved': return '#10B981'; // green
+        case 'pending': return '#F59E42'; // orange
+        case 'rejected': return '#EF4444'; // red
+        default: return '#2563EB'; // blue
+      }
+    }
+
+    function flattenProfessionalData(data) {
+      // Flattens nested data for initial form population
+      const result = {};
+      function recurse(obj, parentKey = '') {
+        for (const key in obj) {
+          if (obj[key] === null || obj[key] === undefined) {
+            continue;
+          }
+          if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+            recurse(obj[key], parentKey);
+          } else {
+            // Store both with and without parent key for maximum compatibility
+            result[key] = obj[key];
+          }
+        }
+      }
+      recurse(data);
+      console.log('Flattened data:', result);
+      return result;
+    }
+
+    function humanizeName(name, typeLabel, ordinal) {
+      if (!name || typeof name !== 'string') {
+        // Generate a playful fallback name
+        const num = ordinal || Math.floor(Math.random() * 90) + 10;
+        return typeLabel + ' ' + num + ' • ' + (typeLabel === 'Reseller' ? 'Friendly Supplies' : 'Trusted Services');
+      }
+      let cleaned = name.trim();
+      // Light cleanup: title case if mostly lowercase, remove excessive punctuation
+      const mostlyLower = cleaned === cleaned.toLowerCase();
+      if (mostlyLower) {
+        cleaned = cleaned.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+      }
+      cleaned = cleaned.replace(/[\-\_]{2,}/g, '-').replace(/\s{2,}/g, ' ');
+      // Add a subtle, fun suffix if the name is very generic
+      const generic = /^(company|contractor|reseller|services|solutions)$/i.test(cleaned);
+      if (generic) {
+        cleaned += ' • ⭐ Top-rated';
+      }
+      return cleaned;
+    }
+
+    function viewDetail(id) {
+      const professional = ProfessionalsDB.getById(id);
+      if (!professional) return;
+      document.getElementById('detailContent').innerHTML = `
+        <pre>${JSON.stringify(professional, null, 2)}</pre>
+      `;
+      document.getElementById('detailModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('detailModal').classList.remove('open');
+    }
+
+    function approve(id) {
+      ProfessionalsDB.updateStatus(id, 'approved');
+      refreshData();
+    }
+
+    function reject(id) {
+      ProfessionalsDB.updateStatus(id, 'rejected');
+      refreshData();
+    }
+
+    function deleteProfessional(id) {
+      if (confirm('Delete this registration?')) {
+        ProfessionalsDB.remove(id);
+        refreshData();
+      }
+    }
+
+    function exportData() {
+      ProfessionalsDB.exportToJSON();
+    }
+
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = ProfessionalsDB.importFromJSON(e.target.result);
+        if (result.success) {
+          alert(`Successfully imported ${result.count} records`);
+          refreshData();
+        } else {
+          alert('Import failed: ' + result.error);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function clearData() {
+      ProfessionalsDB.clear();
+      refreshData();
+    }
+
+    document.getElementById('editClose').onclick = function() {
+      const modal = document.getElementById('editModal');
+      modal.classList.remove('open');
+      document.getElementById('editOverlay').setAttribute('aria-hidden', 'true');
+      modal.style.border = '';
+      modal.style.boxShadow = '';
+    };
+    document.getElementById('editCancel').onclick = function() {
+      const modal = document.getElementById('editModal');
+      modal.classList.remove('open');
+      document.getElementById('editOverlay').setAttribute('aria-hidden', 'true');
+      modal.style.border = '';
+      modal.style.boxShadow = '';
+    };
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      refreshData();
+    });
+
+    function renderTable() {
+      const professionals = ProfessionalsDB.getAll().sort((a, b) => 
+        new Date(b.registrationDate) - new Date(a.registrationDate)
+      );
+      const tbody = document.getElementById('tableBody');
+      if (professionals.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">No registrations yet</td></tr>';
+        return;
+      }
+      tbody.innerHTML = professionals.map(p => {
+        const rawName = p.type === 'contractor' 
+          ? (p.data.full_name || p.data.contractor_full_name || 'N/A')
+          : (p.data.business_name || p.data.reseller_business_name || 'N/A');
+        const typeLabel = p.type === 'contractor' ? 'Contractor' : 'Reseller';
+        const idx = professionals.findIndex(x => x.id === p.id);
+        const name = humanizeName(rawName, typeLabel, idx >= 0 ? idx + 1 : undefined);
+        const date = new Date(p.registrationDate).toLocaleDateString();
+        // Responsive button group
+        let actions = `<div class='action-group'>
+          <button class="btn-view" onclick="viewDetail('${p.id}')">View</button>
+          <button class="btn" onclick="openEditModal('${p.id}')">Edit</button>`;
+        if (p.status === 'pending') {
+          actions += `<button class="btn-approve" onclick="approve('${p.id}')">✓</button>
+          <button class="btn-reject" onclick="reject('${p.id}')">✗</button>`;
+        }
+        actions += `<button class="btn-delete" onclick="deleteProfessional('${p.id}')">Delete</button></div>`;
+        return `
+          <tr>
+            <td>${name}</td>
+            <td><span class="type-badge">${p.type}</span></td>
+            <td>${p.businessType.replace('_', ' ')}</td>
+            <td>${date}</td>
+            <td class="actions">${actions}</td>
+            <td><span class="status-badge status-${p.status}"></span></td>
+          </tr>
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>

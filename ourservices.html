@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,131 +16,110 @@
 </head>
 <body class="page-ourservices">
   <!-- Site Header -->
-<header class="site-header" role="banner">
-  <div class="container header-inner">
-    <a class="logo" aria-label="FitOut Hub home" href="index.html">
-      <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
-        <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
-        <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span>FitOut Hub</span>
-    </a>
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="logo" aria-label="FitOut Hub home" href="index.html">
+        <svg width="32" height="32" viewBox="0 0 36 36" aria-hidden="true">
+          <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
+          <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span data-i18n="nav.home">FitOut Hub</span>
+      </a>
+      <nav class="nav" role="navigation" aria-label="Primary">
+        <div class="greeting" id="greeting"></div>
+        <button id="openLogin" class="btn btn-outline header-button" type="button" data-i18n="btn.login">Login</button>
+        <button id="openJoin" class="btn btn-primary header-button" type="button" data-i18n="btn.join">Join</button>
+        <button id="yourProjectsBtn" class="btn btn-secondary header-button" type="button" style="display:none" data-i18n="btn.yourProjects">Your Projects</button>
+        <button id="newProjectBtn" class="btn btn-secondary header-button" type="button" style="display:none" data-i18n="btn.startProject">Start Project</button>
+        <button id="logoutBtn" class="btn btn-outline header-button" type="button" style="display:none" data-i18n="btn.logout">Logout</button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+          <span class="nav-toggle-bar"></span>
+        </button>
+        <!-- Drawer -->
+        <ul class="nav-links" id="drawer">
+          <li><a href="howitworks.html" data-i18n="howitworks.nav">How it Works</a></li>
+          <li><a href="ourservices.html" data-i18n="services.nav">Our Services</a></li>
+          <li><a href="smallprojects.html" data-i18n="home.trades.title">Book a Tradesman</a></li>
+          <li><a href="forclients.html" data-i18n="forclients.nav">For Clients</a></li>
+          <li><a href="forcontractors.html" data-i18n="forcontractors.nav">For Contractors</a></li>
+          <li><a href="forsuppliers.html" data-i18n="forsuppliers.nav">For Suppliers</a></li>
+          <li><a href="projectmanagement.html" data-i18n="projectmanagement.nav">Project Management</a></li>
+          <li><a href="trustandsecurity.html" data-i18n="trustandsecurity.nav">Trust and Security</a></li>
+          <li><a href="reviews.html" data-i18n="reviews.nav">Reviews</a></li>
+          <li><a href="aboutus.html" data-i18n="about.title">About Us</a></li>
+          <li><a href="contactus.html" data-i18n="contact.nav">Contact Us</a></li>
+          <li class="mobile-only"><a href="#why" data-i18n="home.why.title">Why FitOut Hub</a></li>
+          <li class="mobile-only"><a href="#how" data-i18n="home.how.title">How it works</a></li>
+          <li class="mobile-only"><a href="#who" data-i18n="home.who.title">Who we help</a></li>
+          <li class="mobile-only"><a href="#choose" data-i18n="home.choose.title">Why choose us</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <nav class="nav" role="navigation" aria-label="Primary">
-      <div class="greeting" id="greeting"></div>
-      <button id="openLogin" class="btn btn-outline header-button" type="button">Login</button>
-      <button id="openJoin" class="btn btn-primary header-button" type="button">Join</button>
-      <button id="newProjectBtn" class="btn btn-secondary header-button" type="button" style="display:none">Start Project</button>
-      <button id="logoutBtn" class="btn btn-outline header-button" type="button" style="display:none">Logout</button>
-      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
-
-      <!-- Drawer -->
-      <ul class="nav-links" id="drawer">
-        <li><a href="howitworks.html">How it Works</a></li>
-        <li><a href="ourservices.html">Our Services</a></li>
-        <li><a href="smallprojects.html">Book a Tradesman</a></li>
-        <li><a href="forclients.html">For Clients</a></li>
-        <li><a href="forcontractors.html">For Contractors</a></li>
-        <li><a href="forsuppliers.html">For Suppliers</a></li>
-        <li><a href="projectmanagement.html">Project Management</a></li>
-        <li><a href="trustandsecurity.html">Trust and Security</a></li>
-        <li><a href="reviews.html">Reviews</a></li>
-        <li><a href="aboutus.html">About Us</a></li>
-        <li><a href="contactus.html">Contact Us</a></li>
-        <li class="mobile-only"><a href="#why">Why FitOut Hub</a></li>
-        <li class="mobile-only"><a href="#how">How it works</a></li>
-        <li class="mobile-only"><a href="#who">Who we help</a></li>
-        <li class="mobile-only"><a href="#choose">Why choose us</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
-<main>
+  <main>
     <section class="section">
       <div class="container">
-        <h1 class="section-title">Our Services</h1>
-        <p class="lead">
+        <h1 class="section-title" data-i18n="services.title">Our Services</h1>
+        <p class="lead" data-i18n="services.lead">
           BuildRight is your all-in-one platform for getting things done — from quoting and hiring trusted tradesmen to shopping for the right tools and learning how to use them.
         </p>
-  
         <div class="grid grid-services">
           <div class="card">
-            <h2 class="card-title">🛠️ Project Quoting & Matching</h2>
-            <p>
-              Post your project and receive quotes from vetted local tradesmen. Whether it’s plumbing, painting, or a full renovation, you’ll get competitive offers from professionals in your area — all while staying anonymous.
-            </p>
+            <h2 class="card-title" data-i18n="services.quoting.title">🛠️ Project Quoting & Matching</h2>
+            <p data-i18n="services.quoting.desc">Post your project and receive quotes from vetted local tradesmen. Whether it’s plumbing, painting, or a full renovation, you’ll get competitive offers from professionals in your area — all while staying anonymous.</p>
           </div>
-  
           <div class="card">
-            <h2 class="card-title">🛒 The BuildRight Shop</h2>
-            <p>
-              Discover the best products at the best prices — from tools and fixtures to paint and hardware. We also include expert tips and tricks to help you get the most from your purchase, like how to prep a wall or hang a door.
-            </p>
+            <h2 class="card-title" data-i18n="services.shop.title">🛒 The BuildRight Shop</h2>
+            <p data-i18n="services.shop.desc">Discover the best products at the best prices — from tools and fixtures to paint and hardware. We also include expert tips and tricks to help you get the most from your purchase, like how to prep a wall or hang a door.</p>
           </div>
-  
           <div class="card">
-            <h2 class="card-title">🧰 Light-Touch Project Management</h2>
-            <p>
-              Want a little help keeping things on track? Our optional project management service offers just enough support to guide your job — without taking over.
-            </p>
+            <h2 class="card-title" data-i18n="services.pm.title">🧰 Light-Touch Project Management</h2>
+            <p data-i18n="services.pm.desc">Want a little help keeping things on track? Our optional project management service offers just enough support to guide your job — without taking over.</p>
           </div>
-  
           <div class="card">
-            <h2 class="card-title">🔍 Knowledge & Guidance</h2>
-            <p>
-              We believe informed clients make better decisions. That’s why we offer practical advice, how-to guides, and expert tips throughout your journey — from DIY prep to smart shopping strategies.
-            </p>
+            <h2 class="card-title" data-i18n="services.knowledge.title">🔍 Knowledge & Guidance</h2>
+            <p data-i18n="services.knowledge.desc">We believe informed clients make better decisions. That’s why we offer practical advice, how-to guides, and expert tips throughout your journey — from DIY prep to smart shopping strategies.</p>
           </div>
         </div>
       </div>
     </section>
   </main>
-  
 
-    <!-- Final CTA -->
-    <section id="cta" class="cta" aria-label="Get started">
-        <div class="container cta-inner">
-          <h2>Ready to build with confidence?</h2>
-          <p>Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
-          <div class="cta-actions">
-            <a href="expert3.html" class="btn btn-primary">Start your project</a>
-            <a href="#" class="btn btn-secondary">Join as a professional</a>
-          </div>
-        </div>
-      </section>
-  
+  <!-- Final CTA -->
+  <section id="cta" class="cta" aria-label="Get started">
+    <div class="container cta-inner">
+      <h2 data-i18n="home.cta.title">Ready to build with confidence?</h2>
+      <p data-i18n="home.cta.desc">Start your project today or join as a professional to access transparent, dispute‑free collaboration.</p>
+      <div class="cta-actions">
+        <a href="expert3.html" class="btn btn-primary" data-i18n="home.hero.start">Start your project</a>
+        <a href="#" class="btn btn-secondary professional-join" data-i18n="home.hero.join">Join as a professional</a>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
       <div class="footer-left">
-        <a class="logo" href="#hero">
-          <svg width="28" height="28" viewBox="0 0 36 36" aria-hidden="true">
-            <rect x="2" y="2" width="32" height="32" rx="8" fill="#2563EB"/>
-            <path d="M10 24 L18 12 L26 24" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>FitOut Hub</span>
-        </a>
         <p class="small">© <span id="year"></span> FitOut Hub. All rights reserved.</p>
       </div>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="#why">Why FitOut Hub</a>
-        <a href="#how">How it works</a>
-        <a href="#who">Who we help</a>
-        <a href="#choose">Why choose us</a>
-        <a href="expert3.html">Start your project</a>
-      </nav>
     </div>
   </footer>
 
+  <!-- Corner Banner -->
+  <div class="corner-banner" aria-label="Promotional banner" id="cornerBanner">
+    <!-- Loaded dynamically from corner-banner.json -->
+  </div>
+
+  <script src="corner-banner-loader.js"></script>
+  <script src="i18n.js"></script>
   <script src="main.js"></script>
   <script src="auth.js"></script>
   <script src="contractor-form.js"></script>
   <script src="reseller-form.js"></script>
 </body>
 </html>
+</head>
