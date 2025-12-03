@@ -117,17 +117,10 @@
           <span class="nav-toggle-bar"></span>
         </button>
         <ul class="nav-links" id="drawer">
-          <li><a href="howitworks.html">How it Works</a></li>
-          <li><a href="ourservices.html">Our Services</a></li>
-          <li><a href="smallprojects.html">Book a Tradesman</a></li>
-          <li><a href="forclients.html">For Clients</a></li>
-          <li><a href="forcontractors.html">For Contractors</a></li>
-          <li><a href="forsuppliers.html">For Suppliers</a></li>
-          <li><a href="projectmanagement.html">Project Management</a></li>
-          <li><a href="trustandsecurity.html">Trust and Security</a></li>
-          <li><a href="reviews.html">Reviews</a></li>
-          <li><a href="aboutus.html">About Us</a></li>
-          <li><a href="contactus.html">Contact Us</a></li>
+          <li><a href="users-admin.html">👥 Users Admin</a></li>
+          <li><a href="professionals-admin.html"><strong>🔧 Professionals Admin</strong></a></li>
+          <li><a href="projects-admin.html">📋 Projects Admin</a></li>
+          <li style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #E5E7EB;"><a href="index.html">← Back to FitOut Hub</a></li>
         </ul>
       </nav>
     </div>
@@ -212,6 +205,8 @@
     </div>
   </footer>
 
+  <script src="auth.js"></script>
+  <script src="main.js"></script>
   <script src="professionals-db.js"></script>
   <script src="professionals-seed.js"></script>
   <script src="dynamic-form.js"></script>
@@ -480,9 +475,18 @@
       modal.style.boxShadow = '';
     };
 
-    // Initialize
+    // Initialize - load seed data first
     document.addEventListener('DOMContentLoaded', function() {
-      refreshData();
+      if (window.ProfessionalsDB && window.ProfessionalsDB.init) {
+        ProfessionalsDB.init().then(() => {
+          refreshData();
+        }).catch(err => {
+          console.error('Error initializing ProfessionalsDB:', err);
+          refreshData(); // Still try to render what we have
+        });
+      } else {
+        refreshData();
+      }
     });
 
     function renderTable() {

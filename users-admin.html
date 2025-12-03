@@ -58,18 +58,10 @@
           <span class="nav-toggle-bar"></span>
         </button>
         <ul class="nav-links" id="drawer">
-          <li><a href="howitworks.html">How it Works</a></li>
-          <li><a href="ourservices.html">Our Services</a></li>
-          <li><a href="smallprojects.html">Book a Tradesman</a></li>
-          <li><a href="forclients.html">For Clients</a></li>
-          <li><a href="forcontractors.html">For Contractors</a></li>
-          <li><a href="forsuppliers.html">For Suppliers</a></li>
-          <li><a href="projectmanagement.html">Project Management</a></li>
-          <li><a href="trustandsecurity.html">Trust and Security</a></li>
-          <li><a href="reviews.html">Reviews</a></li>
-          <li><a href="aboutus.html">About Us</a></li>
-          <li><a href="contactus.html">Contact Us</a></li>
-          <li><a href="professionals-admin.html">Professionals Admin</a></li>
+          <li><a href="users-admin.html"><strong>👥 Users Admin</strong></a></li>
+          <li><a href="professionals-admin.html">🔧 Professionals Admin</a></li>
+          <li><a href="projects-admin.html">📋 Projects Admin</a></li>
+          <li style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #E5E7EB;"><a href="index.html">← Back to FitOut Hub</a></li>
         </ul>
       </nav>
     </div>
@@ -128,8 +120,9 @@
     </div>
   </footer>
 
-  <script src="main.js"></script>
   <script src="auth.js"></script>
+  <script src="main.js"></script>
+  <script src="users-db.js"></script>
   <script>
     // Ensure page is visible
     if (document.readyState === 'loading') {
@@ -138,29 +131,8 @@
       document.body.classList.add('is-loaded');
     }
 
-    const LS_KEY = 'fitouthub_users';
-
-    function getUsers() {
-      try {
-        return JSON.parse(localStorage.getItem(LS_KEY) || '[]');
-      } catch (e) {
-        console.error('Error reading users:', e);
-        return [];
-      }
-    }
-
-    function saveUsers(users) {
-      try {
-        localStorage.setItem(LS_KEY, JSON.stringify(users));
-        return true;
-      } catch (e) {
-        console.error('Error saving users:', e);
-        return false;
-      }
-    }
-
     function renderStats() {
-      const users = getUsers();
+      const users = UsersDB.getAll();
       const clients = users.filter(u => u.role === 'client').length;
       const contractors = users.filter(u => u.role === 'contractor').length;
       const resellers = users.filter(u => u.role === 'reseller').length;
@@ -175,7 +147,7 @@
     }
 
     function renderTable() {
-      const users = getUsers();
+      const users = UsersDB.getAll();
       const tbody = document.getElementById('tableBody');
       
       if (users.length === 0) {
@@ -196,8 +168,8 @@
             <td>${u.mobile || 'N/A'}</td>
             <td class="actions">
               <div class="action-group">
-                <button class="btn-view" onclick="viewDetail('${u.nickname}')">View</button>
-                <button class="btn-delete" onclick="deleteUser('${u.nickname}')">Delete</button>
+                <button class="btn-view" onclick="viewDetail('${u.id}')">View</button>
+                <button class="btn-delete" onclick="deleteUser('${u.id}')">Delete</button>
               </div>
             </td>
           </tr>
@@ -205,14 +177,13 @@
       }).join('');
     }
 
-    function viewDetail(nickname) {
-      const users = getUsers();
-      const user = users.find(u => u.nickname === nickname);
+    function viewDetail(id) {
+      const user = UsersDB.getById(id);
       if (!user) return;
       
-      // Hide password for security
+      // Hide password hash for security
       const userCopy = { ...user };
-      if (userCopy.password) userCopy.password = '••••••••';
+      delete userCopy.passwordHash;
       
       document.getElementById('detailContent').innerHTML = `
         <pre>${JSON.stringify(userCopy, null, 2)}</pre>
@@ -224,24 +195,17 @@
       document.getElementById('detailModal').classList.remove('open');
     }
 
-    function deleteUser(nickname) {
-      if (confirm(`Delete user "${nickname}"?`)) {
-        const users = getUsers();
-        const filtered = users.filter(u => u.nickname !== nickname);
-        saveUsers(filtered);
+    function deleteUser(id) {
+      const user = UsersDB.getById(id);
+      if (!user) return;
+      if (confirm(`Delete user "${user.nickname}"?`)) {
+        UsersDB.remove(id);
         refreshData();
       }
     }
 
     function exportData() {
-      const users = getUsers();
-      const blob = new Blob([JSON.stringify(users, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'fitouthub-users-' + new Date().toISOString().split('T')[0] + '.json';
-      a.click();
-      URL.revokeObjectURL(url);
+      UsersDB.exportToJSON();
     }
 
     function importData(event) {
@@ -250,24 +214,19 @@
       
       const reader = new FileReader();
       reader.onload = (e) => {
-        try {
-          const data = JSON.parse(e.target.result);
-          if (Array.isArray(data)) {
-            saveUsers(data);
-            alert(`Successfully imported ${data.length} users`);
-            refreshData();
-          } else {
-            alert('Invalid data format');
-          }
-        } catch (err) {
-          alert('Import failed: ' + err.message);
+        const result = UsersDB.importFromJSON(e.target.result);
+        if (result.success) {
+          alert(`Successfully imported. Total users: ${result.count}`);
+          refreshData();
+        } else {
+          alert('Import failed: ' + result.error);
         }
       };
       reader.readAsText(file);
     }
 
     function clearData() {
-      localStorage.removeItem(LS_KEY);
+      UsersDB.clear();
       refreshData();
     }
 
@@ -278,8 +237,10 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
-      refreshData();
-      document.getElementById('year').textContent = new Date().getFullYear();
+      UsersDB.init().then(() => {
+        refreshData();
+        document.getElementById('year').textContent = new Date().getFullYear();
+      });
     });
   </script>
 </body>
