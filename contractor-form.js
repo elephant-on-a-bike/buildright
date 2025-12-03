@@ -629,19 +629,44 @@
     }
 
     const contractorData = collectFormData();
-    console.log('Contractor registration data:', contractorData);
+    
+    // Add metadata
+    const professionalRecord = {
+      id: 'contractor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+      type: 'contractor', // contractor, reseller
+      businessType: 'sole_trader', // sole_trader or company (can be determined from form data)
+      registrationDate: new Date().toISOString(),
+      status: 'pending', // pending, approved, rejected
+      data: contractorData
+    };
 
-    // Save to localStorage for now (later: send to server)
+    console.log('Contractor registration:', professionalRecord);
+
     try {
-      const contractors = JSON.parse(localStorage.getItem('fitouthub_contractors') || '[]');
-      contractors.push(contractorData);
-      localStorage.setItem('fitouthub_contractors', JSON.stringify(contractors));
+      // Save to unified professionals database via ProfessionalsDB
+      if (window.ProfessionalsDB) {
+        window.ProfessionalsDB.add(professionalRecord);
+      } else {
+        // Fallback to direct localStorage if ProfessionalsDB not loaded
+        const professionals = JSON.parse(localStorage.getItem('fitouthub_professionals') || '[]');
+        professionals.push(professionalRecord);
+        localStorage.setItem('fitouthub_professionals', JSON.stringify(professionals));
+      }
       
-      alert('Contractor registration submitted successfully! You will be notified once your application is reviewed.');
-      
-      // Close modal
-      if (window.auth && typeof window.auth.closeContractor === 'function') {
-        window.auth.closeContractor();
+      // Show success confirmation in the form
+      const formContainer = contractorForm.closest('.join-form-wrapper');
+      if (formContainer) {
+        const leftPanel = formContainer.querySelector('.join-form-left');
+        if (leftPanel) {
+          leftPanel.innerHTML = `
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2rem;text-align:center;min-height:400px;">
+              <img src="assets/check-mark.gif" alt="Success" style="width:120px;height:120px;margin-bottom:1.5rem;" />
+              <h3 style="font-size:1.5rem;color:#10B981;margin:0 0 0.5rem;">Registration Submitted!</h3>
+              <p style="color:#6B7280;margin:0 0 1.5rem;">Your contractor registration has been received. You will be notified once reviewed.</p>
+              <a href="index.html" class="btn btn-primary">Return to Home</a>
+            </div>
+          `;
+        }
       }
     } catch (error) {
       console.error('Error saving contractor data:', error);

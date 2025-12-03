@@ -3,15 +3,74 @@
 
 (function() {
   const DB_KEY = 'fitouthub_professionals';
+  const SEED_KEY = 'fitouthub_professionals_seed_loaded';
+
+  // Initialize from seed + localStorage
+  async function init() {
+    const seed = await loadSeed();
+    const local = loadLocal();
+    
+    // If seed not yet loaded into localStorage, merge once
+    const seedLoaded = localStorage.getItem(SEED_KEY);
+    if (!seedLoaded && seed.length > 0) {
+      const merged = mergeByIdPreferLocal(seed, local);
+      saveLocal(merged);
+      localStorage.setItem(SEED_KEY, 'true');
+      return merged;
+    }
+    
+    // Otherwise return local storage (which may include seed from previous load)
+    return local.length > 0 ? local : seed;
+  }
+
+  // Load seed file
+  async function loadSeed() {
+    try {
+      const res = await fetch('fitout_professionals.json', { cache: 'no-cache' });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
+    } catch (e) {
+      console.warn('Could not load professionals seed:', e);
+      return [];
+    }
+  }
+
+  // Load from localStorage
+  function loadLocal() {
+    try {
+      const raw = localStorage.getItem(DB_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      console.error('Error loading local professionals:', e);
+      return [];
+    }
+  }
+
+  // Merge arrays by ID (local entries override seed)
+  function mergeByIdPreferLocal(seed, local) {
+    const byId = new Map();
+    seed.forEach(p => { if (p && p.id) byId.set(p.id, p); });
+    local.forEach(p => { if (p && p.id) byId.set(p.id, p); }); // Override
+    return Array.from(byId.values());
+  }
+
+  // Save to localStorage
+  function saveLocal(professionals) {
+    try {
+      localStorage.setItem(DB_KEY, JSON.stringify(professionals));
+      return true;
+    } catch (e) {
+      console.error('Error saving professionals database:', e);
+      return false;
+    }
+  }
 
   // Get all professionals
   function getAll() {
-    try {
-      return JSON.parse(localStorage.getItem(DB_KEY) || '[]');
-    } catch (e) {
-      console.error('Error reading professionals database:', e);
-      return [];
-    }
+    return loadLocal();
   }
 
   // Get professionals by type
@@ -65,20 +124,15 @@
     return filtered.length < professionals.length;
   }
 
-  // Save to localStorage
+  // Save to localStorage (now uses saveLocal internally)
   function save(professionals) {
-    try {
-      localStorage.setItem(DB_KEY, JSON.stringify(professionals));
-      return true;
-    } catch (e) {
-      console.error('Error saving professionals database:', e);
-      return false;
-    }
+    return saveLocal(professionals);
   }
 
   // Clear all data
   function clear() {
     localStorage.removeItem(DB_KEY);
+    localStorage.removeItem(SEED_KEY);
   }
 
   // Export stats
@@ -124,6 +178,7 @@
 
   // Expose API globally
   window.ProfessionalsDB = {
+    init,
     getAll,
     getByType,
     getByStatus,

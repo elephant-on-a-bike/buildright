@@ -16,9 +16,9 @@
     the anchor or use `target="_blank"` for external/open-in-new-tab behavior.
 */
 
-// Mobile nav toggle
-const navToggle = document.querySelector('.nav-toggle');
-const navLinks = document.querySelector('.nav-links');
+// Mobile nav toggle (use var to avoid const redeclare errors if script is included twice)
+var navToggle = document.querySelector('.nav-toggle');
+var navLinks = document.querySelector('.nav-links');
 
 if (navToggle && navLinks) {
   navToggle.addEventListener('click', () => {
@@ -37,16 +37,18 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     if (target) {
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      if (navLinks.classList.contains('open')) {
-        navLinks.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
+      const toggle = document.querySelector('.nav-toggle');
+      const links = document.querySelector('.nav-links');
+      if (links && links.classList.contains('open') && toggle) {
+        links.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
       }
     }
   });
 });
 
 // Footer year
-const yearEl = document.getElementById('year');
+var yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // Page transition handling: fade in on load, fade out on internal navigation
@@ -94,7 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Centralized navigation menu for FitOut Hub (root pages only)
   function injectFitOutMenu() {
     const inSubfolder = window.location.pathname.includes('/buildingrennovations/');
-    if (inSubfolder) return; // only apply on FitOut Hub root pages
+    const isAdminPage = window.location.pathname.includes('-admin.html');
+    if (inSubfolder || isAdminPage) return; // skip subfolder and admin pages
     const drawer = document.getElementById('drawer') || document.querySelector('.nav-links');
     if (!drawer) return;
     const t = (k, f) => (window.t ? window.t(k, f) : f);
@@ -103,9 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
       { href: 'forclients.html', text: t('forclients.nav','For Clients') },
       { href: 'forcontractors.html', text: t('forcontractors.nav','For Contractors') },
       { href: 'forsuppliers.html', text: t('forsuppliers.nav','For Suppliers') },
-      { href: 'services.html', text: t('services.nav','Our Services') },
+      { href: 'ourservices.html', text: t('services.nav','Our Services') },
+      { href: 'projectmanagement.html', text: t('nav.projectManagement','Project Management') },
       { href: 'reviews.html', text: t('reviews.nav','Client Reviews') },
-      { href: 'expert.html', text: t('expert.nav','Expert Advice') },
       { href: 'contactus.html', text: t('contact.nav','Contact Us') },
       { divider: true },
       { href: 'buildingrennovations/index.html', text: t('renovations.nav','Renovations Hub') }
@@ -116,7 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Ensure Renovations Hub link exists in FitOut Hub hamburger (drawer)
   try {
     const inSubfolder = window.location.pathname.includes('/buildingrennovations/');
-    if (!inSubfolder) {
+    const isAdminPage = window.location.pathname.includes('-admin.html');
+    if (!inSubfolder && !isAdminPage) {
       // Replace entire drawer with centralized FitOut Hub menu
       injectFitOutMenu();
       injectLangToggle();
@@ -158,6 +162,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Only handle same-origin navigations
     try {
       const url = new URL(href, location.href);
+      // Gate expert page behind login
+      const isExpert = /expert3\.html$/i.test(url.pathname);
+      if (isExpert && typeof window.requireLoginForExpert === 'function') {
+        const ok = window.requireLoginForExpert(url.href);
+        if (!ok) { e.preventDefault(); return; }
+      }
       if (url.origin !== location.origin) return;
       // Allow normal behavior for fragments on same page
       if (url.pathname === location.pathname && url.hash) return;

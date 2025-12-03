@@ -7,6 +7,15 @@
     const base = isSubfolder() ? '../join.html' : 'join.html';
     return role ? base + '?role=' + role : base;
   }
+  // Page-level opt-out: set window.DISABLE_AUTH_MODAL or body[data-no-auth-inject]
+  function shouldInjectAuth(){
+    try {
+      if (window.DISABLE_AUTH_MODAL) return false;
+      const b = document.body;
+      if (b && b.hasAttribute('data-no-auth-inject')) return false;
+    } catch(e){}
+    return true;
+  }
   const JOIN_BTN = document.getElementById('openJoin');
   const LOGIN_BTN = document.getElementById('openLogin');
   const LOGOUT_BTN = document.getElementById('logoutBtn');
@@ -15,6 +24,14 @@
   const greetingEl = document.getElementById('greeting');
   const navEl = document.querySelector('nav.nav');
   const navToggle = document.querySelector('.nav-toggle');
+
+  // Professional role selection modal elements
+  const professionalRoleOverlay = document.getElementById('professionalRoleOverlay');
+  const professionalRoleModal = document.getElementById('professionalRoleModal');
+  const professionalRoleClose = document.getElementById('professionalRoleClose');
+  const professionalContractor = document.getElementById('professionalContractor');
+  const professionalReseller = document.getElementById('professionalReseller');
+  const professionalCancel = document.getElementById('professionalCancel');
 
   // Role selection modal elements
   const roleOverlay = document.getElementById('roleOverlay');
@@ -61,11 +78,68 @@
 
   let users = []; // merged list (seed + local additions)
   let currentUser = null;
-  const LS_KEY = 'fitouthub_users';
   const SESSION_KEY = 'fitouthub_current_user';
 
+  // Gating modal elements
+  let gateOverlay = null, gateModal = null, gateLoginBtn = null, gateJoinBtn = null, gateCancelBtn = null;
+  function ensureGateModal(){
+    // Check if modal already exists in DOM (not just our cached references)
+    if (document.getElementById('gateOverlay') || document.getElementById('gateModal')) {
+      gateOverlay = document.getElementById('gateOverlay');
+      gateModal = document.getElementById('gateModal');
+      gateLoginBtn = document.getElementById('gateLoginBtn');
+      gateJoinBtn = document.getElementById('gateJoinBtn');
+      gateCancelBtn = document.getElementById('gateCancelBtn');
+      const gateClose = document.getElementById('gateClose');
+      // Rebind if not bound
+      if(gateOverlay && !gateOverlay.onclick) gateOverlay.addEventListener('click', closeGate);
+      if(gateClose && !gateClose.onclick) gateClose.addEventListener('click', closeGate);
+      if(gateCancelBtn && !gateCancelBtn.onclick) gateCancelBtn.addEventListener('click', closeGate);
+      if(gateLoginBtn && !gateLoginBtn.onclick) gateLoginBtn.addEventListener('click', () => { closeGate(); openLogin(); });
+      return;
+    }
+    if (gateOverlay && gateModal) return;
+    const t = (k,f)=> (window.t?window.t(k,f):f);
+    const heroImagePath = isSubfolder() ? '../hero.png' : 'hero.png';
+    const joinHref = getJoinPath('client');
+    const html = `
+      <div class="pd-overlay" id="gateOverlay" aria-hidden="true"></div>
+      <section class="pd-modal" id="gateModal" role="dialog" aria-modal="true" aria-labelledby="gateTitle" aria-describedby="gateDesc" tabindex="-1">
+        <div class="pd-content">
+          <button class="pd-close" id="gateClose" aria-label="Close">×</button>
+          <div class="pd-copy">
+            <h2 id="gateTitle">${t('auth.gate.title','Login required')}</h2>
+            <p id="gateDesc">${t('auth.gate.desc','To start your project, please log in or create an account.')}</p>
+            <div class="cta-actions" style="display:flex;gap:8px;margin-top:12px">
+              <button type="button" id="gateLoginBtn" class="btn btn-primary">${t('btn.login','Login')}</button>
+              <a id="gateJoinBtn" class="btn btn-secondary" href="${joinHref}">${t('btn.join','Join')}</a>
+              <button type="button" id="gateCancelBtn" class="btn">${t('btn.cancel','Cancel')}</button>
+            </div>
+          </div>
+          <div class="pd-art" aria-hidden="true">
+            <img src="${heroImagePath}" alt="FitOut Hub" />
+          </div>
+        </div>
+      </section>`;
+    document.body.insertAdjacentHTML('beforeend', html);
+    gateOverlay = document.getElementById('gateOverlay');
+    gateModal = document.getElementById('gateModal');
+    gateLoginBtn = document.getElementById('gateLoginBtn');
+    gateJoinBtn = document.getElementById('gateJoinBtn');
+    gateCancelBtn = document.getElementById('gateCancelBtn');
+    const gateClose = document.getElementById('gateClose');
+    gateOverlay?.addEventListener('click', closeGate);
+    gateClose?.addEventListener('click', closeGate);
+    gateCancelBtn?.addEventListener('click', closeGate);
+    gateLoginBtn?.addEventListener('click', () => { closeGate(); openLogin(); });
+  }
+  function openGate(){ ensureGateModal(); openModal(gateOverlay, gateModal); }
+  function closeGate(){ if(gateOverlay && gateModal) closeModal(gateOverlay, gateModal); }
+
   // Inject login modal if not present
-  function injectLoginModal() {
+  function injectLoginModal(override) {
+    // Respect page-level opt-out unless override is true (lazy injection for gating)
+    if(!override && !shouldInjectAuth()) { return; }
     // Double-check for existing modal to prevent duplicates
     if(document.getElementById('loginOverlay')) {
       console.log('Login modal already exists, skipping injection');
@@ -134,20 +208,22 @@
     if(joinLink) joinLink.textContent = t('btn.join','Join');
   }
 
-  function loadSeed() {
-    // Detect if we're in a subfolder and adjust path
-    const usersPath = isSubfolder() ? '../users.json' : 'users.json';
-    return fetch(usersPath).then(r=>r.json()).catch(()=>[]);
-  }
-  function loadLocal() {
-    try { return JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch(e){ return []; }
-  }
-  function saveLocal() { localStorage.setItem(LS_KEY, JSON.stringify(users)); }
-
-  function mergeUsers(seed, local) {
-    const byId = new Map();
-    [...seed, ...local].forEach(u=>{ if(u && u.id) byId.set(u.id, u); });
-    return Array.from(byId.values());
+  // Helper to ensure UsersDB is loaded
+  async function ensureUsersDB(){
+    if(!window.UsersDB){
+      // Load users-db.js dynamically if not present
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = isSubfolder() ? '../users-db.js' : 'users-db.js';
+        script.onload = () => {
+          if(window.UsersDB) resolve();
+          else reject(new Error('UsersDB not loaded'));
+        };
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    }
+    return Promise.resolve();
   }
 
   function generateIdHex(len=64){
@@ -180,7 +256,11 @@
     modal.classList.remove('open');
     document.removeEventListener('keydown', escListener);
   }
-  function escListener(e){ if(e.key==='Escape'){ [roleModal, joinModal, contractorModal, resellerModal, loginModal].forEach(m=>{ if(m && m.classList.contains('open')){ if(m===roleModal) closeRole(); else if(m===joinModal) closeJoin(); else if(m===contractorModal) closeContractor(); else if(m===resellerModal) closeReseller(); else if(m===loginModal) closeLogin(); }}); } }
+  function escListener(e){ if(e.key==='Escape'){ [professionalRoleModal, roleModal, joinModal, contractorModal, resellerModal, loginModal].forEach(m=>{ if(m && m.classList.contains('open')){ if(m===professionalRoleModal) closeProfessionalRole(); else if(m===roleModal) closeRole(); else if(m===joinModal) closeJoin(); else if(m===contractorModal) closeContractor(); else if(m===resellerModal) closeReseller(); else if(m===loginModal) closeLogin(); }}); } }
+
+  // Professional role modal helpers
+  function openProfessionalRole(){ openModal(professionalRoleOverlay, professionalRoleModal); }
+  function closeProfessionalRole(){ closeModal(professionalRoleOverlay, professionalRoleModal); }
 
   // Modal open/close helpers (restore missing definitions)
   function openRole(){ openModal(roleOverlay, roleModal); }
@@ -202,6 +282,28 @@
   function closeReseller(){ closeModal(resellerOverlay, resellerModal); }
 
   function openLogin(prefillNickname){
+    // Ensure login modal exists even on pages that opted-out of auto injection
+    if(!document.getElementById('loginModal')) {
+      injectLoginModal(true);
+      // Re-capture and bind after injection
+      setTimeout(() => {
+        captureLoginElements();
+        bindLoginEvents();
+        // Now open with prefill
+        if(prefillNickname){
+          const nick = loginForm?.loginNickname || loginForm?.querySelector('#loginNickname');
+          if(nick) nick.value = prefillNickname;
+        }
+        const submit = loginSubmit || document.getElementById('loginSubmit');
+        if(submit){
+          const valid = validateLoginFields();
+          submit.disabled = !valid;
+          submit.setAttribute('aria-disabled', String(!valid));
+        }
+        openModal(loginOverlay, loginModal);
+      }, 10);
+      return;
+    }
     if(!loginOverlay || !loginModal || !loginForm) captureLoginElements();
     const overlay = loginOverlay, modal = loginModal, form = loginForm;
     const submit = loginSubmit || document.getElementById('loginSubmit');
@@ -270,7 +372,18 @@
     clearJoinErrors();
     if(!validateJoinFields()) { setJoinError('Please complete all required fields correctly.'); return; }
     const nick = joinForm.joinNickname.value.trim();
-    if(users.some(u=>u.nickname.toLowerCase()===nick.toLowerCase())) { setJoinError('Nickname already taken.'); return; }
+    
+    // Use UsersDB if available
+    await ensureUsersDB();
+    if(window.UsersDB && window.UsersDB.getByNickname(nick)) { 
+      setJoinError('Nickname already taken.'); 
+      return; 
+    }
+    if(users.some(u=>u.nickname.toLowerCase()===nick.toLowerCase())) { 
+      setJoinError('Nickname already taken.'); 
+      return; 
+    }
+    
     try {
       const hashed = await hashPassword(joinForm.joinPassword.value);
       const user = {
@@ -284,7 +397,17 @@
         passwordHash: hashed,
         createdAt: new Date().toISOString()
       };
-      users.push(user); saveLocal();
+      
+      // Save to UsersDB if available
+      if(window.UsersDB){
+        const result = window.UsersDB.add(user);
+        if(!result.success){ 
+          setJoinError(result.error); 
+          return; 
+        }
+      }
+      
+      users.push(user);
       closeJoin();
       // Open login prefilled
       openLogin(user.nickname);
@@ -294,7 +417,7 @@
   // Separate function to bind login events after elements are captured
   function bindLoginEvents() {
     if(!loginForm) {
-      console.warn('Cannot bind login events - form not found');
+      // Silently skip if form not yet available; openLogin will inject and bind later
       return;
     }
     
@@ -422,6 +545,15 @@
     });
   });
 
+  // Professional role selection buttons
+  professionalContractor?.addEventListener('click', () => { closeProfessionalRole(); openContractor(); });
+  professionalReseller?.addEventListener('click', () => { closeProfessionalRole(); openReseller(); });
+  professionalCancel?.addEventListener('click', closeProfessionalRole);
+  
+  // Professional role modal close
+  professionalRoleClose?.addEventListener('click', closeProfessionalRole);
+  professionalRoleOverlay?.addEventListener('click', closeProfessionalRole);
+
   // Role selection buttons
   roleClient?.addEventListener('click', () => { closeRole(); openJoin(); });
   roleContractor?.addEventListener('click', () => { closeRole(); openContractor(); });
@@ -453,6 +585,7 @@
     LOGIN_BTN?.addEventListener('click', () => openLogin());
     joinClose?.addEventListener('click', closeJoin);
     joinOverlay?.addEventListener('click', closeJoin);
+    NEW_PROJECT_BTN?.addEventListener('click', () => { window.location.href = isSubfolder() ? '../expert3.html' : 'expert3.html'; });
   }
 
   // Logout
@@ -482,11 +615,24 @@
       bindAuthButtons(); // Bind auth buttons after modal is ready
     }, 10);
     
-    loadSeed().then(seed => {
-      users = mergeUsers(seed, loadLocal());
+    // Load users from UsersDB if available, otherwise fallback to old method
+    ensureUsersDB().then(() => {
+      if(window.UsersDB){
+        return window.UsersDB.init();
+      } else {
+        // Fallback to legacy method
+        return loadSeed().then(seed => mergeUsers(seed, loadLocal()));
+      }
+    }).then(loadedUsers => {
+      users = loadedUsers;
       // Restore session user if present
       const sid = sessionStorage.getItem(SESSION_KEY);
-      if(sid){ currentUser = users.find(u=>u.id===sid) || null; }
+      if(sid){ 
+        currentUser = users.find(u=>u.id===sid) || null;
+        if(!currentUser && window.UsersDB){
+          currentUser = window.UsersDB.getById(sid) || null;
+        }
+      }
       updateGreeting();
       // Ensure header buttons reflect i18n-applied texts
       document.addEventListener('i18n:ready', updateGreeting);
@@ -495,6 +641,25 @@
       window.fitouthubUserId = currentUser ? currentUser.id : null;
       // Provide a global handler for inline onclick usage across pages
       window.openRole = function(){ window.location.href = getJoinPath(); };
+      // Provide a global handler to open professional role selection
+      window.openProfessionalRole = openProfessionalRole;
+      // Provide a global gating helper for expert page access
+      window.requireLoginForExpert = function(target){
+        const dest = target || (isSubfolder() ? '../expert3.html' : 'expert3.html');
+        if (currentUser) { window.location.href = dest; return true; }
+        openGate();
+        return false;
+      };
+      
+      // Bind all "Join as professional" buttons to open professional role modal
+      document.querySelectorAll('.professional-join').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          openProfessionalRole();
+        });
+      });
+    }).catch(err => {
+      console.error('Error loading users:', err);
     });
   }
 })();
