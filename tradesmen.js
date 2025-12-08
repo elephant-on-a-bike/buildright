@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginWarning = document.getElementById('loginWarning');
   const bookingGuidance = document.getElementById('bookingGuidance');
   let photoDataUrls = [];
+  let currentTrade = null; // { id, title }
 
   let tradesData = [];
   let showAll = false;
@@ -109,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function populateModal(trade) {
+    currentTrade = { id: trade.id, title: trade.title };
     modalTitle.textContent = trade.title || '';
     modalDesc.textContent = trade.description || '';
     modalImage.src = trade.image || 'pointer.png';
@@ -355,28 +357,35 @@ document.addEventListener('DOMContentLoaded', () => {
   summaryConfirm?.addEventListener('click', async () => {
     const payload = { ...lastSubmissionPayload, userId: (userIdInput?.value || '').trim() || null };
     try {
-      const fd = new FormData();
-      fd.append('trade', payload.trade || '');
-      fd.append('region', payload.region || '');
-      fd.append('description', payload.description || '');
-      (payload.jobs || []).forEach(j => fd.append('jobs[]', j));
-      // Convert data URLs to Blobs, attach as files
-      (payload.photos || []).forEach((dataUrl, idx) => {
-        const blob = dataURLtoBlob(dataUrl);
-        const name = `photo_${idx+1}.png`;
-        fd.append('photos[]', blob, name);
-      });
-      fd.append('userId', payload.userId || '');
-
-      const headers = {};
-      const token = window.BOOKING_TOKEN || null; // optionally set globally
-      if (token) headers['X-Booking-Token'] = token;
-
-      const res = await fetch('submit_booking.php', { method: 'POST', body: fd, headers });
-      const out = await res.json();
-      if (!res.ok || !out.ok) throw new Error(out.error || 'Save failed');
-      alert('Saved locally for testing: ' + (out.path || 'archive/requests.jsonl'));
+      // Front-end mock: persist to ProjectsDB so it surfaces in projects-admin
+      if (window.ProjectsDB && typeof window.ProjectsDB.add === 'function') {
+        const nowIso = new Date().toISOString();
+        const id = 'project_' + Math.random().toString(36).slice(2, 10);
+        const projectRecord = {
+          id,
+          projectName: `${payload.trade || 'Project'} • ${payload.region || ''}`.trim(),
+          clientName: payload.userId ? `Client ${payload.userId}` : 'Anonymous Client',
+          contractorName: '',
+          registrationDate: nowIso,
+          status: 'pending',
+          data: {
+            region: payload.region || '',
+            budget: '',
+            notes: payload.description || '',
+            jobs: payload.jobs || [],
+            photos: payload.photos || [],
+            trade: payload.trade || '',
+            userId: payload.userId || null
+          }
+        };
+        window.ProjectsDB.add(projectRecord);
+        // Optional: give a quick toast via console and proceed to matches
+        console.log('[Projects] Saved to local DB:', projectRecord);
+      } else {
+        console.warn('ProjectsDB not available; skipping local save.');
+      }
       closeSummary();
+      showMatchesModal(payload);
     } catch (e) {
       console.error('Save error:', e);
       alert('Could not save locally: ' + e.message);
@@ -394,4 +403,227 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   fetchTrades();
+
+  // --- Matching Professionals ---
+  const matchesOverlay = document.getElementById('matchesOverlay');
+  const matchesModal = document.getElementById('matchesModal');
+  const matchesClose = document.getElementById('matchesClose');
+  const matchesOk = document.getElementById('matchesOk');
+  const matchesMoreBtn = document.getElementById('matchesMore');
+  const matchesBackBtn = document.getElementById('matchesBack');
+  const matchesContactBtn = document.getElementById('matchesContact');
+  const matchesList = document.getElementById('matchesList');
+  const matchesSummary = document.getElementById('matchesSummary');
+  let matchesMode = 'list';
+  let currentMatches = [];
+  let currentPayload = null;
+  let currentDetail = null;
+
+  function regionCodeToLabel(code) {
+    switch (code) {
+      case 'hong-kong-island': return 'Hong Kong Island';
+      case 'kowloon': return 'Kowloon';
+      case 'new-territories': return 'New Territories';
+      case 'lantau': return 'Lantau Island';
+      case 'outlying-islands': return 'Outlying Islands';
+      default: return code || '';
+    }
+  }
+
+  function normalize(str) {
+    return (str || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  // Map trade titles/ids from tradesmen.json to primary_trade values in professionals DB
+  function mapTradeToPrimary(trade) {
+    const id = (currentTrade && currentTrade.id) ? currentTrade.id : null;
+    const title = trade || (currentTrade ? currentTrade.title : '');
+    const lutById = {
+      'builder': 'Builder/General Contractor',
+      'renovator': 'Renovator',
+      'project-manager': 'Project Manager',
+      'painting': 'Painting & Decorating',
+      'plasterer': 'Plasterer',
+      'tiler': 'Tiler',
+      'flooring': 'Flooring Specialist',
+      'roofer': 'Roofer',
+      'landscaper': 'Landscaper',
+      'fencer': 'Fencing',
+      'window-door': 'Windows & Doors',
+      'electrician': 'Electrician',
+      'plumber': 'Plumber',
+      'hvac': 'HVAC Technician',
+      'smart-home': 'Smart Home Installer',
+      'carpenter': 'Carpenter',
+      'bricklayer': 'Bricklayer',
+      'steelworker': 'Steel Worker',
+      'insulation': 'Insulation Specialist',
+    };
+    if (id && lutById[id]) return lutById[id];
+    // Fallback: fuzzy match on title
+    const titleNorm = normalize(title);
+    const candidates = Object.values(lutById);
+    const found = candidates.find(c => normalize(c).includes(titleNorm) || titleNorm.includes(normalize(c)));
+    return found || title;
+  }
+
+  function statusRank(s) {
+    const v = String(s || '').toLowerCase();
+    if (v === 'approved') return 0;
+    if (v === 'pending') return 1;
+    if (v === 'rejected') return 2;
+    return 3;
+  }
+
+  function sortPreferred(list) {
+    return list.slice().sort((a, b) => {
+      const sr = statusRank(a.status) - statusRank(b.status);
+      if (sr !== 0) return sr;
+      const ar = (b.rating || 0) - (a.rating || 0);
+      if (ar !== 0) return ar;
+      return (a.data?.full_name || '').localeCompare(b.data?.full_name || '');
+    });
+  }
+
+  function findProfessionals(tradeTitle, regionCode) {
+    const targetTrade = mapTradeToPrimary(tradeTitle);
+    const regionLabel = regionCodeToLabel(regionCode);
+    const all = (window.ProfessionalsDB && typeof window.ProfessionalsDB.getAll === 'function')
+      ? window.ProfessionalsDB.getAll() : [];
+    const base = all
+      .filter(p => p && p.type === 'contractor' && p.data && Array.isArray(p.data.service_area))
+      .filter(p => normalize(p.data.primary_trade || '') === normalize(targetTrade));
+    const regional = base.filter(p => p.data.service_area.includes(regionLabel));
+    const candidates = regional.length ? regional : base; // fallback to trade-only
+    return { list: sortPreferred(candidates), usedFallback: regional.length === 0 };
+  }
+
+  let matchesRenderCount = 0;
+  function setMode(mode) {
+    matchesMode = mode;
+    if (mode === 'list') {
+      matchesBackBtn && (matchesBackBtn.style.display = 'none');
+      matchesContactBtn && (matchesContactBtn.style.display = 'none');
+      matchesMoreBtn && (matchesMoreBtn.style.display = currentMatches.length > matchesRenderCount ? 'inline-block' : 'none');
+      matchesOk && (matchesOk.style.display = 'inline-block');
+    } else {
+      matchesBackBtn && (matchesBackBtn.style.display = 'inline-block');
+      matchesContactBtn && (matchesContactBtn.style.display = 'inline-block');
+      matchesMoreBtn && (matchesMoreBtn.style.display = 'none');
+      matchesOk && (matchesOk.style.display = 'none');
+    }
+  }
+
+  function renderMatches(list, payload, resetCount = true) {
+    matchesList.innerHTML = '';
+    const regionLabel = regionCodeToLabel(payload.region);
+    matchesSummary.textContent = `Trade: ${mapTradeToPrimary(payload.trade)} • Region: ${regionLabel}`;
+    if (!list.length) {
+      const li = document.createElement('li');
+      li.innerHTML = '<em>No matching professionals found. Try another region or trade.</em>';
+      matchesList.appendChild(li);
+      setMode('list');
+      return;
+    }
+    if (resetCount) matchesRenderCount = 10;
+    const toShow = list.slice(0, matchesRenderCount);
+    toShow.forEach(p => {
+      const name = p.data.full_name || 'Anonymous Contractor';
+      const rating = typeof p.rating === 'number' ? `${p.rating.toFixed(1)}★` : '—';
+      const status = p.status || 'pending';
+      const li = document.createElement('li');
+      li.innerHTML = `<strong>${name}</strong><br><span class=\"small\">${p.data.primary_trade} • ${rating} • ${status}</span> <br>
+        <button type=\"button\" class=\"btn btn-outline btn--sm\" data-id=\"${p.id}\">Show details</button>`;
+      const btn = li.querySelector('button');
+      btn.addEventListener('click', () => openContractorDetail(p));
+      matchesList.appendChild(li);
+    });
+    if (matchesMoreBtn) {
+      matchesMoreBtn.style.display = list.length > matchesRenderCount ? 'inline-block' : 'none';
+      matchesMoreBtn.onclick = () => {
+        matchesRenderCount += 10;
+        renderMatches(list, payload, false);
+      };
+    }
+    setMode('list');
+  }
+
+  function openMatches() {
+    if (!matchesModal || !matchesOverlay) return;
+    matchesOverlay.classList.add('open');
+    matchesModal.classList.add('open');
+    matchesModal.setAttribute('aria-hidden', 'false');
+    matchesOverlay.setAttribute('aria-hidden', 'false');
+    matchesModal.focus();
+  }
+  function closeMatches() {
+    if (!matchesModal || !matchesOverlay) return;
+    matchesOverlay.classList.remove('open');
+    matchesModal.classList.remove('open');
+    matchesModal.setAttribute('aria-hidden', 'true');
+    matchesOverlay.setAttribute('aria-hidden', 'true');
+  }
+  matchesClose?.addEventListener('click', closeMatches);
+  matchesOk?.addEventListener('click', closeMatches);
+  matchesOverlay?.addEventListener('click', closeMatches);
+
+  function showMatchesModal(payload) {
+    try {
+      const { list, usedFallback } = findProfessionals(payload.trade, payload.region);
+      currentMatches = list;
+      currentPayload = payload;
+      renderMatches(currentMatches, currentPayload);
+      if (usedFallback) {
+        matchesSummary.textContent += ' • No regional matches found — showing all for trade';
+      }
+      openMatches();
+    } catch (e) {
+      console.error('Match error:', e);
+    }
+  }
+
+  function openContractorDetail(p) {
+    currentDetail = p;
+    const name = p.data.full_name || 'Anonymous Contractor';
+    const rating = typeof p.rating === 'number' ? `${p.rating.toFixed(1)}★` : '—';
+    const trade = p.data.primary_trade || '';
+    const areas = Array.isArray(p.data.service_area) ? p.data.service_area.join(', ') : '';
+    matchesSummary.textContent = `${name} • ${trade} • ${rating}`;
+    matchesList.innerHTML = `
+      <li>
+        <div class="card">
+          <p><strong>ID:</strong> <code>${p.id}</code></p>
+          <p><strong>Status:</strong> ${p.status || 'pending'}</p>
+          <p><strong>Business Type:</strong> ${p.businessType || ''}</p>
+          <p><strong>Registered:</strong> ${p.registrationDate ? new Date(p.registrationDate).toLocaleString() : ''}</p>
+          <p><strong>Service Areas:</strong> ${areas}</p>
+          <p><strong>Rating:</strong> ${rating}</p>
+          <p><strong>Raw Data:</strong></p>
+          <pre style="white-space:pre-wrap;">${escapeHtml(JSON.stringify(p.data || {}, null, 2))}</pre>
+        </div>
+      </li>
+    `;
+    setMode('detail');
+  }
+
+  matchesBackBtn?.addEventListener('click', () => {
+    if (currentMatches && currentPayload) {
+      renderMatches(currentMatches, currentPayload, false);
+    } else {
+      closeMatches();
+    }
+  });
+  matchesContactBtn?.addEventListener('click', () => {
+    // Unwired for now — placeholder
+    alert('Contact flow coming soon.');
+  });
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
 });

@@ -369,11 +369,53 @@ body.is-exiting {
 .cta p { color: var(--gray-700); }
 .cta-actions { margin-top: 18px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
+/* Corner Banner */
+.corner-banner {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 150px;
+  height: 150px;
+  z-index: 100;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+.corner-banner:hover {
+  transform: translateY(-4px);
+}
+.corner-banner-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.corner-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Hide corner banner on small screens to avoid obstructing content */
+@media (max-width: 768px) {
+  .corner-banner {
+    width: 100px;
+    height: 100px;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--gray-200);
   background: var(--white);
   padding: 24px 0;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  clear: both;
+  transform: none;
 }
 .footer-inner {
   display: flex;
@@ -383,34 +425,6 @@ body.is-exiting {
   flex-wrap: wrap;
 }
 .footer-nav a {
-.site-header .header-inner { display: flex; align-items: center; gap: 12px; }
-.site-header .logo { flex: 0 0 30%; min-width: 160px; display: inline-flex; align-items: center; gap: 8px; }
-.site-header nav.nav { flex: 1 1 70%; display: flex; align-items: center; justify-content: flex-end; }
-.site-header nav.nav .header-row { display: inline-flex; align-items: center; gap: 10px; flex-wrap: nowrap; width: 100%; justify-content: flex-end; }
-.site-header .nav-inline { display: none; }
-.site-header .nav-toggle { flex: 0 0 auto; }
-.greeting { display: inline-flex; align-items: center; gap: 10px; margin: 0; }
-.greeting h1, .greeting span { font-size: 1rem; margin: 0; }
-.header-button { margin: 0 10px !important; }
-
-/* Ensure all header buttons have identical sizing (match Log Off) */
-.site-header .header-row .header-button,
-.site-header .header-row .btn,
-.site-header .header-row .btn-logoff {
-  padding: 10px 16px !important;
-  font-size: 0.95rem !important;
-  line-height: 1.2 !important;
-  border-radius: 12px !important;
-}
-
-/* Normalise button sizes across pages */
-.btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 12px; font-size: 0.95rem; font-weight: 700; line-height: 1; }
-.btn-primary { background: #1e40af; color: #fff; }
-.btn-secondary { background: #e2e8f0; color: #0f172a; }
-.btn-outline { background: #ffffff; color: #0f172a; border: 1px solid #cbd5e1; }
-
-/* Prevent header wrapping */
-.site-header .header-inner, .site-header nav.nav .header-row { white-space: nowrap; }
   color: var(--gray-700);
   text-decoration: none;
   font-weight: 600;

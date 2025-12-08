@@ -5,8 +5,14 @@ let keywordMap = {};
 let questionHistory = [];
 // Track where answers came from: 'keyword' (inferred), 'user' (explicit), etc.
 let inferredSources = {};
+// Track current UI state for live re-translation
+let currentQuestion = null; // {id,...} | {id:'__intro__'} | {id:'__summary__'}
 
 document.getElementById('start-btn').addEventListener('click', startChat);
+
+function t(key, fallback){
+  try { return (window.i18nDict && window.i18nDict[key]) || (fallback ?? key); } catch(e){ return fallback ?? key; }
+}
 
 async function startChat() {
   document.getElementById('start-btn').style.display = 'none';
@@ -81,12 +87,12 @@ function askIntro() {
   const wrapper = document.createElement('div');
   wrapper.className = 'chat-question';
   wrapper.innerHTML = `
-    <p>Tell us a bit about your project.</p>
-    <p class="chat-subtext">This helps us understand your needs and guide you through the right questions to define your renovation or fit-out scope.</p>
+    <p>${t('expert.intro.prompt','Tell us a bit about your project.')}</p>
+    <p class="chat-subtext">${t('expert.intro.help','This helps us understand your needs and guide you through the right questions to define your renovation or fit-out scope.')}</p>
   `;
 
   const textarea = document.createElement('textarea');
-  textarea.placeholder = "e.g. Renovating my bathroom, need new tiles and plumbing fixes.";
+  textarea.placeholder = t('expert.intro.placeholder','e.g. Renovating my bathroom, need new tiles and plumbing fixes.');
   wrapper.appendChild(textarea);
 
   // Debug: show matched keywords and highlighted narrative here
@@ -103,7 +109,7 @@ function askIntro() {
   }
 
   const btn = document.createElement('button');
-  btn.textContent = "Continue";
+  btn.textContent = t('expert.intro.continue','Continue');
   btn.className = "btn btn-primary";
   btn.addEventListener('click', () => {
     const text = textarea.value.trim();
@@ -116,6 +122,8 @@ function askIntro() {
   wrapper.appendChild(btn);
   container.appendChild(wrapper);
   textarea.focus();
+  // mark state for translation updates
+  currentQuestion = { id: '__intro__' };
 }
 
 function extractKeywords(text) {
@@ -337,6 +345,8 @@ function showNextQuestion() {
       renderSummary(container);
       return;
     }
+  // set current question for live translation when language changes
+  currentQuestion = next;
 
     questionHistory.push(next.id);
 
@@ -356,13 +366,13 @@ function showNextQuestion() {
     questionRow.className = 'chat-question-row';
 
     const questionText = document.createElement('p');
-    questionText.textContent = next.question;
+    questionText.textContent = t('expert.q.' + next.id, next.question);
     questionRow.appendChild(questionText);
 
     if (next.help) {
       const helpBtn = document.createElement('button');
       helpBtn.className = 'help-icon';
-      helpBtn.setAttribute('aria-label', 'More info');
+      helpBtn.setAttribute('aria-label', t('expert.help.more','More info'));
 
       // Use a path-based SVG for maximum compatibility across browsers.
       // Also include a textual fallback inside a visually shown span in case
@@ -374,7 +384,7 @@ function showNextQuestion() {
         <span class="help-fallback" aria-hidden="true">?</span>
       `;
 
-      helpBtn.addEventListener('click', () => showHelpModal(next.question, next.help));
+      helpBtn.addEventListener('click', () => showHelpModal(t('expert.q.'+next.id, next.question), t('expert.help.'+next.id, next.help)));
       questionRow.appendChild(helpBtn);
 
       // Runtime SVG visibility detection: some global CSS or browser quirks
@@ -411,9 +421,9 @@ function showNextQuestion() {
         hint.className = 'trigger-hint';
         if (trigger.source === 'narrative') {
           const ev = (trigger.evidence && trigger.evidence[0]) ? trigger.evidence[0] : '';
-          hint.textContent = ev ? `Asked because you mentioned "${ev}"` : 'Asked based on your project description.';
+          hint.textContent = ev ? t('expert.hint.mentioned', 'Asked because you mentioned "') + ev + '"' : t('expert.hint.narrative','Asked based on your project description.');
         } else if (trigger.source === 'previous') {
-          hint.textContent = 'Follow‑up based on your earlier answer.';
+          hint.textContent = t('expert.hint.followup','Follow‑up based on your earlier answer.');
         }
         questionRow.appendChild(hint);
       }
@@ -423,10 +433,15 @@ function showNextQuestion() {
     }
 
     if (next.type === 'select') {
+      const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
       next.options.forEach(option => {
         const btn = document.createElement('button');
-        btn.textContent = option;
+        const slug = slugify(option);
+        btn.textContent = t('expert.opt.' + slug, t('opt.' + slug, option));
         btn.className = 'btn btn-secondary';
+        // store option data for re-translation
+        btn.dataset.optionValue = option;
+        btn.dataset.optionSlug = slug;
         btn.addEventListener('click', () => {
           answers[next.id] = option;
           // mark this answer as provided by the user explicitly
@@ -466,7 +481,7 @@ function showNextQuestion() {
       backWrapper.className = 'chat-back';
 
       const backBtn = document.createElement('button');
-      backBtn.setAttribute('aria-label', 'Go back');
+      backBtn.setAttribute('aria-label', t('expert.back','Go back'));
       backBtn.innerHTML = `
         <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <path d="M12.707 15.707a1 1 0 01-1.414 0L6.586 11l4.707-4.707a1 1 0 00-1.414-1.414l-5.414 5.414a1 1 0 000 1.414l5.414 5.414a1 1 0 001.414-1.414z"/>
@@ -627,12 +642,13 @@ function detectTriggerSource(question) {
 function renderSummary(container) {
   const summary = document.createElement('div');
   summary.className = 'chat-summary';
-  summary.innerHTML = `<h2>Project Scope Summary</h2>`;
+  summary.innerHTML = `<h2>${t('expert.summary.title','Project Scope Summary')}</h2>`;
   const ul = document.createElement('ul');
 
   for (const [key, value] of Object.entries(answers)) {
     const li = document.createElement('li');
-    li.textContent = `${key.replace(/_/g, ' ')}: ${value}`;
+    const label = t('expert.field.' + key, key.replace(/_/g, ' '));
+    li.textContent = `${label}: ${value}`;
     ul.appendChild(li);
   }
 
@@ -643,7 +659,7 @@ function renderSummary(container) {
 
   const emailBtn = document.createElement('button');
   emailBtn.className = 'btn btn-primary';
-  emailBtn.textContent = 'Email PDF';
+  emailBtn.textContent = t('expert.summary.email','Email PDF');
   emailBtn.addEventListener('click', async () => {
     try {
       // show modal to collect recipient email
@@ -684,32 +700,34 @@ function renderSummary(container) {
       // show a lightweight in-UI status
       const sending = document.createElement('div');
       sending.className = 'pdf-sending';
-      sending.textContent = 'Sending PDF — please wait...';
+      sending.textContent = t('expert.pdf.sending','Sending PDF — please wait...');
       summary.appendChild(sending);
 
       const resp = await fetch('send_pdf.php', { method: 'POST', body: fd });
       sending.remove();
       if (!resp.ok) {
         const txt = await resp.text();
-        alert('Failed to send PDF: ' + txt);
+        alert(t('expert.pdf.failed','Failed to send PDF: ') + txt);
         return;
       }
       const j = await resp.json().catch(()=>({ok:false,message:'Invalid JSON response'}));
       if (j && j.ok) {
-        alert('PDF sent successfully to ' + recipient + '.');
+        alert(t('expert.pdf.success','PDF sent successfully to ') + recipient + '.');
       } else {
-        alert('Failed to send PDF: ' + (j && j.message ? j.message : 'Unknown error'));
+        alert(t('expert.pdf.failed','Failed to send PDF: ') + (j && j.message ? j.message : t('expert.pdf.unknown','Unknown error')));
       }
 
     } catch (err) {
       console.error('Failed to generate or send PDF', err);
-      alert('Sorry — could not generate/send the PDF. See console for details.');
+      alert(t('expert.pdf.error','Sorry — could not generate/send the PDF. See console for details.'));
     }
   });
 
   actions.appendChild(emailBtn);
   summary.appendChild(actions);
   container.appendChild(summary);
+  // mark state
+  currentQuestion = { id: '__summary__' };
 }
 
 // Helper to dynamically load a script and return when it's ready
@@ -748,14 +766,14 @@ function showEmailModal() {
         <div class="help-modal-overlay" tabindex="-1"></div>
         <div class="help-modal-content" role="dialog" aria-modal="true" aria-labelledby="email-title">
           <button class="help-close" aria-label="Close">&times;</button>
-          <h3 id="email-title">Send project PDF</h3>
+          <h3 id="email-title">${t('expert.email.title','Send project PDF')}</h3>
           <div style="margin-top:8px">
-            <label for="email-input">Recipient email</label>
-            <input id="email-input" type="email" style="width:100%;padding:8px;margin-top:6px;border:1px solid #d1d5db;border-radius:6px" placeholder="client@example.com" />
+            <label for="email-input">${t('expert.email.label','Recipient email')}</label>
+            <input id="email-input" type="email" style="width:100%;padding:8px;margin-top:6px;border:1px solid #d1d5db;border-radius:6px" placeholder="${t('expert.email.placeholder','client@example.com')}" />
           </div>
           <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
-            <button id="email-cancel" class="btn">Cancel</button>
-            <button id="email-send" class="btn btn-primary">Send</button>
+            <button id="email-cancel" class="btn">${t('btn.cancel','Cancel')}</button>
+            <button id="email-send" class="btn btn-primary">${t('btn.send','Send')}</button>
           </div>
         </div>
       `;
@@ -860,3 +878,80 @@ function showHelpModal(title, content) {
   const closeBtn = modal.querySelector('.help-close');
   if (closeBtn && closeBtn.focus) closeBtn.focus();
 }
+
+// Translate active UI when language changes
+function translateActiveUI() {
+  if (!document.body.classList.contains('chat-active')) return;
+  const container = document.getElementById('chat-container');
+  if (!container) return;
+
+  // Intro screen
+  if (currentQuestion && currentQuestion.id === '__intro__') {
+    const wrapper = container.querySelector('.chat-question');
+    if (wrapper) {
+      const ps = wrapper.querySelectorAll('p');
+      if (ps[0]) ps[0].textContent = t('expert.intro.prompt','Tell us a bit about your project.');
+      if (ps[1]) ps[1].textContent = t('expert.intro.help','This helps us understand your needs and guide you through the right questions to define your renovation or fit-out scope.');
+      const textarea = wrapper.querySelector('textarea');
+      if (textarea) textarea.placeholder = t('expert.intro.placeholder','e.g. Renovating my bathroom, need new tiles and plumbing fixes.');
+      const btn = wrapper.querySelector('button.btn.btn-primary');
+      if (btn) btn.textContent = t('expert.intro.continue','Continue');
+    }
+    return;
+  }
+
+  // Question screen
+  if (currentQuestion && currentQuestion.id && currentQuestion.id !== '__summary__') {
+    const row = container.querySelector('.chat-question-row');
+    if (row) {
+      const qP = row.querySelector('p');
+      if (qP) qP.textContent = t('expert.q.' + currentQuestion.id, currentQuestion.question || qP.textContent);
+
+      const helpBtn = row.querySelector('.help-icon');
+      if (helpBtn) helpBtn.setAttribute('aria-label', t('expert.help.more','More info'));
+
+      // Update trigger hint
+      const hint = row.querySelector('.trigger-hint');
+      if (hint) {
+        const trigger = detectTriggerSource(currentQuestion);
+        if (trigger) {
+          if (trigger.source === 'narrative') {
+            const ev = (trigger.evidence && trigger.evidence[0]) ? trigger.evidence[0] : '';
+            hint.textContent = ev ? t('expert.hint.mentioned','Asked because you mentioned "') + ev + '"' : t('expert.hint.narrative','Asked based on your project description.');
+          } else if (trigger.source === 'previous') {
+            hint.textContent = t('expert.hint.followup','Follow‑up based on your earlier answer.');
+          }
+        }
+      }
+    }
+
+    // Update select buttons if present
+    const selectBtns = container.querySelectorAll('.chat-question .btn.btn-secondary');
+    if (selectBtns && selectBtns.length) {
+      const slugify = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_+|_+$/g,'');
+      selectBtns.forEach(btn => {
+        const val = btn.dataset.optionValue || btn.textContent || '';
+        const slug = btn.dataset.optionSlug || slugify(val);
+        btn.textContent = t('expert.opt.' + slug, t('opt.' + slug, val));
+        btn.dataset.optionSlug = slug;
+        btn.dataset.optionValue = val;
+      });
+    }
+
+    // Update back button label
+    const backBtn = container.querySelector('.chat-back button');
+    if (backBtn) backBtn.setAttribute('aria-label', t('expert.back','Go back'));
+    return;
+  }
+
+  // Summary: lightweight update of title and button
+  if (currentQuestion && currentQuestion.id === '__summary__') {
+    const h2 = container.querySelector('.chat-summary h2');
+    if (h2) h2.textContent = t('expert.summary.title','Project Scope Summary');
+    const emailBtn = container.querySelector('.chat-summary .btn.btn-primary');
+    if (emailBtn) emailBtn.textContent = t('expert.summary.email','Email PDF');
+  }
+}
+
+document.addEventListener('i18n:changed', translateActiveUI);
+document.addEventListener('i18n:ready', translateActiveUI);

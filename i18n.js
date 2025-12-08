@@ -30,9 +30,20 @@
     });
     // Attributes like placeholder, aria-label
     document.querySelectorAll('[data-i18n-attr]').forEach(el => {
-      const attr = el.getAttribute('data-i18n-attr');
-      const key = el.getAttribute('data-i18n');
-      if (attr && key && dict[key]) el.setAttribute(attr, dict[key]);
+      const spec = el.getAttribute('data-i18n-attr');
+      if (!spec) return;
+      // Support formats:
+      //  - "placeholder" + data-i18n="key"
+      //  - "placeholder:key"
+      //  - "placeholder:key,aria-label:other.key"
+      const parts = spec.split(',').map(s=>s.trim()).filter(Boolean);
+      parts.forEach(p => {
+        const [attrName, attrKeyRaw] = p.split(':');
+        const attrKey = attrKeyRaw ? attrKeyRaw.trim() : el.getAttribute('data-i18n');
+        if (!attrName || !attrKey) return;
+        const val = dict[attrKey];
+        if (val !== undefined) el.setAttribute(attrName.trim(), val);
+      });
     });
   }
 

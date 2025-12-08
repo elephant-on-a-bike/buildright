@@ -4,8 +4,8 @@
     bubble.innerHTML = "💬";
     Object.assign(bubble.style, {
       position: "fixed",
-      bottom: "20px",
-      right: "70px",
+      top: "50%",
+      right: "20px",
       width: "50px",
       height: "50px",
       background: "#0078d4",
@@ -18,7 +18,8 @@
       cursor: "pointer",
       zIndex: 9999,
       boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
-      transition: "transform 0.3s ease"
+      transition: "transform 0.3s ease",
+      transform: "translateY(-50%)"
     });
     
     // Add periodic animation
@@ -30,8 +31,10 @@
     const iframe = document.createElement("iframe");
     iframe.src = "chat-widget.html";
     iframe.style.position = "fixed";
-    iframe.style.bottom = "80px";
-    iframe.style.left = "20px";
+    iframe.style.top = "50%";
+    iframe.style.right = "80px";
+    iframe.style.transform = "translateY(-50%)";
+    iframe.style.left = "auto";
     iframe.style.width = "320px";
     iframe.style.height = "440px";
     iframe.style.border = "none";
@@ -51,14 +54,14 @@
 const style = document.createElement("style");
 style.textContent = `
 @keyframes wiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-15deg); }
-  75% { transform: rotate(15deg); }
+  0%, 100% { transform: translateY(-50%) rotate(0deg); }
+  25% { transform: translateY(-50%) rotate(-15deg); }
+  75% { transform: translateY(-50%) rotate(15deg); }
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.25); }
+  0%, 100% { transform: translateY(-50%) scale(1); }
+  50% { transform: translateY(-50%) scale(1.25); }
 }
 
 #chat-bubble.animate {
