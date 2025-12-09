@@ -1,0 +1,230 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Contact QR – Roman Nowak</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Minimal styling -->
+  <style>
+    :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    body { margin: 0; padding: 2rem; color: #222; background: #f5f5f5; }
+    .container { max-width: 700px; margin: 0 auto; }
+    .card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+    .contact-section { text-align: center; }
+    .qr-container { margin: 2rem 0; display: flex; flex-direction: column; align-items: center; }
+    #qrcode { padding: 1rem; background: white; border-radius: 8px; }
+    #qrcode img { display: block !important; margin: 0 auto !important; }
+    .btn-primary { background: #0066cc; color: white; border: none; padding: 1rem 2rem; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 500; }
+    .btn-primary:hover { background: #0052a3; }
+    small { color: #666; display: block; margin-top: 1rem; }
+
+    /* Action buttons */
+    .actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; margin: 0 auto 1.5rem; }
+    .action-btn { display: inline-flex; align-items: center; gap: .5rem; background: #fff; color: #004b99; border: 1px solid #d6e4ff; padding: .75rem 1.1rem; border-radius: 10px; text-decoration: none; font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.06); transition: transform .15s, box-shadow .15s, background .15s; }
+    .action-btn:hover { background: #e9f2ff; box-shadow: 0 3px 10px rgba(0,0,0,0.08); transform: translateY(-1px); }
+    .action-btn:active { transform: translateY(0); }
+    .action-btn .emoji { font-size: 1.1rem; }
+    
+    /* Business Card Flip Animation */
+    .flip-card-container {
+      perspective: 1500px;
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+    
+    .flip-card {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 62.5%; /* 8:5 aspect ratio for business cards */
+      transform-style: preserve-3d;
+      transition: transform 0.8s ease-in-out;
+      cursor: pointer;
+    }
+    
+    .flip-card.flipped {
+      transform: rotateY(180deg);
+    }
+    
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      overflow: hidden;
+    }
+    
+    .flip-card-front img,
+    .flip-card-back img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+    
+    .flip-hint {
+      text-align: center;
+      color: #666;
+      margin-top: 0.75rem;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Business Card Flip -->
+    <div class="flip-card-container">
+      <div class="flip-card" id="businessCard">
+        <div class="flip-card-front">
+          <img src="kaddy nowak.jpg" alt="Business Card Front">
+        </div>
+        <div class="flip-card-back">
+          <img src="card back.jpg" alt="Business Card Back">
+        </div>
+      </div>
+      <p class="flip-hint">👆 Click the card to see both sides</p>
+    </div>
+
+    <div class="card contact-section">
+      <h1>Add to Contacts</h1>
+      <p><strong>Scan with your phone to add contact</strong></p>
+      
+      <div class="qr-container">
+        <div id="qrcode"></div>
+      </div>
+
+      <div class="actions">
+        <a id="btn-call" class="action-btn" href="#">
+          <span class="emoji">📞</span><span>Call now</span>
+        </a>
+        <a id="btn-wa" class="action-btn" href="#">
+          <span class="emoji">💬</span><span>WhatsApp</span>
+        </a>
+        <a id="btn-email" class="action-btn" href="#">
+          <span class="emoji">✉️</span><span>Email</span>
+        </a>
+        <a id="btn-wechat" class="action-btn" href="#">
+          <span class="emoji">🟩</span><span>WeChat</span>
+        </a>
+      </div>
+      
+      <button class="btn-primary" id="btn-download-vcf">
+        📥 Download Contact Card (.vcf)
+      </button>
+      
+      <small>Scan the QR code with your phone camera to instantly add the contact, or download the vCard file.</small>
+    </div>
+  </div>
+
+  <!-- QRCode.js (client-side, no build needed) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  
+  <script>
+    // 1) Fill your details here:
+    const CONTACT = {
+      firstName: "Kaddy",
+      lastName: "Nowak",
+      org: "Artzpeople Ltd",
+      title: "Director - Design & Marketing",
+      email: "kaddy@artzpeople.com",
+      phone: "+85292699692",
+      whatsapp: "+85292699692",
+      wechat: "kaddywechat",
+      url: "https://artzpeople.com"
+      // Optional: workPhone, address, note...
+    };
+
+    // 2) Build vCard 4.0 payload
+    const buildVCard = (c) => [
+      "BEGIN:VCARD",
+      "VERSION:4.0",
+      `N:${c.lastName};${c.firstName};;;`,
+      `FN:${c.firstName} ${c.lastName}`,
+      `ORG:${c.org}`,
+      `TITLE:${c.title}`,
+      c.phone ? `TEL;TYPE=cell:${c.phone}` : null,
+      c.email ? `EMAIL:${c.email}` : null,
+      c.url ? `URL:${c.url}` : null,
+      "END:VCARD"
+    ].filter(Boolean).join("\r\n");
+
+    // Generate QR Code
+    function renderQR() {
+      const payload = buildVCard(CONTACT);
+      document.getElementById("qrcode").innerHTML = "";
+      new QRCode(document.getElementById("qrcode"), {
+        text: payload,
+        width: 256,
+        height: 256,
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+
+    const sanitizePhone = (p) => (p || "").trim().replace(/[^\d+]/g, "");
+
+    function setupActions() {
+      const tel = sanitizePhone(CONTACT.phone);
+      const waRaw = sanitizePhone(CONTACT.whatsapp || CONTACT.phone);
+
+      if (tel) document.getElementById("btn-call").setAttribute("href", `tel:${tel}`);
+
+      if (waRaw) {
+        const cleanedWa = waRaw.replace(/^\+/, "").replace(/^0+/, "");
+        document.getElementById("btn-wa").setAttribute("href", `https://wa.me/${cleanedWa}`);
+      }
+
+      if (CONTACT.email) document.getElementById("btn-email").setAttribute("href", `mailto:${CONTACT.email}`);
+
+      const wechatBtn = document.getElementById("btn-wechat");
+      if (CONTACT.wechat) {
+        wechatBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(CONTACT.wechat).catch(() => {});
+          }
+          alert(`WeChat ID: ${CONTACT.wechat}`);
+        });
+      } else {
+        wechatBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          alert("Add CONTACT.wechat to enable quick copy.");
+        });
+      }
+    }
+
+    // Download vCard button
+    document.getElementById("btn-download-vcf").addEventListener("click", () => {
+      const vcardData = buildVCard(CONTACT);
+      const blob = new Blob([vcardData], { type: "text/vcard;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${CONTACT.firstName}${CONTACT.lastName}.vcf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Initial render
+    setupActions();
+    renderQR();
+    
+    // Business Card Flip functionality
+    document.getElementById("businessCard").addEventListener("click", function() {
+      this.classList.toggle("flipped");
+    });
+  </script>
+</body>
+</html>
