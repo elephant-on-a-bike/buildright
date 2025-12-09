@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Contact QR – Roman Nowak</title>
+  <title>Contact QR – Kaddy Nowak</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Minimal styling -->
   <style>
@@ -116,9 +116,6 @@
         <a id="btn-email" class="action-btn" href="#">
           <span class="emoji">✉️</span><span>Email</span>
         </a>
-        <a id="btn-wechat" class="action-btn" href="#">
-          <span class="emoji">🟩</span><span>WeChat</span>
-        </a>
       </div>
       
       <button class="btn-primary" id="btn-download-vcf">
@@ -187,22 +184,6 @@
       }
 
       if (CONTACT.email) document.getElementById("btn-email").setAttribute("href", `mailto:${CONTACT.email}`);
-
-      const wechatBtn = document.getElementById("btn-wechat");
-      if (CONTACT.wechat) {
-        wechatBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          if (navigator.clipboard) {
-            navigator.clipboard.writeText(CONTACT.wechat).catch(() => {});
-          }
-          alert(`WeChat ID: ${CONTACT.wechat}`);
-        });
-      } else {
-        wechatBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          alert("Add CONTACT.wechat to enable quick copy.");
-        });
-      }
     }
 
     // Download vCard button
